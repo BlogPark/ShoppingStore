@@ -308,6 +308,16 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ShoppingStore.BLL\ShoppingStore.BLL.csproj">
+      <Project>{6ec8eafe-779f-416d-8014-34efb42a632b}</Project>
+      <Name>ShoppingStore.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShoppingStore.Model\ShoppingStore.Model.csproj">
+      <Project>{0a93eedb-aedc-4614-9544-eac5ae925435}</Project>
+      <Name>ShoppingStore.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
