@@ -28,5 +28,11 @@ namespace ShoppingStore.Web.Controllers
 
             return View();
         }
+        public ActionResult defaultpage()
+        {
+            ViewBag.Message = "Your app description page.";
+
+            return View();
+        }
     }
 }
