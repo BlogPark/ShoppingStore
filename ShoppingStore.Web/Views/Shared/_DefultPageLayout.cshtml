@@ -20,26 +20,29 @@
             </div>
             <div id="pagelogo" style="border:solid 1px; width:50%;background-color:lightgreen;float:left;height:30px">
                 网站Logo
-            </div>
-            <div id="pageright" style="border:solid 1px;width:50%;background-color:lightsteelblue;float:right;height:30px">
+            </div><div id="pageright" style="border:solid 1px;background-color:lightsteelblue;float:left;height:30px">
                 右侧搜索区
                 @*<section id="login">
                         @Html.Partial("_LoginPartial")
                     </section>*@
-            </div>
-            <div id="navmenu" style="border:solid 1px;width:100%;background-color:limegreen;height:20px;">
+            </div><br />
+            <div id="navmenu" style="border:solid 1px;width:100%;background-color:limegreen;height:40px;">
                 菜单栏
             </div>
         </header>
         <div id="body">
-            <div id="leftpanel" style="border:solid 1px;width:100px;background-color:blue;height:200px;float:left">
-                左侧
-            </div>
-            <div id="circle" style="border:solid 1px;width:800px;background-color:green;height:200px;">
-                中间循环播放
-            </div>
-            <div id="rightpanel" style="border:solid 1px;width:100px;background-color:green;height:200px;float:right">
-                右侧
+            <div>
+                <div id="leftpanel" style="border:solid 1px;width:100px;background-color:blue;height:200px;float:left">
+                    <section id="bigcategory">
+                        @Html.Action("BigCategoryList", "Home")
+                    </section>
+                </div>
+                <div id="circle" style="border:solid 1px;width:800px;background-color:green;height:200px;">
+                    中间循环播放
+                </div>
+                <div id="rightpanel" style="border:solid 1px;width:100px;background-color:green;height:200px;float:left">
+                    右侧
+                </div>
             </div>
             <div id="center" style="border:solid 1px;width:100px;background-color:indigo;height:800px;">
                 开始主体

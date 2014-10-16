@@ -1,1 +1,11 @@
-﻿
+﻿@using System.Data;
+<div style="width:100px;">
+    <ul>
+        @{
+            foreach (DataRow item in ((DataTable)Model).Rows)
+            {
+                <li id="@item["cateid"].ToString()">@item["name"].ToString()</li>
+            }
+        }
+    </ul>
+</div>

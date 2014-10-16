@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ShoppingStore.BLL;
+using System.Data;
 
 namespace ShoppingStore.Web.Controllers
 {
@@ -33,6 +35,12 @@ namespace ShoppingStore.Web.Controllers
             ViewBag.Message = "Your app description page.";
 
             return View();
+        }
+        public ActionResult BigCategoryList()
+        {
+            IndexCommonDataBLL bll = new IndexCommonDataBLL();
+            DataTable bigcategorytable = bll.GetFatherMenus();
+            return PartialView("_MenuPartial", bigcategorytable);
         }
     }
 }
