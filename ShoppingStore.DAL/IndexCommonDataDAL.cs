@@ -22,7 +22,7 @@ namespace ShoppingStore.DAL
         {
             string sqltxt = @"SELECT  cateid ,
         name
-FROM    [brnshop].[dbo].bsp_categories WITH ( NOLOCK )
+FROM    [ShoppingStore].[dbo].bsp_categories WITH ( NOLOCK )
 WHERE   parentid = 0
         AND isshow = 1
         AND layer = 1
@@ -38,7 +38,7 @@ ORDER BY displayorder ASC";
         {
             string sqltxt = @"SELECT  cateid ,
         name
-FROM    [brnshop].[dbo].bsp_categories WITH ( NOLOCK )
+FROM    [ShoppingStore].[dbo].bsp_categories WITH ( NOLOCK )
 WHERE   isshow = 1
         AND parentid = @prentid
         AND layer <> 1
