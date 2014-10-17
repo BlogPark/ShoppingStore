@@ -1,0 +1,24 @@
+﻿@using System.Data
+<div class="container">
+    <div class="menu style-1">
+        <ul class="menu">
+            <li><a href="http://js.itivy.com/?">全部商品分类</a></li>
+            @{
+                foreach (DataRow  item in ((DataTable)Model).Rows)
+                {
+                    <li><a href="#">@item["name"].ToString()</a></li>
+                }
+            }
+            <li class="right">
+                <div id="sidesearch">
+                    <form id="sitesearchform" style="display:inline" method="get" action="http://js.itivy.com/?">
+                        <fieldset>
+                            <input class="sidesearch_input" type="text" value="e.g: Web Design" onfocus="if (this.value == 'e.g: Web Design') {this.value = '';}" x-webkit-speech="" onwebkitspeechchange="transcribe(this.value)" onblur="if (this.value == '') {this.value = 'e.g: Web Design';}" name="s" id="s">
+                            <input type="image" class="sidesearch_submit" src="~/Images/sidesearchsubmit.png" />
+                        </fieldset>
+                    </form>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

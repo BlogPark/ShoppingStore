@@ -7,59 +7,55 @@
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <meta name="viewport" content="width=device-width" />
     @*@Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")*@
+        @Scripts.Render("~/bundles/modernizr")*@
     <link href="~/Content/menustyle.css" rel="stylesheet" />
+    <link href="~/Content/navstyle.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-1.8.2.min.js"></script>
     <script src="~/Scripts/3c-menu.js"></script>
 </head>
 <body>
-    <div style="width:20px; float:left; background-color:white">
-
-    </div>
-    <div>
-        <header id="header" style="height:100px;">
-            <div id="top" style="border:solid 1px;width:100%;background-color:lightpink;height:30px;">
-                这里是顶部
-            </div>
-            <div id="pagelogo" style="border:solid 1px; width:50%;background-color:lightgreen;float:left;height:30px">
-                网站Logo
-            </div><div id="pageright" style="border:solid 1px;background-color:lightsteelblue;float:left;height:30px">
-                右侧搜索区
-                @*<section id="login">
+    <header id="header" style="height:100px;">
+        <div id="top">
+            这里是顶部
+        </div>
+        <div id="pagelogo">
+            网站Logo
+        </div><div id="pageright">
+            右侧搜索区
+            @*<section id="login">
                     @Html.Partial("_LoginPartial")
                 </section>*@
-            </div><br />
-            <div id="navmenu" style="border:solid 1px;width:100%;background-color:limegreen;height:40px;">
-                菜单栏
-            </div>
-        </header>
-        <div id="body">
+        </div>
+        <div>
+            @Html.Action("PageNavList", "Home")
+        </div>
+    </header>
+    <div id="body" style="position: relative;width:990px;margin:0px auto;">
+        <div>
             <div>
-                <div >
-                    <section id="bigcategory">
-                        @Html.Action("BigCategoryList", "Home")
-                    </section>
-                </div>
-                <div id="circle" style="border:solid 1px;width:800px;background-color:green;height:200px;">
-                    中间循环播放
-                </div>
-                <div id="rightpanel" style="border:solid 1px;width:100px;background-color:green;height:200px;float:left">
-                    右侧
-                </div>
-            </div>
-            <div id="center" style="border:solid 1px;width:100px;background-color:indigo;height:800px;">
-                开始主体
-                @RenderSection("featured", required: false)
-                <section class="content-wrapper main-content clear-fix">
-                    @RenderBody()
+                <section id="bigcategory">
+                    @Html.Action("BigCategoryList", "Home")
                 </section>
             </div>
+            <div id="circle" style="border:solid 1px;background-color:green;height:200px;">
+                中间循环播放
+            </div>
+            <div id="rightpanel" style="border:solid 1px;background-color:green;height:200px;float:left">
+                右侧
+            </div>
         </div>
-        <footer>
-            友情链接处
-        </footer>
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", required: false)
+        <div id="center" style="border:solid 1px;background-color:indigo;height:800px;">
+            开始主体
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
     </div>
+    <footer>
+        友情链接处
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

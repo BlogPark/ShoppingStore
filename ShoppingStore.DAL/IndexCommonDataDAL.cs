@@ -77,5 +77,24 @@ WHERE   IsRecommend = 1";
             dt.TableName = "brands";
             return dt;
         }
+        /// <summary>
+        /// 得到前端的导航
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetPageNavlist()
+        {
+            string sqltxt = @"SELECT  id ,
+        pid ,
+        layer ,
+        name ,
+        title ,
+        url ,
+        [target] ,
+        displayorder
+FROM    ShoppingStore.dbo.bsp_navs WITH ( NOLOCK )
+WHERE   isshow = 1
+ORDER BY displayorder ASC";
+            return helper.Query(sqltxt).Tables[0];
+        }
     }
 }

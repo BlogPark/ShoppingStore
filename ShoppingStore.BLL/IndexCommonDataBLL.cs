@@ -36,5 +36,13 @@ namespace ShoppingStore.BLL
         {
             return dal.GetChildMenus();
         }
+        /// <summary>
+        /// 得到前端的导航
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetPageNavlist()
+        {
+            return dal.GetPageNavlist();
+        }
     }
 }

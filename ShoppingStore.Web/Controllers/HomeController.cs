@@ -47,5 +47,11 @@ namespace ShoppingStore.Web.Controllers
             model.brandtable=ds.Tables[2];
             return PartialView("_MenuPartial",model);
         }
+        public ActionResult PageNavList()
+        {
+            IndexCommonDataBLL bll = new IndexCommonDataBLL();
+            DataTable dt = bll.GetPageNavlist();
+            return PartialView("_PageNavPartial",dt);
+        }
     }
 }
