@@ -21,12 +21,17 @@ namespace ShoppingStore.DAL
         public DataTable GetFatherMenus()
         {
             string sqltxt = @"SELECT  cateid ,
-        name
-FROM    [ShoppingStore].[dbo].bsp_categories WITH ( NOLOCK )
-WHERE   parentid = 0
-        AND isshow = 1
-        AND layer = 1
-ORDER BY displayorder ASC";
+        isshow ,
+        displayorder ,
+        name ,
+        pricerange ,
+        parentid ,
+        layer ,
+        haschild ,
+        path
+FROM    ShoppingStore.dbo.bsp_categories WITH(NOLOCK)
+WHERE isshow=1 AND parentid=0
+ORDER BY displayorder";
             return helper.Query(sqltxt).Tables[0];
         }
         /// <summary>
@@ -34,20 +39,43 @@ ORDER BY displayorder ASC";
         /// </summary>
         /// <param name="fatherid"></param>
         /// <returns></returns>
-        public DataTable GetChildMenus(int fatherid)
+        public DataTable GetChildMenus()
         {
             string sqltxt = @"SELECT  cateid ,
-        name
-FROM    [ShoppingStore].[dbo].bsp_categories WITH ( NOLOCK )
-WHERE   isshow = 1
-        AND parentid = @prentid
-        AND layer <> 1
-ORDER BY displayorder ASC";
-            SqlParameter[] paramter = {
-                                          new SqlParameter("@prentid",SqlDbType.Int)
-                                      };
-            paramter[0].Value = fatherid;
-            return helper.Query(sqltxt,paramter).Tables[0];
+        isshow ,
+        displayorder ,
+        name ,
+        pricerange ,
+        parentid ,
+        layer ,
+        haschild ,
+        path
+FROM    ShoppingStore.dbo.bsp_categories WITH(NOLOCK)
+WHERE isshow=1 AND [path]=2
+ORDER BY displayorder";
+            DataTable dt= helper.Query(sqltxt).Tables[0];
+            dt.TableName = "subcategories";
+            return dt;
+        }
+        /// <summary>
+        /// 得到推荐的品牌列表
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetRecommandBrands()
+        {
+            string sqltxt = @"SELECT  [brandid] ,
+        [isshow] ,
+        [displayorder] ,
+        [name] ,
+        [logo] ,
+        [BelongsCategoryID] ,
+        [IsRecommend] ,
+        [MainCategoryID]
+FROM    [ShoppingStore].[dbo].[bsp_brands] WITH ( NOLOCK )
+WHERE   IsRecommend = 1";
+            DataTable dt = helper.Query(sqltxt).Tables[0];
+            dt.TableName = "brands";
+            return dt;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using ShoppingStore.BLL;
 using System.Data;
+using ShoppingStore.Web.Models;
 
 namespace ShoppingStore.Web.Controllers
 {
@@ -38,9 +39,13 @@ namespace ShoppingStore.Web.Controllers
         }
         public ActionResult BigCategoryList()
         {
+            MenuCategoriesPModel model = new MenuCategoriesPModel();
             IndexCommonDataBLL bll = new IndexCommonDataBLL();
-            DataTable bigcategorytable = bll.GetFatherMenus();
-            return PartialView("_MenuPartial", bigcategorytable);
+            DataSet ds = bll.GetFatherMenus();
+            model.bigcategory=ds.Tables[0];
+            model.subcategory=ds.Tables[1];
+            model.brandtable=ds.Tables[2];
+            return PartialView("_MenuPartial",model);
         }
     }
 }

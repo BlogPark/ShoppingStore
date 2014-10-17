@@ -19,9 +19,13 @@ namespace ShoppingStore.BLL
         /// 查询所有大类别信息
         /// </summary>
         /// <returns></returns>
-        public DataTable GetFatherMenus()
+        public DataSet GetFatherMenus()
         {
-            return dal.GetFatherMenus();
+            DataSet ds = new DataSet("dataset");
+            ds.Tables.Add(dal.GetFatherMenus().Copy()) ;
+            ds.Tables.Add(dal.GetChildMenus().Copy());
+            ds.Tables.Add(dal.GetRecommandBrands().Copy());
+            return ds;
         }
          /// <summary>
         /// 按照主类别查找子分类
@@ -30,7 +34,7 @@ namespace ShoppingStore.BLL
         /// <returns></returns>
         public DataTable GetChildMenus(int fatherid)
         {
-            return dal.GetChildMenus(fatherid);
+            return dal.GetChildMenus();
         }
     }
 }
