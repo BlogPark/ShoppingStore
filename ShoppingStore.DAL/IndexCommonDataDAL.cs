@@ -35,11 +35,10 @@ ORDER BY displayorder";
             return helper.Query(sqltxt).Tables[0];
         }
         /// <summary>
-        /// 按照主类别查找子分类
+        /// 查找主类别
         /// </summary>
-        /// <param name="fatherid"></param>
         /// <returns></returns>
-        public DataTable GetChildMenus()
+        public DataTable GetChildsubMenus()
         {
             string sqltxt = @"SELECT  cateid ,
         isshow ,
@@ -51,8 +50,29 @@ ORDER BY displayorder";
         haschild ,
         path
 FROM    ShoppingStore.dbo.bsp_categories WITH(NOLOCK)
-WHERE isshow=1 AND [path]=2
+WHERE isshow=1 AND parentid<>0
 ORDER BY displayorder";
+            DataTable dt= helper.Query(sqltxt).Tables[0];
+            dt.TableName = "childmenus";
+            return dt;
+        }
+        /// <summary>
+        /// 按照主类别查找子类别
+        /// </summary>
+        /// <param name="fatherid"></param>
+        /// <returns></returns>
+        public DataTable GetChildMenus()
+        {
+            string sqltxt = @"SELECT  id ,
+        SubCategoryName ,
+        Isshow ,
+        ParentID ,
+        MainCategory ,
+        DisplayOrder ,
+        [Path]
+FROM    ShoppingStore.dbo.bsp_subcategories WITH ( NOLOCK )
+WHERE   isshow = 1
+ORDER BY DisplayOrder";
             DataTable dt= helper.Query(sqltxt).Tables[0];
             dt.TableName = "subcategories";
             return dt;
@@ -96,5 +116,26 @@ WHERE   isshow = 1
 ORDER BY displayorder ASC";
             return helper.Query(sqltxt).Tables[0];
         }
+        /// <summary>
+        /// 得到banner的列表
+        /// </summary>
+        /// <returns></returns>
+        public DataTable Getbannerlist()
+        {
+            string sqltxt = @"SELECT  id ,
+        starttime ,
+        endtime ,
+        isshow ,
+        title ,
+        img ,
+        url ,
+        displayorder
+FROM    ShoppingStore.dbo.bsp_banners WITH ( NOLOCK )
+WHERE   starttime < GETDATE()
+        AND endtime > GETDATE()
+ORDER BY displayorder ASC";
+            return helper.Query(sqltxt).Tables[0];
+        }
+
     }
 }

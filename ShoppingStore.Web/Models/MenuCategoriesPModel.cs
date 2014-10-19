@@ -20,5 +20,9 @@ namespace ShoppingStore.Web.Models
         /// 推荐品牌信息
         /// </summary>
         public DataTable brandtable { get; set; }
+        /// <summary>
+        /// 子分类
+        /// </summary>
+        public DataTable categorytable { get; set; }
     }
 }

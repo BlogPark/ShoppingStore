@@ -758,6 +758,7 @@
     <Content Include="Views\Home\defaultpage.cshtml" />
     <Content Include="Views\Shared\_MenuPartial.cshtml" />
     <Content Include="Views\Shared\_PageNavPartial.cshtml" />
+    <Content Include="Views\Shared\_BannerPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

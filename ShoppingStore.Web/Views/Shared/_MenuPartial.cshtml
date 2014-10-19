@@ -19,7 +19,7 @@
                             <h3 class="@classsrt"><span></span><a href="#">@item["name"].ToString()</a></h3>
                             <p class="itemCol">
                                 @{
-                        DataRow[] rows = Model.subcategory.Select("parentid=" + item["cateid"].ToString());
+                        DataRow[] rows = Model.categorytable.Select("parentid=" + item["cateid"].ToString());
                         int sub = 0;
                         foreach (DataRow subcategory in rows)
                         {
@@ -47,15 +47,24 @@
                         <div class="entity-main">
                             <ul class="shadow-left">
                                 @{
-                        DataRow[] rows = Model.subcategory.Select("parentid=" + item["cateid"].ToString());
-                        foreach (DataRow arr in rows)
+                        DataRow[] srows = Model.categorytable.Select("parentid=" + item["cateid"].ToString());
+                        foreach (DataRow sitem in srows)
                         {
-                            <li><a href="#">@arr["name"].ToString()</a></li>
+                            <li>
+                                @{
+                            DataRow[] rows = Model.subcategory.Select("ParentID=" + sitem["cateid"].ToString());
+                            foreach (DataRow arr in rows)
+                            {
+                                <a href="#">@arr["SubCategoryName"].ToString()</a>
+                                }
+                                }
+                            </li>
                         }
+
                                 }
                             </ul>
                             <dl class="shadow-right">
-                               <dt><b>@item["name"].ToString() 推荐品牌：</b></dt>
+                                <dt><b>@item["name"].ToString() 推荐品牌：</b></dt>
                                 <dd>
                                     @{
                         DataRow[] brands = Model.brandtable.Select("MainCategoryID=" + item["cateid"].ToString());

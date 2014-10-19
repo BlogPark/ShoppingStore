@@ -23,8 +23,9 @@ namespace ShoppingStore.BLL
         {
             DataSet ds = new DataSet("dataset");
             ds.Tables.Add(dal.GetFatherMenus().Copy()) ;
-            ds.Tables.Add(dal.GetChildMenus().Copy());
+            ds.Tables.Add(dal.GetChildMenus().Copy());            
             ds.Tables.Add(dal.GetRecommandBrands().Copy());
+            ds.Tables.Add(dal.GetChildsubMenus().Copy());
             return ds;
         }
          /// <summary>
@@ -43,6 +44,14 @@ namespace ShoppingStore.BLL
         public DataTable GetPageNavlist()
         {
             return dal.GetPageNavlist();
+        }
+         /// <summary>
+        /// 得到banner的列表
+        /// </summary>
+        /// <returns></returns>
+        public DataTable Getbannerlist()
+        {
+            return dal.Getbannerlist();
         }
     }
 }

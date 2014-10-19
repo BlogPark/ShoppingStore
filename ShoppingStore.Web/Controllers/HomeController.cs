@@ -45,6 +45,7 @@ namespace ShoppingStore.Web.Controllers
             model.bigcategory=ds.Tables[0];
             model.subcategory=ds.Tables[1];
             model.brandtable=ds.Tables[2];
+            model.categorytable = ds.Tables[3];
             return PartialView("_MenuPartial",model);
         }
         public ActionResult PageNavList()
@@ -52,6 +53,12 @@ namespace ShoppingStore.Web.Controllers
             IndexCommonDataBLL bll = new IndexCommonDataBLL();
             DataTable dt = bll.GetPageNavlist();
             return PartialView("_PageNavPartial",dt);
+        }
+        public ActionResult PageBannerList()
+        {
+            IndexCommonDataBLL bll = new IndexCommonDataBLL();
+            DataTable dt = bll.Getbannerlist();
+            return PartialView("_BannerPartial", dt);
         }
     }
 }
