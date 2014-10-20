@@ -17,17 +17,12 @@
     <script src="~/Scripts/3c-menu.js"></script>
 </head>
 <body>
-    <header id="header" style="height:100px;">
-        <div id="top">
+    <header id="header" style="height:140px;">
+        <div id="top" style="background-color: rgba(193, 179, 179, 0.95); height:20px;">
             这里是顶部
         </div>
-        <div id="pagelogo">
+        <div id="pagelogo" style="height:70px;">
             网站Logo
-        </div><div id="pageright">
-            右侧搜索区
-            @*<section id="login">
-                    @Html.Partial("_LoginPartial")
-                </section>*@
         </div>
         <div>
             @Html.Action("PageNavList", "Home")
