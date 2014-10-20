@@ -60,5 +60,9 @@ namespace ShoppingStore.Web.Controllers
             DataTable dt = bll.Getbannerlist();
             return PartialView("_BannerPartial", dt);
         }
+        public ActionResult PageNewsList()
+        {
+            return PartialView("_NewsPartial");
+        }
     }
 }

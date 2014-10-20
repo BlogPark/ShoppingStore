@@ -46,9 +46,9 @@ a:link,a:visited{color:#666;font-size:12px;text-decoration:none;}
 .shadow-right dd{overflow:hidden;width:164px;}
 .entity-main{overflow:hidden;padding:0 0 0 39px;height:100%;background:url(../Images/listbg2.gif) right top repeat-y;}
 /*轮播图部分*/
-#banner {position:relative; width:478px; height:286px; border:1px solid #666; overflow:hidden;}
+#banner {position:relative; width:680px; height:286px; border:1px solid #666; overflow:hidden;}
 #banner_list img {border:0px;}
-#banner_bg {position:absolute; bottom:0;background-color:#000;height:30px;filter: Alpha(Opacity=30);opacity:0.3;z-index:1000;cursor:pointer; width:478px; }
+#banner_bg {position:absolute; bottom:0;background-color:#000;height:30px;filter: Alpha(Opacity=30);opacity:0.3;z-index:1000;cursor:pointer; width:680px; }
 #banner_info{position:absolute; bottom:0; left:5px;height:22px;color:#fff;z-index:1001;cursor:pointer}
 #banner_text {position:absolute;width:120px;z-index:1002; right:3px; bottom:3px;}
 #banner ul {position:absolute;list-style-type:none;filter: Alpha(Opacity=80);opacity:0.8; border:1px solid #fff;z-index:1002;

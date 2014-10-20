@@ -254,7 +254,7 @@ visibility: hidden;
 
 
 .onethousand_wrap {
-	width:990px;
+	width:1210px;
 	margin:0 auto;
 }
 #pagenav {
@@ -306,7 +306,7 @@ visibility: hidden;
 	background-color:transparent;
 }
 .ninenineo_wrap {
-	width:990px;
+	width:1210px;
 	margin:0 auto;
 }
 .topsection {
@@ -319,7 +319,7 @@ visibility: hidden;
 	float:left;
 }
 #header {
-	width:990px;
+	width:1210px;
 	font: 14px/14px 'Open Sans', Arial, sans-serif;
 	height:45px;
 	position:relative;
@@ -327,7 +327,7 @@ visibility: hidden;
 	background:#275468;
 	margin:0 auto;
 }
-#topheader {width:990px; height:90px; margin:15px 0 15px 0;}
+#topheader {width:1210px; height:90px; margin:15px 0 15px 0;}
 #topheader .logo { background:url(images/logo.png) no-repeat left center;  height:90px; width:281px; text-indent: -9999px;}
 #topheader .topbanner {
 	float: right;
@@ -404,7 +404,7 @@ visibility: hidden;
 /* content */
 
 #leftandright {
-	width:990px;/*990*/
+	width:1210px;/*1210*/
 	margin:0;
 	padding:17px 17px 17px 0px;
 	padding-right:0px;
@@ -1756,7 +1756,7 @@ font-size: 10px;
 .diggnav #b5{
 	background-color:#446cb3; padding:8px; float: left; border-bottom-left-radius:5px; border-bottom-right-radius:5px;color:white; font-weight:bold; text-align:center; width:102px;
 }
-.container { position: relative; width: 990px; margin: 0 auto; padding: 0; margin-top: 10px; font: 18px/21px "Open Sans",Arial, sans-serif; color: #446cb3; z-index:1}
+.container { position: relative; width: 1210px; margin: 0 auto; padding: 0; margin-top: 10px; font: 18px/21px "Open Sans",Arial, sans-serif; color: #446cb3; z-index:1}
 @media only screen and (min-width: 768px) and (max-width: 959px) { .container { width: 768px; } }
 @media only screen and (max-width: 767px) { .container { width: 300px; } }
 @media only screen and (min-width: 480px) and (max-width: 767px) { .container { width: 420px; } }
