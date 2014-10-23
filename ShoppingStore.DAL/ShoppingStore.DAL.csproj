@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="DbHelperSQL.cs" />
     <Compile Include="IndexCommonDataDAL.cs" />
+    <Compile Include="ProductOperateDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
