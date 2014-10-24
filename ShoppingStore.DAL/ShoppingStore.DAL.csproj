@@ -58,6 +58,7 @@
     <Content Include="SQL\bsp_brands add filer.sql" />
     <Content Include="SQL\bsp_brands.sql" />
     <Content Include="SQL\bsp_subcategories.sql" />
+    <Content Include="SQL\CategoryAttribute.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
