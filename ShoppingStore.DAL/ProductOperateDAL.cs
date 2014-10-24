@@ -22,12 +22,12 @@ namespace ShoppingStore.DAL
         public DataTable GetProShowIndexPage()
         {
             string sqltxt = @"SELECT  pid ,
-        showimg ,
-        name ,
+        showimgPath ,
+        ProductName ,
         shopprice
 FROM    ShoppingStore.dbo.bsp_products WITH ( NOLOCK )
-WHERE [state]=0 
-ORDER BY addtime DESC";
+WHERE productstate=0 
+ORDER BY CreateTime DESC";
             //SqlParameter[] paramter = { };
             return helper.Query(sqltxt).Tables[0];
         }
