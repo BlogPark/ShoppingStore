@@ -55,8 +55,11 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="SQL\bsp_advertpositions.sql" />
+    <Content Include="SQL\bsp_attributes.sql" />
+    <Content Include="SQL\bsp_attributevalues.sql" />
     <Content Include="SQL\bsp_brands add filer.sql" />
     <Content Include="SQL\bsp_brands.sql" />
+    <Content Include="SQL\bsp_ProductAttribute.sql" />
     <Content Include="SQL\bsp_subcategories.sql" />
     <Content Include="SQL\CategoryAttribute.sql" />
   </ItemGroup>
