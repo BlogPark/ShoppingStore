@@ -14,6 +14,14 @@ namespace ShoppingStore.BLL
     /// </summary>
     public class ProductOperateBLL
     {
-
+        ProductOperateDAL dal=new ProductOperateDAL();
+        /// <summary>
+        /// 得到首页显示的商品信息
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetProShowIndexPage()
+        {
+            return dal.GetProShowIndexPage();
+        }
     }
 }
