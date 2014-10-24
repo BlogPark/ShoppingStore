@@ -60,6 +60,7 @@
     <Content Include="SQL\bsp_brands add filer.sql" />
     <Content Include="SQL\bsp_brands.sql" />
     <Content Include="SQL\bsp_ProductAttribute.sql" />
+    <Content Include="SQL\bsp_products.sql" />
     <Content Include="SQL\bsp_subcategories.sql" />
     <Content Include="SQL\CategoryAttribute.sql" />
   </ItemGroup>
