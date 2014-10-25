@@ -29,10 +29,10 @@
         </div>
     </header>
     <div id="body" style="position: relative;width:1210px;margin:0px auto;">
-         <div style="height: 425px; width: 1210px;"> 
+        <div style="height: 425px; width: 1210px;">
             <div style="width: 185px; margin: 0px 0px; float: left; height: 425px; position: absolute;">
                 @*<section id="bigcategory" style="width:185px;margin:0px 0px;">*@
-                    @Html.Action("BigCategoryList", "Home")
+                @Html.Action("BigCategoryList", "Home")
                 @*</section>*@
             </div>
             <div id="circle" style="border: solid 1px; background-color: green; height: 415px; float: left; width: 681px; margin-left: 203px; top: 10px; position: absolute;">
@@ -42,18 +42,20 @@
                 @Html.Action("PageNewsList", "Home")
             </div>
         </div>
-        <div id="center" style="border:solid 1px;background-color:indigo;height:800px;">
-            开始主体
+        <div id="center" style="border:solid 1px; width: 1210px;">
             @RenderSection("featured", required: false)
             <section class="content-wrapper main-content clear-fix">
                 @RenderBody()
             </section>
         </div>
+        <div style ="height: 125px; width: 1210px;">
+            <footer>
+                友情链接处
+            </footer>
+        </div>
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
     </div>
-    <footer>
-        友情链接处
-    </footer>
-    @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
+
 </body>
 </html>

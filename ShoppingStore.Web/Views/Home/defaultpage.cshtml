@@ -1,6 +1,27 @@
 ﻿@{
     ViewBag.Title = "defaultpage";
-    Layout = "~/Views/Shared/_DefultPageLayout.cshtml";
-}
+    Layout = "~/Views/Shared/_DefultPageLayout.cshtml"; }
 
-<h2>defaultpage</h2>
+@{
+    for (int i = 0; i < 5; i++)
+    {
+        <div style="border:1px solid;width:1210px;margin-bottom:10px;height:390px;">
+            <div style="width:209px;height:390px;float:left;">
+                <h2>广告</h2>
+            </div>
+            <div style="width:800px;float:left;height:390px">             
+                    @{
+        for (int j = 0; j < 8; j++)
+        {
+
+            <div style="width:196px;height:193px;border:1px solid;float:left;"></div>
+
+        }
+                    }                
+            </div>
+            <div style="width:200px;float:left;height:390px">
+                <h2>广告</h2>
+                </div>
+            </div>
+    }
+}
