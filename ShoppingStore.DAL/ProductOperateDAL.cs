@@ -19,17 +19,18 @@ namespace ShoppingStore.DAL
         /// 得到首页显示的商品信息
         /// </summary>
         /// <returns></returns>
-        public DataTable GetProShowIndexPage()
+        public DataTable GetProShowIndexPage(int categoryid)
         {
             string sqltxt = @"SELECT  pid ,
         showimgPath ,
         ProductName ,
         shopprice
 FROM    ShoppingStore.dbo.bsp_products WITH ( NOLOCK )
-WHERE productstate=0 
+WHERE productstate=0 and MainCategoryid=@id 
 ORDER BY CreateTime DESC";
-            //SqlParameter[] paramter = { };
-            return helper.Query(sqltxt).Tables[0];
+            SqlParameter[] paramter = { new SqlParameter("@id",SqlDbType.Int)};
+            paramter[0].Value = categoryid;
+            return helper.Query(sqltxt,paramter).Tables[0];
         }
     }
 }

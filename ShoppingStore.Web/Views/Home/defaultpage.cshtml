@@ -1,28 +1,40 @@
 ﻿@using System.Data;
+@using ShoppingStore.Model
 @{
     ViewBag.Title = "defaultpage";
     Layout = "~/Views/Shared/_DefultPageLayout.cshtml";
- }
+}
 @{
-    for (int i = 0; i < 5; i++)
+    foreach (CategoriesModel item in Model)
     {
+        int id = item.cateid;
+        <input type="hidden" id="hid" />
         <div style="border:1px solid;width:1210px;margin-bottom:10px;height:390px;">
             <div style="width:209px;height:390px;float:left;">
                 <h2>广告</h2>
             </div>
-            <div style="width:800px;float:left;height:390px">             
-                    @{
+            <div style="width:800px;float:left;height:390px">
+                @{
+        List<ProductsModel> arrLNG = new List<ProductsModel>();
+        ShoppingStore.Web.Controllers.HomeController mm = new ShoppingStore.Web.Controllers.HomeController();
+        arrLNG = mm.GetProductsByMainCate(id);
         for (int j = 0; j < 8; j++)
         {
-
-            <div style="width:196px;height:193px;border:1px solid;float:left;"></div>
-
+            if (arrLNG.Count>0)
+            {
+                <div style="width:196px;height:193px;border:1px solid;float:left;">1</div>
+            }
+            else
+            {
+                <div style="width:196px;height:193px;border:1px solid;float:left;">2</div>
+            }
         }
-                    }                
+                }
+
             </div>
             <div style="width:200px;float:left;height:390px">
                 <h2>广告</h2>
-                </div>
             </div>
+        </div>
     }
 }

@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CategoriesOperateDAL.cs" />
     <Compile Include="DbHelperSQL.cs" />
     <Compile Include="IndexCommonDataDAL.cs" />
     <Compile Include="ProductOperateDAL.cs" />

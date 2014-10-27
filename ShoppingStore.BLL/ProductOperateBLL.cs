@@ -19,9 +19,20 @@ namespace ShoppingStore.BLL
         /// 得到首页显示的商品信息
         /// </summary>
         /// <returns></returns>
-        public DataTable GetProShowIndexPage()
+        public List<ProductsModel> GetProShowIndexPage(int categoryid)
         {
-            return dal.GetProShowIndexPage();
+            DataTable dt= dal.GetProShowIndexPage(categoryid);
+            List<ProductsModel> products = new List<ProductsModel>();
+            foreach (DataRow item in dt.Rows)
+            {
+                ProductsModel model = new ProductsModel();
+                model.ShowimgPath = item["showimgPath"].ToString();
+                model.pid = int.Parse(item["pid"].ToString());
+                model.Shopprice = decimal.Parse(item["shopprice"].ToString());
+                model.ProductName = item["ProductName"].ToString();
+                products.Add(model);
+            }
+            return products;
         }
     }
 }
