@@ -5,13 +5,14 @@
     Layout = "~/Views/Shared/_DefultPageLayout.cshtml";
 }
 @{
+    int k = 1;
     foreach (CategoriesModel item in Model)
     {
         int id = item.cateid;
-        <input type="hidden" id="hid" />
-        <div style="border:1px solid;width:1210px;margin-bottom:10px;height:390px;">
+        <div style="width:1210px;background-color:lightblue;height:20px;font-size:20px;"><p>@k@Html.Raw("F")   @item.name</p></div>
+        <div style="width:1210px;margin-bottom:10px;height:390px;">
             <div style="width:209px;height:390px;float:left;">
-                <h2>广告</h2>
+                <img style="width: 189px; height: 380px; margin-top: 5px; margin-left: 10px" src="/skuimgs/20141028115612.jpg" alt="木有商品" />
             </div>
             <div style="width:800px;float:left;height:390px">
                 @{
@@ -20,21 +21,45 @@
         arrLNG = mm.GetProductsByMainCate(id);
         for (int j = 0; j < 8; j++)
         {
-            if (arrLNG.Count>0)
+            if (arrLNG.Count >= (j + 1))
             {
-                <div style="width:196px;height:193px;border:1px solid;float:left;">1</div>
+                string linkurl = "/Home/Products/" + arrLNG[j].pid;
+                <div style="width:196px;height:193px;float:left;">
+                    <a href="@linkurl" target="_blank">
+                        <img src="@arrLNG[j].ShowimgPath" alt="@arrLNG[j].ProductName" style="width:176px;height:150px;margin-top:5px;margin-left:10px" />
+                    </a>
+                    <div style="width: 176px; height: auto; margin-left: 10px">
+                        <div style="width:186px;height:20px;">
+                            @{
+                if (arrLNG[j].ProductName.Length > 14)
+                {
+                    string str = arrLNG[j].ProductName.Substring(0, 12) + " . . .";
+                    <p style="font-size:15px"> <a href="@linkurl" target="_blank">@str</a></p>
+                }
+                else
+                { <p style="font-size:15px"> <a href="@linkurl" target="_blank">@arrLNG[j].ProductName</a></p>}
+                            }
+
+                        </div>
+                        <div style="width:186px;height:auto">
+                            <span>￥</span>@arrLNG[j].Shopprice
+                        </div>
+                    </div>
+                </div>
             }
             else
             {
-                <div style="width:196px;height:193px;border:1px solid;float:left;">2</div>
+                <div style="width:196px;height:193px;float:left;">
+                    <img style="width: 176px; height: 185px; margin-top: 5px; margin-left: 10px" src="/skuimgs/20141028114741.jpg" alt="木有商品" />
+                </div>
             }
         }
                 }
-
             </div>
-            <div style="width:200px;float:left;height:390px">
-                <h2>广告</h2>
+            <div style="width: 200px; float: left; height: 390px;">
+                <img style="width: 180px; height: 380px; margin-top: 5px; margin-left: 10px" src="/skuimgs/20141028115612.jpg" alt="木有商品" />
             </div>
         </div>
+        k++;
     }
 }

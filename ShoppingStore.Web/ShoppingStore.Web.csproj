@@ -183,6 +183,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -271,6 +272,9 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="skuimgs\20141028105605.jpg" />
+    <Content Include="skuimgs\20141028114741.jpg" />
+    <Content Include="skuimgs\20141028115612.jpg" />
     <Content Include="UICerter\images\loading.gif" />
     <Content Include="UICerter\images\top.jpg" />
     <Content Include="UICerter\images\topicon.gif" />
@@ -761,6 +765,8 @@
     <Content Include="Views\Shared\_PageNavPartial.cshtml" />
     <Content Include="Views\Shared\_BannerPartial.cshtml" />
     <Content Include="Views\Shared\_NewsPartial.cshtml" />
+    <Content Include="Views\Products\itemdetail.cshtml" />
+    <Content Include="Views\Shared\_ProductitemPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
