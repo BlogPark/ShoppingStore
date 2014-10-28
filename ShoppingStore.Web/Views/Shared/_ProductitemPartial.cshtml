@@ -1,0 +1,50 @@
+﻿@{
+    Layout = null;
+}
+ 
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <title>_ProductitemPartial</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/menustyle.css" rel="stylesheet" />
+    <link href="~/Content/navstyle.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.8.24.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/3c-menu.js"></script>
+</head>
+<body>
+    <header id="header" style="height:140px;">
+        <div id="top" style="background-color: rgba(193, 179, 179, 0.95); height:20px;">
+            这里是顶部
+        </div>
+        <div id="pagelogo" style="height:70px;">
+            网站Logo
+        </div>
+        <div>
+            @Html.Action("PageNavList", "Home")
+        </div>
+    </header>
+    <div id="body" style="position: relative;width:1210px;margin:0px auto;">        
+        <div id="center" style="border:solid 1px; width: 1210px;margin-top:10px;">
+            @RenderSection("featured", required: false)
+            <section class="content-wrapper main-content clear-fix">
+                @RenderBody()
+            </section>
+        </div>
+        <div style="height: 125px; width: 1210px;">
+            <footer>
+                友情链接处
+            </footer>
+        </div>
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </div>
+</body>
+</html>
