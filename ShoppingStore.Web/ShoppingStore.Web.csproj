@@ -272,6 +272,10 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="skuimgs\1029154041.jpg" />
+    <Content Include="skuimgs\1029154139.jpg" />
+    <Content Include="skuimgs\1029154247.jpg" />
+    <Content Include="skuimgs\1029154338.jpg" />
     <Content Include="skuimgs\20141028105605.jpg" />
     <Content Include="skuimgs\20141028114741.jpg" />
     <Content Include="skuimgs\20141028115612.jpg" />
@@ -767,6 +771,7 @@
     <Content Include="Views\Shared\_NewsPartial.cshtml" />
     <Content Include="Views\Products\itemdetail.cshtml" />
     <Content Include="Views\Shared\_ProductitemPartial.cshtml" />
+    <Content Include="Views\Products\test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

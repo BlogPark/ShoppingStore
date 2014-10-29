@@ -61,6 +61,7 @@
     <Content Include="SQL\bsp_brands add filer.sql" />
     <Content Include="SQL\bsp_brands.sql" />
     <Content Include="SQL\bsp_ProductAttribute.sql" />
+    <Content Include="SQL\bsp_productimages.sql" />
     <Content Include="SQL\bsp_products.sql" />
     <Content Include="SQL\bsp_productskus.sql" />
     <Content Include="SQL\bsp_subcategories.sql" />
