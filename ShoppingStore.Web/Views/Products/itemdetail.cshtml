@@ -34,20 +34,33 @@
         左侧推广区
     </div>
     <div style="width:990px;height:2000px;float:left;margin-left:10px;">
-        <div id="tab">
-            <div class="tabList" style="height:35px;">
-                <ul style="height:35px;">
-                    <li class="cur">商品详情</li>
-                    <li>用户评价</li>
-                    <li>售后服务</li>
-                    <li>客户咨询</li>
+        <div class="detailtab">
+            <div class="title cf">
+                <ul class="title-list fr cf ">
+                    <li class="on">商品介绍</li>
+                    <li>包装清单</li>
+                    <li>商品评价</li>
+                    <li>商品咨询</li>
+                    <p><b></b></p>
                 </ul>
             </div>
-            <div class="tabCon">
-                <div class="cur">@Html.Raw(Model.product.Rows[0]["Description"].ToString())</div>
-                <div><a target="_blank" href="http://mobile.jd.com/index.do">用户评价</a></div>
-                <div>售后服务</div>
-                <div>客户咨询</div>
+            <div class="product-wrap">
+                <!--商品介绍-->
+                <div class="product show">
+                    @Html.Raw(Model.product.Rows[0]["Description"].ToString())
+                </div>
+                <!--包装清单-->
+                <div class="product">
+                    案例2
+                </div>
+                <!--商品评价-->
+                <div class="product">
+                    案例3
+                </div>
+                <!--商品咨询-->
+                <div class="product">
+                    案例4-
+                </div>
             </div>
         </div>
     </div>
@@ -83,36 +96,23 @@
 </div>
 
 <script type="text/javascript">
-    window.onload = function () {
-        var oDiv = document.getElementById("tab");
-        var oLi = oDiv.getElementsByTagName("div")[0].getElementsByTagName("li");
-        var aCon = oDiv.getElementsByTagName("div")[1].getElementsByTagName("div");
-        var timer = null;
-        for (var i = 0; i < oLi.length; i++) {
-            oLi[i].index = i;
-            oLi[i].onmouseover = function () {
-                show(this.index);
-            }
-        }
-        function show(a) {
-            index = a;
-            var alpha = 0;
-            for (var j = 0; j < oLi.length; j++) {
-                oLi[j].className = "";
-                aCon[j].className = "";
-                aCon[j].style.opacity = 0;
-                aCon[j].style.filter = "alpha(opacity=0)";
-            }
-            oLi[index].className = "cur";
-            clearInterval(timer);
-            timer = setInterval(function () {
-                alpha += 2;
-                alpha > 100 && (alpha = 100);
-                aCon[index].style.opacity = alpha / 100;
-                aCon[index].style.filter = "alpha(opacity=" + alpha + ")";
-                alpha == 100 && clearInterval(timer);
-            },
-            5)
-        }
-    }
+    $(function () {
+        //设计案例切换
+        $('.title-list li').mouseover(function () {
+            var liindex = $('.title-list li').index(this);
+            $(this).addClass('on').siblings().removeClass('on');
+            $('.product-wrap div.product').eq(liindex).fadeIn(150).siblings('div.product').hide();
+            var liWidth = $('.title-list li').width();
+            $('.detailtab .title-list p').stop(false, true).animate({ 'left': liindex * liWidth + 'px' }, 300);
+        });
+
+        //设计案例hover效果
+        $('.product-wrap .product li').hover(function () {
+            $(this).css("border-color", "#ff6600");
+            $(this).find('p > a').css('color', '#ff6600');
+        }, function () {
+            $(this).css("border-color", "#fafafa");
+            $(this).find('p > a').css('color', '#666666');
+        });
+    });
 </script>
