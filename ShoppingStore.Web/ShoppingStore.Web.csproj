@@ -194,6 +194,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\magiczoomplus.css" />
     <Content Include="Content\menustyle.css" />
     <Content Include="Content\navstyle.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
@@ -272,6 +273,7 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\mzp-packed.js" />
     <Content Include="skuimgs\1029154041.jpg" />
     <Content Include="skuimgs\1029154139.jpg" />
     <Content Include="skuimgs\1029154247.jpg" />

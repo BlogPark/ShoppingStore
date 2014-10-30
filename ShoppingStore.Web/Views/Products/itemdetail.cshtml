@@ -2,28 +2,117 @@
     ViewBag.Title = "itemdetail";
     Layout = "~/Views/Shared/_ProductitemPartial.cshtml";
 }
+@using System.Data;
+@model ShoppingStore.Model.ProductDetailsPageModel
 <div style="width:1210px;height:474px;border:1px solid;margin:0px 0px;">
-        <div style="width:352px;height:446px;background-color:lightblue;float:left;margin-top:15px;margin-left:15px;">
-            <div id="ShowPictureBox" style="width: 342px; height: 300px; border: 1px solid; margin-left: 5px; float: left;">
-                <img src="/skuimgs/1029154041.jpg" style="width:342px; height:300px">
+    <div style="width:352px;height:446px;float:left;margin-top:15px;margin-left:15px;">
+        @{
+            string fristimgpath = Model.MainImages[0].showimg;
+            <div class="t2">
+                <a href="@fristimgpath" id="zoom1" class="MagicZoom MagicThumb"><img src="@fristimgpath" id="main_img" class="main_img" style="width:352px;height:350px;" /></a>
             </div>
-            <div style="width:342px;height:100px;border:1px solid;margin-left:5px;float:left;margin:20px 0px;">
+        }
+        <div class="t1">
+            <div id="showArea">
+                @{
+                    foreach (var item in Model.MainImages)
+                    {
+                        <a href="@item.showimg" rel="zoom1" rev="@item.showimg"><img src="@item.showimg" /></a>
+                    }
+                }
             </div>
         </div>
-        <div style="width:810px;height:410px;float:left;margin-left:15px;margin-top:10px;">
-            <div style="width: 810px; height: 22px; border: 1px solid;">名称区</div>
-            <div style="width: 810px; height: 375px; background-color:lightpink;margin-top:10px">SKU区</div>
+
+    </div>
+    <div style="width:810px;height:410px;float:left;margin-left:15px;margin-top:10px;">
+        <div style="width: 810px; height: 22px; border: 1px solid;">@Model.product.Rows[0]["ProductName"].ToString()</div>
+        <div style="width: 810px; height: 375px; background-color:lightpink;margin-top:10px">SKU区</div>
+    </div>
+</div>
+<div style="width:1210px;height:2000px;border:1px solid;margin-top:15px;">
+    <div style="width:210px;height:1000px;float:left;background-color:lightyellow">
+        左侧推广区
+    </div>
+    <div style="width:990px;height:2000px;float:left;margin-left:10px;">
+        <div id="tab">
+            <div class="tabList" style="height:35px;">
+                <ul style="height:35px;">
+                    <li class="cur">商品详情</li>
+                    <li>用户评价</li>
+                    <li>售后服务</li>
+                    <li>客户咨询</li>
+                </ul>
+            </div>
+            <div class="tabCon">
+                <div class="cur">@Html.Raw(Model.product.Rows[0]["Description"].ToString())</div>
+                <div><a target="_blank" href="http://mobile.jd.com/index.do">用户评价</a></div>
+                <div>售后服务</div>
+                <div>客户咨询</div>
+            </div>
         </div>
     </div>
-    <div style="width:1210px;height:2000px;border:1px solid;margin-top:15px;">
-        <div style="width:210px;height:1000px;float:left;background-color:lightyellow">
-            左侧推广区
-        </div>
-        <div style="width:990px;height:2000px;float:left;background-color:lightskyblue;margin-left:10px;">
-            商品参数，详情区
-        </div>
-    </div>
-    <div style="width:1210px;height:276px;border:1px solid;margin-top:15px;background-color:lightgreen">
-        推荐区
-    </div>
-        
+</div>
+<div style="width:1210px;height:206px;margin-top:15px;background-color:lightgreen">
+    <div style="width:1210px;height:10px;text-align:right;"><a href="#">查看更多商品 >></a></div>
+    @{
+        foreach (var item in Model.BestProducts)
+        {
+            string linkurl = "/Products/itemdetail/" + item.pid;
+            <a href="" target="_blank">
+                <img src="@item.ShowimgPath" alt="@item.ProductName" style="width:176px;height:150px;margin-top:5px;margin-left:10px" />
+            </a>
+            <div style="width: 176px; height: auto; margin-left: 10px">
+                <div style="width:186px;height:20px;">
+                    @{
+            if (item.ProductName.Length > 14)
+            {
+                string str = item.ProductName.Substring(0, 12) + " . . .";
+                <p style="font-size:15px"> <a href="@linkurl" target="_blank">@str</a></p>
+            }
+            else
+            { <p style="font-size:15px"> <a href="@linkurl" target="_blank">@item.ProductName</a></p>}
+                    }
+
+                </div>
+                <div style="width:186px;height:auto">
+                    <span>￥</span>@item.Shopprice
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        var oDiv = document.getElementById("tab");
+        var oLi = oDiv.getElementsByTagName("div")[0].getElementsByTagName("li");
+        var aCon = oDiv.getElementsByTagName("div")[1].getElementsByTagName("div");
+        var timer = null;
+        for (var i = 0; i < oLi.length; i++) {
+            oLi[i].index = i;
+            oLi[i].onmouseover = function () {
+                show(this.index);
+            }
+        }
+        function show(a) {
+            index = a;
+            var alpha = 0;
+            for (var j = 0; j < oLi.length; j++) {
+                oLi[j].className = "";
+                aCon[j].className = "";
+                aCon[j].style.opacity = 0;
+                aCon[j].style.filter = "alpha(opacity=0)";
+            }
+            oLi[index].className = "cur";
+            clearInterval(timer);
+            timer = setInterval(function () {
+                alpha += 2;
+                alpha > 100 && (alpha = 100);
+                aCon[index].style.opacity = alpha / 100;
+                aCon[index].style.filter = "alpha(opacity=" + alpha + ")";
+                alpha == 100 && clearInterval(timer);
+            },
+            5)
+        }
+    }
+</script>

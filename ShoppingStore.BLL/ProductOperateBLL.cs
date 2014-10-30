@@ -82,6 +82,7 @@ namespace ShoppingStore.BLL
                 model.ShowimgPath = item["ShowimgPath"].ToString();
                 model.pid = int.Parse(item["pid"].ToString());
                 model.ProductName = item["ProductName"].ToString();
+                model.Shopprice = decimal.Parse(item["Shopprice"].ToString());
                 productlist.Add(model);
             }
             productmodel.BestProducts = productlist;
