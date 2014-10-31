@@ -76,5 +76,53 @@ WHERE   BelongsCategoryID = ( SELECT    Cateid
             pramter[0].Value = productid;
             return helper.Query(sqltxt, pramter).Tables[0];
         }
+        /// <summary>
+        /// 根据上一类别得到下属类别列表
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        public DataTable GetChildCategoryList(int category)
+        {
+            string sqltxt = @"SELECT  cateid ,
+        isshow ,
+        displayorder ,
+        name ,
+        pricerange ,
+        parentid ,
+        layer ,
+        haschild ,
+        path
+FROM    ShoppingStore.dbo.bsp_categories WITH ( NOLOCK )
+WHERE   parentid = @id AND isshow=1
+ORDER BY displayorder DESC";
+            SqlParameter[] paramter = { new SqlParameter("@id",SqlDbType.Int)};
+            paramter[0].Value = category;
+            return helper.Query(sqltxt, paramter).Tables[0];
+        }
+        /// <summary>
+        /// 根据类别得到该分类下的所有品牌
+        /// </summary>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        public DataTable GetBrandsByBlogcategory(int category)
+        {
+            string sqltxt = @"SELECT brandid ,
+isshow ,
+displayorder ,
+name ,
+logo ,
+BelongsCategoryID ,
+IsRecommend ,
+MainCategoryID
+FROM ShoppingStore.dbo.bsp_brands WITH ( NOLOCK )
+WHERE BelongsCategoryID = @id
+AND isshow = 1
+ORDER BY displayorder DESC";
+            SqlParameter[] paramter = { new SqlParameter("@id",SqlDbType.Int)};
+            paramter[0].Value = category;
+            return helper.Query(sqltxt, paramter).Tables[0];
+        }
+
+
     }
 }

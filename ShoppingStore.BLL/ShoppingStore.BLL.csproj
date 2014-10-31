@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AdminOperateBLL.cs" />
     <Compile Include="CategoriesOperateBLL.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="IndexCommonDataBLL.cs" />
@@ -46,6 +47,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ShoppingStore.Common\ShoppingStore.Common.csproj">
+      <Project>{ed25710d-9178-4a22-8278-db4db1c2049b}</Project>
+      <Name>ShoppingStore.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ShoppingStore.DAL\ShoppingStore.DAL.csproj">
       <Project>{8cf28b33-a261-47a9-b57c-709f92c735b2}</Project>
       <Name>ShoppingStore.DAL</Name>

@@ -15,8 +15,8 @@ namespace ShoppingStore.Web
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "defaultpage", id = UrlParameter.Optional }
+                url: "{area}/{controller}/{action}/{id}",
+                defaults: new { area="Admin", controller = "AdminOperare", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

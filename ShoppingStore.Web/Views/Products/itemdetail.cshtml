@@ -30,9 +30,72 @@
     </div>
 </div>
 <div style="width:1210px;height:2000px;border:1px solid;margin-top:15px;">
+    <!--左侧推广产品区-->
     <div style="width:210px;height:1000px;float:left;background-color:lightyellow">
-        左侧推广区
+        <div style="margin-bottom:10px;">
+            <div style="height: 28px; border: 1px solid #ddd; line-height: 28px; background-color: #f7f7f7;">
+                <h2 style="font-size:14px;">相关分类</h2>
+            </div>
+            <div style="border-style: none solid solid; border-width: 0px 1px 1px; border-color: -moz-use-text-color #ddd #ddd">
+                <ul style="padding:4px 0px 4px 6px;margin:0px;overflow:hidden;">
+                    @{
+                        foreach (var item in Model.category)
+                        {
+                            <li style="float:left;height:18px;overflow:hidden;padding:3px 6px 3px 0px;width:94px"><a href="#">@item.name</a></li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div style="margin-bottom:10px;">
+            <div style="height: 28px; border: 1px solid #ddd; line-height: 28px; background-color: #f7f7f7;">
+                <h2 style="font-size:14px;">热卖品牌</h2>
+            </div>
+            <div style="border-style: none solid solid; border-width: 0px 1px 1px; border-color: -moz-use-text-color #ddd #ddd">
+                <ul style="padding:4px 0px 4px 6px;margin:0px;overflow:hidden;">
+                    @{
+                        foreach (var item in Model.brands)
+                        {
+                            <li style="float:left;height:18px;overflow:hidden;padding:3px 6px 3px 0px;width:94px"><a href="#">@item.name</a></li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div style="margin-bottom:10px;">
+            <div style="height: 28px; border: 1px solid #ddd; line-height: 28px; background-color: #f7f7f7;">
+                <h2 style="font-size:14px;">更多购买</h2>
+            </div>
+            <div style="border-style: none solid solid; border-width: 0px 1px 1px; border-color: -moz-use-text-color #ddd #ddd;margin-top:10px;padding-bottom:10px;">
+                   @{
+    foreach (var item in Model.BestProducts)
+    {
+        string linkurl = "/Products/itemdetail/" + item.pid;
+        <a href="" target="_blank">
+            <img src="@item.ShowimgPath" alt="@item.ProductName" style="width:176px;height:150px;margin-top:5px;margin-left:10px" />
+        </a>
+        <div style="width: 176px; height: auto; margin-left: 10px">
+            <div style="width:186px;height:20px;">
+                @{
+        if (item.ProductName.Length > 14)
+        {
+            string str = item.ProductName.Substring(0, 12) + " . . .";
+            <p style="font-size:15px"> <a href="@linkurl" target="_blank">@str</a></p>
+        }
+        else
+        { <p style="font-size:15px"> <a href="@linkurl" target="_blank">@item.ProductName</a></p>}
+                }
+            </div>
+            <div style="width:186px;height:auto">
+                <span>￥</span>@item.Shopprice
+            </div>
+        </div>
+    }
+}
+            </div>
+        </div>
     </div>
+    <!--右侧商品详情区-->
     <div style="width:990px;height:2000px;float:left;margin-left:10px;">
         <div class="detailtab">
             <div class="title cf">
@@ -65,6 +128,7 @@
         </div>
     </div>
 </div>
+<!--底部推荐区-->
 <div style="width:1210px;height:206px;margin-top:15px;background-color:lightgreen">
     <div style="width:1210px;height:10px;text-align:right;"><a href="#">查看更多商品 >></a></div>
     @{
