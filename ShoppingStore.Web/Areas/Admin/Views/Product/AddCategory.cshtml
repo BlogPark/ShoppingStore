@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "AddCategory";
+    Layout = "/Areas/Admin/Views/Shared/_AdminContorlPartView.cshtml";
+}
+<script type="text/javascript">
+    $.ajax({
+        url: "/Admin/Product/getCategoryjsonstr",
+        datatype: "html",
+        type: "get",
+        success: function (data) {
+            var mydata = Json.parse(data);
+            $("#allcategory").ligerTree({
+                data: mydata,
+                checkbox: false,
+                textFieldName: "name",
+                idFieldName: "cateid",
+                parentidFieldName: "parentid",
+            });
+        }
+    });
+</script>
+<ul id="allcategory"></ul>

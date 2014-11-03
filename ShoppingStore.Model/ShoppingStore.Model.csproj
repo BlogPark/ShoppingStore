@@ -40,8 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\Adminactions.cs" />
+    <Compile Include="Admin\Categories.cs" />
+    <Compile Include="Adverts.cs" />
     <Compile Include="BrandsModel.cs" />
     <Compile Include="CategoriesModel.cs" />
+    <Compile Include="CategoriesPageModel.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="ProductDetailsPageModel.cs" />
     <Compile Include="ProductImagesModel.cs" />

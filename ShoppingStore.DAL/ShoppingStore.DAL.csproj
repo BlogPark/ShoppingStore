@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Admin\AdminOperateDAL.cs" />
+    <Compile Include="Admin\CategoryAndProductDAL.cs" />
     <Compile Include="CategoriesOperateDAL.cs" />
     <Compile Include="DbHelperSQL.cs" />
     <Compile Include="IndexCommonDataDAL.cs" />
@@ -55,6 +57,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="SQL\bsp_adminactions.sql" />
     <Content Include="SQL\bsp_advertpositions.sql" />
     <Content Include="SQL\bsp_attributes.sql" />
     <Content Include="SQL\bsp_attributevalues.sql" />

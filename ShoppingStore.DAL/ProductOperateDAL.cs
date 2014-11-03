@@ -160,5 +160,53 @@ ORDER BY CreateTime DESC ";
             return helper.Query(sqltxt, parmter).Tables[0];
         }
 
+        public DataTable GetProductsBycategory(int category, int type,int isbest)
+        {
+            string sqltxt = @"SELECT  [pid] ,
+        [InternalCode] ,
+        [MainCategoryid] ,
+        [Cateid] ,
+        [Brandid] ,
+        [ProductName] ,
+        [Shopprice] ,
+        [Marketprice] ,
+        [Costprice] ,
+        [ProductState] ,
+        [Isbest] ,
+        [Ishot] ,
+        [Isnew] ,
+        [Displayorder] ,
+        [Weight] ,
+        [ShowimgPath] ,
+        [Salecount] ,
+        [Visitcount] ,
+        [Reviewcount] ,
+        [Star1] ,
+        [Star2] ,
+        [Star3] ,
+        [Star4] ,
+        [Star5] ,
+        [Description] ,
+        [CreateTime] ,
+        [SimpleDescription]
+FROM    [ShoppingStore].[dbo].[bsp_products] WITH(NOLOCK)
+WHERE  productstate=0";
+            if (isbest == 1)
+            {
+                sqltxt += @" AND Isbest=1";
+            }
+            if (type == 0)
+                sqltxt += @"  AND MainCategoryid=@id 
+ORDER BY CreateTime DESC";
+            else
+                sqltxt += @"  AND Cateid=@id 
+ORDER BY CreateTime DESC";
+            SqlParameter[] paramter = { new SqlParameter("@id",SqlDbType.Int)};
+            paramter[0].Value = category;
+            return helper.Query(sqltxt, paramter).Tables[0];
+        }
+
+
+
     }
 }
