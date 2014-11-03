@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\AdminOperateBLL.cs" />
+    <Compile Include="Admin\CategoryAndProductBLL.cs" />
     <Compile Include="CategoriesOperateBLL.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="IndexCommonDataBLL.cs" />

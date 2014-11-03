@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\AdminOperateDAL.cs" />
+    <Compile Include="Admin\CategoryAndProductDAL.cs" />
     <Compile Include="CategoriesOperateDAL.cs" />
     <Compile Include="DbHelperSQL.cs" />
     <Compile Include="IndexCommonDataDAL.cs" />

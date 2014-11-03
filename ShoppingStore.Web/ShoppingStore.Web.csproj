@@ -183,6 +183,8 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminOperateController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Models\CategoriesViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -196,7 +198,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Admin\Views\AdminOperate\welcome.htm" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\magiczoomplus.css" />
     <Content Include="Content\menustyle.css" />
@@ -260,6 +261,8 @@
     <Content Include="Areas\Admin\Views\Web.config" />
     <Content Include="Areas\Admin\Views\AdminOperate\AdminLogin.cshtml" />
     <Content Include="Areas\Admin\Views\AdminOperate\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\AddCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_AdminContorlPartView.cshtml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\listbg.gif" />
     <Content Include="Images\listbg2.gif" />
@@ -1230,8 +1233,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
