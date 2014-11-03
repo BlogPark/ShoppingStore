@@ -22,7 +22,7 @@ namespace ShoppingStore.BLL.Admin
             {
                 Adminactions model = new Adminactions();
                 model.adminaid = int.Parse(item["adminaid"].ToString());
-                model.action = item["action"].ToString();
+                model.url = item["url"].ToString();
                 model.parentid = int.Parse(item["parentid"].ToString());
                 model.title = item["title"].ToString();
                 models.Add(model);

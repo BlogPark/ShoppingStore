@@ -24,7 +24,7 @@ namespace ShoppingStore.Model.Admin
         /// action
         /// </summary>
         [DataMember]
-        public string action { get; set; }
+        public string url { get; set; }
         /// <summary>
         /// parentid
         /// </summary>

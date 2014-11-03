@@ -196,6 +196,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Admin\Views\AdminOperate\welcome.htm" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\magiczoomplus.css" />
     <Content Include="Content\menustyle.css" />

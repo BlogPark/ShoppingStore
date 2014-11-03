@@ -23,7 +23,7 @@ namespace ShoppingStore.DAL.Admin
         {
             string sqltxt = @"SELECT  adminaid ,
         title ,
-        action ,
+        [action] AS url ,
         parentid 
 FROM    ShoppingStore.dbo.bsp_adminactions WITH(NOLOCK)
 ORDER BY displayorder DESC";
