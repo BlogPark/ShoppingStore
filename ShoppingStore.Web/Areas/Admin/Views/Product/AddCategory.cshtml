@@ -29,29 +29,43 @@
         if (pid != 0) {
             $("#name").val(nodetext);
             $("#cateid").val(nodeid);
-            $("#name").attr("disabled", "disabled");
-            $("#cateid").attr("disabled", "disabled");
-            $("#btnedit").show();
+            $.ligerDialog.open({
+                target: $("#showmsg"),
+                width: 200,
+                height: 300
+            });
         }
     }
-    $().ready(function () {
-        $("#btnedit").hide();
-        $("#btnedit").click(function () {
-            $("#name").removeAttr("disabled");
-        });
+
+    $.ajax({
+        url: "/Admin/Product/GetMainCategories",
+        datatype: "html",
+        type: "get",
+        success: function (data) {
+            $("#txt2").ligerComboBox({
+                tree: {
+                    data: data, parentIDFieldName: "parentid",
+                    textFieldName: "name",
+                    idFieldName: "cateid",
+                    isExpand: true,
+                    slide: false,
+                    nodeWidth: 120
+                }
+            });
+        }
     });
 </script>
-<h4 style="margin-left:20px; margin-top:10px">商品分类</h4>
+<h4 style="margin-left:20px; margin-top:10px">商品分类</h4> <span><a href="">添加类别</a></span>
 <div id="panel1" style="width:200px;height:100%;margin:5px 20px;border:1px solid;overflow:hidden;float:left;">
     <ul id="allcategory"></ul>
 </div>
-
-<div style="width:200px;height:200px;margin:15px 10px;border:1px solid;overflow:hidden;float:left;">
+<div id="showmsg" style="width:200px; margin:3px; display:none;height:300px;">
     <form action="/" method="post">
         类别名称：<input type="text" id="name" />
         ID：<input type="text" id="cateid" /><br />
         <input type="button" id="btnedit" value="修 改" />
-           
-        <input type="button" id="btnadd" value="修 改" />
     </form>
+</div>
+<div id="Addcategory" style="width:300px;height:300px;float:right;">
+    <input type="text" id="txt2" />
 </div>

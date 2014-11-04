@@ -30,6 +30,7 @@ namespace ShoppingStore.BLL
             }
             return categories;
         }
+       
         /// <summary>
         /// 为分类页面准备数据
         /// </summary>
