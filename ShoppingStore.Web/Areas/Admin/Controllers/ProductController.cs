@@ -22,7 +22,6 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
         }
         public ActionResult AddCategory()
         {
-            ViewBag.categorystr = getCategoryjsonstr();
             return View();
         }
     }
