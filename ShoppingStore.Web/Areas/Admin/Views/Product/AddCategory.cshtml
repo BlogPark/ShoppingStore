@@ -20,6 +20,45 @@
                 isExpand: true,
                 onSelect: opendiagshowmsg
             });
+            $("#txt2").ligerComboBox({
+                width: 180,
+                selectBoxWidth: 200,
+                selectBoxHeight: 200,
+                textField: 'name',
+                treeLeafOnly: false,
+                valueField: "cateid",
+                valueFieldID: "parentid",
+                tree: {
+                    data: mydata, parentIDFieldName: "parentid",
+                    textFieldName: "name",
+                    idFieldName: "cateid",
+                    isExpand: true,
+                    checkbox: false,
+                    slide: false,
+                    nodeWidth: 120
+                },
+                onselected: function (newvalue, newtext) {
+                    $("#hiddenarea").val(newvalue);
+                }
+            });
+            $("#txt1").ligerComboBox({
+                width: 180,
+                selectBoxWidth: 200,
+                selectBoxHeight: 200,
+                textField: 'name',
+                treeLeafOnly: false,
+                valueField: "cateid",
+                valueFieldID: "parentid",
+                tree: {
+                    data: mydata, parentIDFieldName: "parentid",
+                    textFieldName: "name",
+                    idFieldName: "cateid",
+                    isExpand: true,
+                    checkbox: false,
+                    slide: false,
+                    nodeWidth: 120
+                }
+            });
         }
     });
     function opendiagshowmsg(node) {
@@ -29,43 +68,48 @@
         if (pid != 0) {
             $("#name").val(nodetext);
             $("#cateid").val(nodeid);
+            $("#txt1").ligerComboBox().setValue(pid);
             $.ligerDialog.open({
                 target: $("#showmsg"),
-                width: 200,
-                height: 300
+                width: 500,
+                height: 500
             });
         }
     }
-
-    $.ajax({
-        url: "/Admin/Product/GetMainCategories",
-        datatype: "html",
-        type: "get",
-        success: function (data) {
-            $("#txt2").ligerComboBox({
-                tree: {
-                    data: data, parentIDFieldName: "parentid",
-                    textFieldName: "name",
-                    idFieldName: "cateid",
-                    isExpand: true,
-                    slide: false,
-                    nodeWidth: 120
-                }
+    $(function () {
+        $("#add").bind("click", function () {
+            $.ligerDialog.open({
+                target: $("#Addcategory"),
+                width: 500,
+                height: 500
             });
-        }
+        });
+        $("#chk").ligerCheckBox();
     });
 </script>
-<h4 style="margin-left:20px; margin-top:10px">商品分类</h4> <span><a href="">添加类别</a></span>
+<h4 style="margin-left:20px; margin-top:10px">商品分类</h4> <span><a id="add">添加类别</a></span>
 <div id="panel1" style="width:200px;height:100%;margin:5px 20px;border:1px solid;overflow:hidden;float:left;">
     <ul id="allcategory"></ul>
 </div>
 <div id="showmsg" style="width:200px; margin:3px; display:none;height:300px;">
     <form action="/" method="post">
+        所属类别：<input type="text" id="txt1" />
         类别名称：<input type="text" id="name" />
         ID：<input type="text" id="cateid" /><br />
-        <input type="button" id="btnedit" value="修 改" />
+        <input type="submit" id="btnedit" value="确  定" />
     </form>
 </div>
-<div id="Addcategory" style="width:300px;height:300px;float:right;">
-    <input type="text" id="txt2" />
+<div id="Addcategory" style="width:300px;height:300px;display:none;">
+    @{
+        using (Html.BeginForm("AddCategoryitem", "Product", FormMethod.Post))
+        {
+            <span>选择类别：<input type="text" id="txt2" name="txt2" /></span>
+            <span>类别名称：<input type="text" id="name" name="name" /></span>
+            <span>价格区间：<input type="text" id="pricerange" name="pricerange" /></span>
+            <span>是否启用：<input type="checkbox" id="chk" name="chk" /></span>
+            <input type="submit" value="确 定" id="addbtn" style="margin-left:10px;" />
+            <input type="hidden" name="hiddenarea" id="hiddenarea" />
+        }
+    }
+
 </div>

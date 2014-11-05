@@ -41,12 +41,12 @@ namespace ShoppingStore.DAL.Admin
             SqlParameter[] paramter = {
  new SqlParameter("@isshow",SqlDbType.Int),
  new SqlParameter("@displayorder",SqlDbType.Int),
- new SqlParameter("@name",SqlDbType.Int),
- new SqlParameter("@pricerange",SqlDbType.Int),
+ new SqlParameter("@name",SqlDbType.NVarChar),
+ new SqlParameter("@pricerange",SqlDbType.NVarChar),
  new SqlParameter("@parentid",SqlDbType.Int),
  new SqlParameter("@layer",SqlDbType.Int),
  new SqlParameter("@haschild",SqlDbType.Int),
- new SqlParameter("@path",SqlDbType.Int)
+ new SqlParameter("@path",SqlDbType.NVarChar)
                                       };
             paramter[0].Value = model.isshow;
             paramter[1].Value = model.displayorder;
