@@ -263,6 +263,7 @@
     <Content Include="Areas\Admin\Views\AdminOperate\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\AddCategory.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_AdminContorlPartView.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Brands.cshtml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\listbg.gif" />
     <Content Include="Images\listbg2.gif" />

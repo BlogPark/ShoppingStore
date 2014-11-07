@@ -57,6 +57,9 @@
                     checkbox: false,
                     slide: false,
                     nodeWidth: 120
+                },
+                onselected: function (newvalue, newtext) {
+                    $("#hiddenarea").val(newvalue);
                 }
             });
         }
@@ -66,7 +69,7 @@
         var nodeid = node.data.cateid;
         var pid = node.data.parentid;
         if (pid != 0) {
-            $("#name").val(nodetext);
+            $("#upname").val(nodetext);
             $("#cateid").val(nodeid);
             $("#txt1").ligerComboBox().setValue(pid);
             $.ligerDialog.open({
@@ -85,19 +88,52 @@
             });
         });
         $("#chk").ligerCheckBox();
+        $("#upchk").ligerCheckBox();
+        $("#btnedit").click(function () {
+            var maincateid = $("#hiddenarea").val();
+            var catename = $("#upname").val();
+            var isenable = $("#upchk").ligerCheckBox().getValue();
+            var id = $("#cateid").val();
+            $.ajax({
+                url: "/Admin/Product/UpdateCategoryItem",
+                datatype: "text",
+                type: "get",
+                data: { "id": id, "pid": maincateid, "catename": catename, "isenable": isenable },
+                async: false,
+                success: function (data) {
+                    if (data == "1")
+                    {
+                        alert("修改成功");
+                        parent.$.ligerDialog.close();
+                        $.ajax({
+                            url: "/Admin/Product/getCategoryjsonstr",
+                            datatype: "html",
+                            type: "get",
+                            success: function (data) {
+                                $("#allcategory").ligerTree().refreshTree();
+                            }
+                        });
+                       
+                    }
+                    else
+                    { alert("修改失败"); }
+                }
+            });
+        });
     });
 </script>
 <h4 style="margin-left:20px; margin-top:10px">商品分类</h4> <span><a id="add">添加类别</a></span>
 <div id="panel1" style="width:200px;height:100%;margin:5px 20px;border:1px solid;overflow:hidden;float:left;">
     <ul id="allcategory"></ul>
 </div>
+<input type="hidden" name="hiddenarea" id="hiddenarea" />
 <div id="showmsg" style="width:200px; margin:3px; display:none;height:300px;">
-    <form action="/" method="post">
-        所属类别：<input type="text" id="txt1" />
-        类别名称：<input type="text" id="name" />
-        ID：<input type="text" id="cateid" /><br />
-        <input type="submit" id="btnedit" value="确  定" />
-    </form>
+    所属类别：<input type="text" id="txt1" /><br />
+    类别名称：<input type="text" id="upname" /><br />
+    <input type="checkbox" id="upchk" checked="checked" /><p>启用</p>
+    <input type="hidden" id="cateid" /><br />
+    <input type="button" id="btnedit" value="修  改" />
+    <input type="button" id="btndeleteitem" value="删   除" />
 </div>
 <div id="Addcategory" style="width:300px;height:300px;display:none;">
     @{
@@ -108,7 +144,6 @@
             <span>价格区间：<input type="text" id="pricerange" name="pricerange" /></span>
             <span>是否启用：<input type="checkbox" id="chk" name="chk" /></span>
             <input type="submit" value="确 定" id="addbtn" style="margin-left:10px;" />
-            <input type="hidden" name="hiddenarea" id="hiddenarea" />
         }
     }
 

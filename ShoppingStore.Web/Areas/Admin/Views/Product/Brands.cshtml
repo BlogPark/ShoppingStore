@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Brands";
+    Layout = "/Areas/Admin/Views/Shared/_AdminContorlPartView.cshtml";
+}
+<script type="text/javascript">
+    var mydata;
+    $.ajax({
+        url: '/Admin/Product/GetAllBrands',
+        datatype: 'text',
+        type: 'get',
+        success: function (data) {
+            mydata = JSON.parse(data);
+            window['g'] =
+        $("#maingrid").ligerGrid({
+            height: '100%',
+            columns: [
+            { display: '顾客', name: 'name', align: 'left', width: 100, minWidth: 60 },
+            { display: '公司名', name: 'cateid', minWidth: 120 },
+            { display: '联系名', name: 'name', minWidth: 140 },
+            { display: '城市', name: 'cateid' }
+            ],
+            data: data,
+            pageSize: 30,
+            rownumbers: true,
+            toolbar: {
+                items: [
+                { text: '增加', click: itemclick, icon: 'add' },
+                { line: true },
+                { text: '修改', click: itemclick, icon: 'modify' },
+                { line: true },
+                { text: '删除', click: itemclick, img: '/lib/ligerUI/skins/icons/delete.gif' }
+                ]
+            }
+        });
+            $("#pageloading").hide();
+        }
+    });
+    function itemclick(item) {
+        alert(item.text);
+    }
+   
+    function deleteRow() {
+        g.deleteSelectedRow();
+    }
+</script>
+
+
+<div class="l-loading" style="display:block" id="pageloading"></div>
+<div class="l-clear"></div>
+<div id="maingrid"></div>
+
+<div style="display:none;">
+
+</div>

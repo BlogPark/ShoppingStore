@@ -42,11 +42,45 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
             model.parentid = string.IsNullOrWhiteSpace(from["txt2"].ToString()) ? 0 : int.Parse(from["hiddenarea"].ToString());
             model.pricerange = from["pricerange"].ToString();
             model.haschild = model.parentid == 0 ? 1 : 0;
-            model.layer = 0;
+            model.layer = model.parentid == 0 ? 1 : 0; ;
             model.path = model.parentid == 0 ? "1" : "2";
             model.displayorder = 0;
             int k = categoryandproduct.AddCategoryInfo(model);
             return RedirectToAction("AddCategory");
+        }
+
+        public string UpdateCategoryItem(int id, int pid, string catename, bool isenable = false)
+        {
+            Categories model = new Categories();
+            model.name = catename;
+            model.isshow = isenable ? 1 : 0;
+            model.parentid = pid;
+            model.cateid = id;
+            int k = categoryandproduct.UpdateCategoryItem(model);
+            if (k > 0)
+                return "1";
+            else
+                return "0";
+        }
+
+        public ActionResult Brands()
+        {
+            return View();
+        }
+        public JsonResult GetAllBrands()
+        {
+            BrandsInfoModel model = new BrandsInfoModel();
+            //int pageindexsd = Convert.ToInt32(Request.Params["pageindex"]) + Convert.ToInt32(Request.Params["pagesize"]);
+            model.PageSize = 30;//Convert.ToInt32(Request.Params["pagesize"]);
+            model.PageIndex = 1;//Convert.ToInt32(Request.Params["page"]);
+            //DataTable brandstable = categoryandproduct.GetAllBrands(model);
+            List<CategoriesModel> models = catebll.GetAllMainCategories();
+            var griddata = new
+            {
+                Rows = models,
+                Total = 100
+            };
+            return Json(griddata);
         }
     }
 }

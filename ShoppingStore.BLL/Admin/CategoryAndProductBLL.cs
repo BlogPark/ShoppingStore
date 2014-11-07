@@ -36,5 +36,24 @@ namespace ShoppingStore.BLL.Admin
             }
             return categorys;
         }
+
+        /// <summary>
+        /// 修改单个类别信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int UpdateCategoryItem(Categories model)
+        {
+            return dal.UpdateCategoryItem(model);
+        }
+        /// <summary>
+        /// 查询所有的品牌
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public DataTable GetAllBrands(BrandsInfoModel model)
+        {
+            return dal.GetAllBrands(model);
+        }
     }
 }
