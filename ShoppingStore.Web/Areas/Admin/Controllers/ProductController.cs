@@ -73,14 +73,13 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
             //int pageindexsd = Convert.ToInt32(Request.Params["pageindex"]) + Convert.ToInt32(Request.Params["pagesize"]);
             model.PageSize = 30;//Convert.ToInt32(Request.Params["pagesize"]);
             model.PageIndex = 1;//Convert.ToInt32(Request.Params["page"]);
-            //DataTable brandstable = categoryandproduct.GetAllBrands(model);
-            List<CategoriesModel> models = catebll.GetAllMainCategories();
+            DataTable brandstable = categoryandproduct.GetAllBrands(model);
             var griddata = new
             {
-                Rows = models,
-                Total = 100
+                Rows =brandstable,
+                Total = int.Parse(brandstable.Rows[0]["tco"].ToString())
             };
-            return Json(griddata);
+            return Json(griddata,JsonRequestBehavior.AllowGet);
         }
     }
 }

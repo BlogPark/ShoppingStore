@@ -2,53 +2,76 @@
     ViewBag.Title = "Brands";
     Layout = "/Areas/Admin/Views/Shared/_AdminContorlPartView.cshtml";
 }
-<script type="text/javascript">
-    var mydata;
-    $.ajax({
-        url: '/Admin/Product/GetAllBrands',
-        datatype: 'text',
-        type: 'get',
-        success: function (data) {
-            mydata = JSON.parse(data);
-            window['g'] =
-        $("#maingrid").ligerGrid({
-            height: '100%',
-            columns: [
-            { display: '顾客', name: 'name', align: 'left', width: 100, minWidth: 60 },
-            { display: '公司名', name: 'cateid', minWidth: 120 },
-            { display: '联系名', name: 'name', minWidth: 140 },
-            { display: '城市', name: 'cateid' }
-            ],
-            data: data,
-            pageSize: 30,
-            rownumbers: true,
-            toolbar: {
-                items: [
-                { text: '增加', click: itemclick, icon: 'add' },
-                { line: true },
-                { text: '修改', click: itemclick, icon: 'modify' },
-                { line: true },
-                { text: '删除', click: itemclick, img: '/lib/ligerUI/skins/icons/delete.gif' }
-                ]
-            }
-        });
-            $("#pageloading").hide();
-        }
-    });
-    function itemclick(item) {
-        alert(item.text);
-    }
-   
-    function deleteRow() {
-        g.deleteSelectedRow();
-    }
-</script>
-
 
 <div class="l-loading" style="display:block" id="pageloading"></div>
+<a class="l-button" style="width:120px;float:left; margin-left:10px; display:none;" onclick="deleteRow()">删除选择的行</a>
+
 <div class="l-clear"></div>
 <div id="maingrid"></div>
 
 <div style="display:none;">
 
 </div>
+<script type="text/javascript">
+    $("#maingrid").ligerGrid({
+        checkbox: false,
+        height: '100%',
+        allowUnSelectRow: true,
+        columns: [
+        {
+            display: '品牌名', name: 'brandname', width: 100, minWidth: 60,
+            editor: { type: 'text' }
+
+        },
+    {
+        display: '所属类', name: 'blongcatename', minWidth: 100,
+        editor: { type: 'text' },
+    },
+        {
+            display: '顶级类', name: 'maincatename', minWidth: 100,
+            editor: { type: 'text' },
+        },
+    {
+        display: '是否启用', name: 'isused', minWidth: 100,
+        editor: { type: 'text' },
+    },
+    {
+        display: 'brandid', name: 'brandid', hide: true, minWidth: 100,
+        editor: { type: 'text' },
+    },
+    {
+        display: 'displayorder', name: 'displayorder', hide: true, minWidth: 100,
+        editor: { type: 'text' },
+    },
+    {
+        display: 'Logo图片', name: 'logopath', minWidth: 100,
+        editor: { type: 'text' },
+    },
+    {
+        display: 'BelongsCategoryID', name: 'BelongsCategoryID', hide: true, minWidth: 100,
+        editor: { type: 'text' },
+    },
+    {
+        display: 'MainCategoryID', name: 'MainCategoryID', hide: true, minWidth: 100,
+        editor: { type: 'text' },
+    },
+    {
+        display: '是否推荐', name: 'IsRecommend', minWidth: 100,
+        editor: { type: 'text' },
+    }
+        ],
+        enabledEdit: false, detailToEdit: false, isScroll: true, frozen: false,
+        url: '/Admin/Product/GetAllBrands', pageSize: 30, rownumbers: true,
+        width: '100%',
+        toolbar: {
+            items: [
+                { text: '添加', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/add.gif' },
+                { line: true },
+                { text: '修改', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/config.gif' },
+                { line: true },
+                { text: '删除', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/delete.gif' }
+            ]
+        }
+    });
+    $("#pageloading").hide();
+</script>
