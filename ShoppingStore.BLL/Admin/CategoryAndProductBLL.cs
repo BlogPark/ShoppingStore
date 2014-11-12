@@ -55,5 +55,23 @@ namespace ShoppingStore.BLL.Admin
         {
             return dal.GetAllBrands(model);
         }
+        /// <summary>
+        /// 添加品牌信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int Addbranditem(BrandsInfoModel model)
+        {
+            return dal.Addbranditem(model);
+        }
+        /// <summary>
+        /// 修改品牌信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int UpdateBrandsitem(BrandsInfoModel model)
+        {
+            return dal.UpdateBrandsitem(model);
+        }
     }
 }

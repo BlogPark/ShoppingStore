@@ -21,6 +21,11 @@ namespace ShoppingStore.Model.Admin
         [DataMember]
         public int isshow { get; set; }
         /// <summary>
+        /// 是否启用
+        /// </summary>
+        [DataMember]
+        public string IsUsed { get; set; }
+        /// <summary>
         /// 排序
         /// </summary>
         [DataMember]
@@ -46,6 +51,11 @@ namespace ShoppingStore.Model.Admin
         [DataMember]
         public int IsRecommend { get; set; }
         /// <summary>
+        /// 是否推荐
+        /// </summary>
+        [DataMember]
+        public string IsRecommended { get; set; }
+        /// <summary>
         /// 主类ID
         /// </summary>
         [DataMember]
@@ -60,6 +70,16 @@ namespace ShoppingStore.Model.Admin
         /// </summary>
         [DataMember]
         public int PageSize { get; set; }
+        /// <summary>
+        /// 主类的名称
+        /// </summary>
+        [DataMember]
+        public string MainCategoryName { get; set; }
+        /// <summary>
+        /// 所属类别名称
+        /// </summary>
+        [DataMember]
+        public string BlongCategoryName { get; set; }
 
     }
 }

@@ -85,6 +85,6 @@ namespace ShoppingStore.BLL
             categorypagemodel.HotProducts = promodel;
             return categorypagemodel;
         }
-
+        
     }
 }

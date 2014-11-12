@@ -41,27 +41,6 @@
                     $("#hiddenarea").val(newvalue);
                 }
             });
-            $("#txt1").ligerComboBox({
-                width: 180,
-                selectBoxWidth: 200,
-                selectBoxHeight: 200,
-                textField: 'name',
-                treeLeafOnly: false,
-                valueField: "cateid",
-                valueFieldID: "parentid",
-                tree: {
-                    data: mydata, parentIDFieldName: "parentid",
-                    textFieldName: "name",
-                    idFieldName: "cateid",
-                    isExpand: true,
-                    checkbox: false,
-                    slide: false,
-                    nodeWidth: 120
-                },
-                onselected: function (newvalue, newtext) {
-                    $("#hiddenarea").val(newvalue);
-                }
-            });
         }
     });
     function opendiagshowmsg(node) {
@@ -80,6 +59,28 @@
         }
     }
     $(function () {
+        $("#txt1").ligerComboBox({
+            width: 180,
+            selectBoxWidth: 200,
+            selectBoxHeight: 200,
+            textField: 'name',
+            treeLeafOnly: false,
+            valueField: "cateid",
+            valueFieldID: "parentid",
+            tree: {
+                url: "/Admin/Product/getCategoryjsonstr2",
+                textFieldName: "name",
+                idFieldName: "cateid",
+                parentIDFieldName: "parentid",
+                isExpand: true,
+                checkbox: false,
+                slide: false,
+                nodeWidth: 120
+            },
+            onselected: function (newvalue, newtext) {
+                $("#hiddenarea").val(newvalue);
+            }
+        });
         $("#add").bind("click", function () {
             $.ligerDialog.open({
                 target: $("#Addcategory"),

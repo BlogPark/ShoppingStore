@@ -124,7 +124,7 @@ SELECT  @totalco AS tco ,
         A.name AS brandname ,
         ISNULL(A.logo, '(无)') AS logopath ,
         A.BelongsCategoryID ,
-        A.IsRecommend ,
+        CASE  A.IsRecommend WHEN 1 THEN '是' ELSE '否' END  AS IsRecommend,
         A.MainCategoryID ,
         B.name AS blongcatename ,
         C.name AS maincatename
@@ -133,7 +133,7 @@ FROM    #t D
                                                               AND D.rowid > ( @pageindex
                                                               - 1 )
                                                               * @pagesize
-                                                              AND D.rowid < ( @pageindex
+                                                              AND D.rowid <= ( @pageindex
                                                               * @pagesize )
         INNER JOIN ShoppingStore.dbo.bsp_categories B WITH ( NOLOCK ) ON A.BelongsCategoryID = B.cateid
         INNER JOIN ShoppingStore.dbo.bsp_Categories C WITH ( NOLOCK ) ON A.MainCategoryID = C.cateid";
@@ -145,6 +145,75 @@ FROM    #t D
             paramter[1].Value = model.PageSize;
             return helper.Query(sqltxt, paramter).Tables[0];
         }
-        
+        /// <summary>
+        /// 添加品牌信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int Addbranditem(BrandsInfoModel model)
+        {
+            string sqltxt = @"INSERT  INTO ShoppingStore.dbo.bsp_brands
+        ( isshow ,
+          displayorder ,
+          name ,
+          logo ,
+          BelongsCategoryID ,
+          IsRecommend ,
+          MainCategoryID
+        )
+        SELECT  @isshow ,
+                0 ,
+                @name ,
+                @logo ,
+                @belongscategoryid ,
+                @isrecommend ,
+                parentid
+        FROM    ShoppingStore.dbo.bsp_categories WITH ( NOLOCK )
+        WHERE   cateid = @belongscategoryid";
+            SqlParameter[] paramter = {
+                                          new SqlParameter("@isshow",SqlDbType.Int),
+                                          new SqlParameter("@name",SqlDbType.NVarChar),
+                                          new SqlParameter("@logo",SqlDbType.NVarChar),
+                                          new SqlParameter("@belongscategoryid",SqlDbType.Int),
+                                          new SqlParameter("@isrecommend",SqlDbType.Int)
+                                      };
+            paramter[0].Value = model.isshow;
+            paramter[1].Value = model.name;
+            paramter[2].Value = model.logo;
+            paramter[3].Value = model.BelongsCategoryID;
+            paramter[4].Value = model.IsRecommend;
+            return helper.ExecuteSql(sqltxt,paramter);
+        }
+        /// <summary>
+        /// 修改品牌信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int UpdateBrandsitem(BrandsInfoModel model)
+        {
+            string sqltxt = @"UPDATE  A WITH ( ROWLOCK )
+SET     A.NAME = @name ,
+        A.BelongsCategoryID = @blongcateid ,
+        A.isshow = @isshow ,
+        A.IsRecommend = @IsRecommend ,
+        A.MainCategoryID = B.parentid
+FROM    ShoppingStore.dbo.bsp_brands A
+        LEFT JOIN ShoppingStore.dbo.bsp_categories B WITH ( NOLOCK ) ON A.BelongsCategoryID = B.cateid
+                                                              AND B.cateid = @blongcateid
+WHERE   A.brandid = @id ";
+            SqlParameter[] paramter = {
+                                          new SqlParameter("@name",SqlDbType.NVarChar),
+                                          new SqlParameter("@blongcateid",SqlDbType.Int),
+                                          new SqlParameter("@isshow",SqlDbType.Int),
+                                          new SqlParameter("@IsRecommend",SqlDbType.Int),
+                                          new SqlParameter("@id",SqlDbType.Int)
+                                      };
+            paramter[0].Value = model.name;
+            paramter[1].Value = model.BelongsCategoryID;
+            paramter[2].Value = model.isshow;
+            paramter[3].Value = model.IsRecommend;
+            paramter[4].Value = model.brandid;
+            return helper.ExecuteSql(sqltxt, paramter);
+        }
     }
 }

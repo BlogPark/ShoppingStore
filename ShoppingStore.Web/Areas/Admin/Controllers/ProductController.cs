@@ -23,6 +23,12 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
             JavaScriptSerializer jss = new JavaScriptSerializer();
             return jss.Serialize(categories);
         }
+        public JsonResult getCategoryjsonstr2()
+        {
+            List<Categories> categories = categoryandproduct.SelectAllCategory();
+
+            return Json(categories, JsonRequestBehavior.AllowGet);
+        }
         public string GetMainCategories()
         {
             List<CategoriesModel> model = catebll.GetAllMainCategories();
@@ -70,16 +76,51 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
         public JsonResult GetAllBrands()
         {
             BrandsInfoModel model = new BrandsInfoModel();
-            //int pageindexsd = Convert.ToInt32(Request.Params["pageindex"]) + Convert.ToInt32(Request.Params["pagesize"]);
-            model.PageSize = 30;//Convert.ToInt32(Request.Params["pagesize"]);
-            model.PageIndex = 1;//Convert.ToInt32(Request.Params["page"]);
+            model.PageSize = Convert.ToInt32(Request.Params["pagesize"]);
+            model.PageIndex = Convert.ToInt32(Request.Params["page"]);
             DataTable brandstable = categoryandproduct.GetAllBrands(model);
+            List<BrandsInfoModel> brandslist = new List<BrandsInfoModel>();
+            foreach (DataRow item in brandstable.Rows)
+            {
+                BrandsInfoModel brandmodel = new BrandsInfoModel();
+                brandmodel.brandid = int.Parse(item["brandid"].ToString());
+                brandmodel.name = item["brandname"].ToString();
+                brandmodel.IsUsed = item["isused"].ToString();
+                brandmodel.IsRecommended = item["IsRecommend"].ToString();
+                brandmodel.logo = item["logopath"].ToString();
+                brandmodel.MainCategoryName = item["maincatename"].ToString();
+                brandmodel.MainCategoryID = int.Parse(item["MainCategoryID"].ToString());
+                brandmodel.BlongCategoryName = item["blongcatename"].ToString();
+                brandmodel.BelongsCategoryID = int.Parse(item["BelongsCategoryID"].ToString());
+                brandslist.Add(brandmodel);
+            }
             var griddata = new
             {
-                Rows =brandstable,
+                Rows = brandslist,
                 Total = int.Parse(brandstable.Rows[0]["tco"].ToString())
             };
-            return Json(griddata,JsonRequestBehavior.AllowGet);
+            return Json(griddata, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public ActionResult AddBrands(FormCollection form)
+        {
+            BrandsInfoModel model = new BrandsInfoModel();
+            model.name = form["addbrands"].ToString();
+            model.isshow = form["addcheckuse"] == null ? 0 : 1;
+            model.IsRecommend = form["addcheckRecommended"] == null ? 0 : 1;
+            model.BelongsCategoryID = int.Parse(form["addhidden"].ToString());
+            int k = categoryandproduct.Addbranditem(model);
+            return RedirectToAction("Brands");
+        }
+
+        [HttpPost]
+        public ActionResult Updatebrands(BrandsInfoModel model)
+        {
+            int k = categoryandproduct.UpdateBrandsitem(model);
+            if (k > 0)
+                return Json("1", JsonRequestBehavior.DenyGet);
+            else
+                return Json("0", JsonRequestBehavior.DenyGet);
         }
     }
 }

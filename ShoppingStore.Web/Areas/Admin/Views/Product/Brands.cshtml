@@ -2,37 +2,158 @@
     ViewBag.Title = "Brands";
     Layout = "/Areas/Admin/Views/Shared/_AdminContorlPartView.cshtml";
 }
-
+@using ShoppingStore.Model.Admin;
 <div class="l-loading" style="display:block" id="pageloading"></div>
 <a class="l-button" style="width:120px;float:left; margin-left:10px; display:none;" onclick="deleteRow()">删除选择的行</a>
-
 <div class="l-clear"></div>
 <div id="maingrid"></div>
-
 <div style="display:none;">
-
 </div>
 <script type="text/javascript">
-    $("#maingrid").ligerGrid({
-        checkbox: false,
-        height: '100%',
+    var g;
+    $.ajax({
+        url: "/Admin/Product/getCategoryjsonstr",
+        datatype: "html",
+        type: "get",
+        success: function (data) {
+            var mydata = JSON.parse(data);
+            $("#cate1").ligerComboBox({
+                width: 180,
+                selectBoxWidth: 200,
+                selectBoxHeight: 200,
+                textField: 'name',
+                treeLeafOnly: false,
+                valueField: "cateid",
+                valueFieldID: "parentid",
+                tree: {
+                    data: mydata, parentIDFieldName: "parentid",
+                    textFieldName: "name",
+                    idFieldName: "cateid",
+                    isExpand: true,
+                    checkbox: false,
+                    slide: false,
+                    nodeWidth: 120
+                },
+                onselected: function (newvalue, newtext) {
+                    $("#addhidden").val(newvalue);
+                }
+            });
+        }
+    });
+    $(function () {
+        //修改的下拉框
+        $("#cate2").ligerComboBox({
+            width: 180,
+            selectBoxWidth: 200,
+            selectBoxHeight: 200,
+            textField: 'name',
+            treeLeafOnly: false,
+            valueField: "cateid",
+            valueFieldID: "parentid",
+            tree: {
+                url: "/Admin/Product/getCategoryjsonstr2", ajaxType: "get",
+                textFieldName: "name",
+                idFieldName: "cateid",
+                parentIDFieldName: "parentid",
+                isExpand: true,
+                checkbox: false,
+                slide: false,
+                nodeWidth: 120
+            },
+            onselected: function (newvalue, newtext) {
+                $("#hiddenarea").val(newvalue);
+            }
+        });
+        //修改按钮
+        $("#updbtn").bind("click", function () {
+            var brandsmodel = {
+                brandid: $("#hiddenbrandid").val(),
+                name: $("#updbrands").val(),
+                isshow: $("#updateuse").ligerCheckBox().getValue(),
+                IsRecommend: $("#updateRecommended").ligerCheckBox().getValue(),
+                BelongsCategoryID: $("#hiddenarea").val()
+            };
+            $.ajax({
+                url: "/Admin/Product/Updatebrands",
+                data: JSON.stringify(brandsmodel),
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                async: true,
+                processData: false,
+                success: function (data) {
+                    if (data == "1") {
+                        $.ligerDialog.success("数据更新成功");
+                        $.ligerDialog.close();
+                        $(".l-dialog,.l-window-mask").css("display", "none");
+                        g.reload();
+                    }
+                    else {
+                        $.ligerDialog.error("数据更新失败");
+                    }
+                }
+            });
+        });
+    });
+    function addbtnclick() {
+        $.ligerDialog.open({
+            target: $("#AddBrands"),
+            width: 500,
+            height: 500
+        });
+    }
+    function updatebtnclick() {
+        var row = g.getSelectedRow();
+        if (row == null)
+        { alert('请先选择行'); return; }
+        var name = row.name;
+        var used = false;
+        if (row.IsUsed == '启用')
+            used = true;
+        var Recommended = false;
+        if (row.IsRecommended == '是')
+            Recommended = true;
+        var blongid = row.BelongsCategoryID;
+        var id = row.brandid;
+        $("#hiddenbrandid").val(id);
+        $("#updbrands").val(name);
+        $("#updateuse").ligerCheckBox().setValue(used);
+        $("#updateRecommended").ligerCheckBox().setValue(Recommended);
+        $("#cate2").ligerComboBox().setValue(blongid);
+        $.ligerDialog.open({
+            target: $("#updateBrands"),
+            width: 500,
+            height: 500
+        });
+    }
+    function deletebtnclick() {
+        var row = g.getSelectedRow();
+        $.ligerDialog.confirm('确定要删除此项？', function (yes) {
+            if (yes)
+                alert(yes);
+        });
+
+    }
+    g = $("#maingrid").ligerGrid({
+        checkbox: true,
+        height: '99%',
         allowUnSelectRow: true,
         columns: [
         {
-            display: '品牌名', name: 'brandname', width: 100, minWidth: 60,
+            display: '品牌名', name: 'name', width: 100, minWidth: 60,
             editor: { type: 'text' }
 
         },
     {
-        display: '所属类', name: 'blongcatename', minWidth: 100,
+        display: '所属类', name: 'BlongCategoryName', minWidth: 100,
         editor: { type: 'text' },
     },
         {
-            display: '顶级类', name: 'maincatename', minWidth: 100,
+            display: '顶级类', name: 'MainCategoryName', minWidth: 100,
             editor: { type: 'text' },
         },
     {
-        display: '是否启用', name: 'isused', minWidth: 100,
+        display: '是否启用', name: 'IsUsed', minWidth: 100,
         editor: { type: 'text' },
     },
     {
@@ -40,11 +161,7 @@
         editor: { type: 'text' },
     },
     {
-        display: 'displayorder', name: 'displayorder', hide: true, minWidth: 100,
-        editor: { type: 'text' },
-    },
-    {
-        display: 'Logo图片', name: 'logopath', minWidth: 100,
+        display: 'Logo图片', name: 'logo', minWidth: 100,
         editor: { type: 'text' },
     },
     {
@@ -56,22 +173,54 @@
         editor: { type: 'text' },
     },
     {
-        display: '是否推荐', name: 'IsRecommend', minWidth: 100,
+        display: '是否推荐', name: 'IsRecommended', minWidth: 100,
         editor: { type: 'text' },
     }
         ],
         enabledEdit: false, detailToEdit: false, isScroll: true, frozen: false,
-        url: '/Admin/Product/GetAllBrands', pageSize: 30, rownumbers: true,
-        width: '100%',
+        url: '/Admin/Product/GetAllBrands', pageSize: 10, rownumbers: true,
+        pageSizeOptions: [10, 15, 20],
+        width: '99%',
+        dataAction: 'server',
         toolbar: {
             items: [
-                { text: '添加', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/add.gif' },
+                { text: '添加', click: addbtnclick, img: '/lib/ligerUI/skins/icons/add.gif' },
                 { line: true },
-                { text: '修改', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/config.gif' },
+                { text: '修改', click: updatebtnclick, img: '/lib/ligerUI/skins/icons/config.gif' },
                 { line: true },
-                { text: '删除', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/delete.gif' }
+                { text: '删除', click: deletebtnclick, img: '/lib/ligerUI/skins/icons/delete.gif' }
             ]
+        },
+        onCheckRow: function (checked, rowdata, rowindex) {
+            for (var rowid in this.records)
+                this.unselect(rowid);
+            this.select(rowindex);
         }
     });
     $("#pageloading").hide();
+    $("#updateuse").ligerCheckBox();
 </script>
+
+<div id="AddBrands" style="width:300px;height:300px;display:none">
+    @{
+        using (Html.BeginForm("AddBrands", "Product", FormMethod.Post))
+        {
+            <p>所属类别：<input type="text" id="cate1" name="cate1" /></p>
+            <p>品牌名称：<input type="text" id="addbrands" name="addbrands" /></p>
+            <p>是否启用：<input type="checkbox" id="addcheckuse" name="addcheckuse" /></p>
+            <p>是否推荐：<input type="checkbox" id="addcheckRecommended" name="addcheckRecommended" /></p>
+            <p><input type="submit" id="addbtn" value="添 加" /></p>
+            <input type="hidden" id="addhidden" name="addhidden" />
+        }
+    }
+</div>
+
+<div id="updateBrands" style="width:300px;height:300px;display:none">
+    <p>所属类别：<input type="text" id="cate2" name="cate2" /></p>
+    <p>品牌名称：<input type="text" id="updbrands" name="updbrands" /></p>
+    <p>是否启用：<input type="checkbox" id="updateuse" name="updateuse" /></p>
+    <p>是否推荐：<input type="checkbox" id="updateRecommended" name="updateRecommended"></p>
+    <p><input type="button" id="updbtn" value="修  改" /></p>
+    <input type="hidden" id="hiddenarea" name="hiddenarea">
+    <input type="hidden" id="hiddenbrandid" name="hiddenbrandid">
+</div>
