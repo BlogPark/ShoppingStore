@@ -215,5 +215,23 @@ WHERE   A.brandid = @id ";
             paramter[4].Value = model.brandid;
             return helper.ExecuteSql(sqltxt, paramter);
         }
+        /// <summary>
+        /// 删除品牌信息
+        /// </summary>
+        /// <param name="brandid"></param>
+        /// <returns></returns>
+        public int DeleteBrandItem(int brandid)
+        {
+            string sqltxt = @"UPDATE  A WITH ( ROWLOCK )
+SET    
+        A.isshow =0 
+FROM    ShoppingStore.dbo.bsp_brands A 
+WHERE A.brandid = @id ";
+            SqlParameter[] paramter = {
+                                          new SqlParameter("@id",SqlDbType.Int)
+                                      };
+            paramter[0].Value = brandid;
+            return helper.ExecuteSql(sqltxt,paramter);
+        }
     }
 }

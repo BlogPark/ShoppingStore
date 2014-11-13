@@ -122,5 +122,14 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
             else
                 return Json("0", JsonRequestBehavior.DenyGet);
         }
+        [HttpPost]
+        public ActionResult Deletebrand(int id)
+        {
+            int k = categoryandproduct.DeleteBrandItem(id);
+            if (k > 0)
+                return Json("1", JsonRequestBehavior.DenyGet);
+            else
+                return Json("0", JsonRequestBehavior.DenyGet);
+        }
     }
 }

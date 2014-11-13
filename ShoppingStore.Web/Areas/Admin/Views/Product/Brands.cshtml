@@ -10,7 +10,7 @@
 <div style="display:none;">
 </div>
 <script type="text/javascript">
-    var g;
+    var g; var upcu; var upcr; var upcc; var updatapanel;
     $.ajax({
         url: "/Admin/Product/getCategoryjsonstr",
         datatype: "html",
@@ -42,7 +42,7 @@
     });
     $(function () {
         //修改的下拉框
-        $("#cate2").ligerComboBox({
+       upcc= $("#cate2").ligerComboBox({
             width: 180,
             selectBoxWidth: 200,
             selectBoxHeight: 200,
@@ -83,10 +83,13 @@
                 processData: false,
                 success: function (data) {
                     if (data == "1") {
-                        $.ligerDialog.success("数据更新成功");
-                        $.ligerDialog.close();
-                        $(".l-dialog,.l-window-mask").css("display", "none");
-                        g.reload();
+                        $.ligerDialog.success("数据更新成功", "提示", function () {
+                            //$.ligerDialog.close();
+                            //$(".l-dialog,.l-window-mask").css("display", "none");
+                            $.ligerDialog.hide();
+                            g.reload();
+                        });
+                       
                     }
                     else {
                         $.ligerDialog.error("数据更新失败");
@@ -94,6 +97,9 @@
                 }
             });
         });
+       
+        upcu = $("#updateuse").ligerCheckBox();
+        upcr = $("#updateRecommended").ligerCheckBox();
     });
     function addbtnclick() {
         $.ligerDialog.open({
@@ -117,20 +123,51 @@
         var id = row.brandid;
         $("#hiddenbrandid").val(id);
         $("#updbrands").val(name);
-        $("#updateuse").ligerCheckBox().setValue(used);
-        $("#updateRecommended").ligerCheckBox().setValue(Recommended);
-        $("#cate2").ligerComboBox().setValue(blongid);
-        $.ligerDialog.open({
-            target: $("#updateBrands"),
-            width: 500,
-            height: 500
-        });
+        upcu.setValue(used);
+        upcr.setValue(Recommended);
+        upcc.setValue(blongid);
+        if (updatapanel == null) {
+            updatapanel = $.ligerDialog.open({
+                target: $("#updateBrands"),
+                width: 500,
+                height: 500
+            });
+        }
+        else {
+            updatapanel.show();
+        }
     }
     function deletebtnclick() {
         var row = g.getSelectedRow();
+        if (row == null)
+        {
+            $.ligerDialog.warn("请先选择行");
+            return;
+        }
         $.ligerDialog.confirm('确定要删除此项？', function (yes) {
             if (yes)
-                alert(yes);
+            {
+                $.ajax({
+                    url: "/Admin/Product/Deletebrand",
+                    data: { "id": row.brandid },
+                    type: "POST",
+                    datatype: "json",
+                    async: true,
+                    success: function (data) {
+                        if (data == "1")
+                        {
+                            $.ligerDialog.success("删除成功！", "提示", function () {
+                                g.reload();
+                            })
+                        }
+                        else
+                        {
+                            $.ligerDialog.error("删除失败");
+                        }
+                    }
+                });
+
+            }
         });
 
     }
@@ -198,7 +235,7 @@
         }
     });
     $("#pageloading").hide();
-    $("#updateuse").ligerCheckBox();
+  
 </script>
 
 <div id="AddBrands" style="width:300px;height:300px;display:none">
@@ -217,7 +254,7 @@
 
 <div id="updateBrands" style="width:300px;height:300px;display:none">
     <p>所属类别：<input type="text" id="cate2" name="cate2" /></p>
-    <p>品牌名称：<input type="text" id="updbrands" name="updbrands" /></p>
+   <p>品牌名称：<input type="text" id="updbrands" name="updbrands" /></p>
     <p>是否启用：<input type="checkbox" id="updateuse" name="updateuse" /></p>
     <p>是否推荐：<input type="checkbox" id="updateRecommended" name="updateRecommended"></p>
     <p><input type="button" id="updbtn" value="修  改" /></p>

@@ -73,5 +73,14 @@ namespace ShoppingStore.BLL.Admin
         {
             return dal.UpdateBrandsitem(model);
         }
+        /// <summary>
+        /// 删除品牌信息
+        /// </summary>
+        /// <param name="brandid"></param>
+        /// <returns></returns>
+        public int DeleteBrandItem(int brandid)
+        {
+            return dal.DeleteBrandItem(brandid);
+        }
     }
 }
