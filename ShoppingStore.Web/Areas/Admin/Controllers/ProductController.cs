@@ -17,18 +17,29 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
     {
         CategoryAndProductBLL categoryandproduct = new CategoryAndProductBLL();
         CategoriesOperateBLL catebll = new CategoriesOperateBLL();
+        /// <summary>
+        /// 返回所有类别的json字符串
+        /// </summary>
+        /// <returns></returns>
         public string getCategoryjsonstr()
         {
             List<Categories> categories = categoryandproduct.SelectAllCategory();
             JavaScriptSerializer jss = new JavaScriptSerializer();
             return jss.Serialize(categories);
         }
+        /// <summary>
+        /// 返回所有类别的Json对象
+        /// </summary>
+        /// <returns></returns>
         public JsonResult getCategoryjsonstr2()
         {
             List<Categories> categories = categoryandproduct.SelectAllCategory();
-
             return Json(categories, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// 得到所有一级类别
+        /// </summary>
+        /// <returns></returns>
         public string GetMainCategories()
         {
             List<CategoriesModel> model = catebll.GetAllMainCategories();
@@ -39,6 +50,11 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// 添加类别信息
+        /// </summary>
+        /// <param name="from"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult AddCategoryitem(FormCollection from)
         {
@@ -54,7 +70,14 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
             int k = categoryandproduct.AddCategoryInfo(model);
             return RedirectToAction("AddCategory");
         }
-
+        /// <summary>
+        /// 更新类别信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="pid"></param>
+        /// <param name="catename"></param>
+        /// <param name="isenable"></param>
+        /// <returns></returns>
         public string UpdateCategoryItem(int id, int pid, string catename, bool isenable = false)
         {
             Categories model = new Categories();
@@ -73,6 +96,10 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// 得到品牌信息
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetAllBrands()
         {
             BrandsInfoModel model = new BrandsInfoModel();
@@ -101,6 +128,11 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
             };
             return Json(griddata, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// 添加品牌信息
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult AddBrands(FormCollection form)
         {
@@ -112,7 +144,11 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
             int k = categoryandproduct.Addbranditem(model);
             return RedirectToAction("Brands");
         }
-
+        /// <summary>
+        /// 更新品牌信息
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Updatebrands(BrandsInfoModel model)
         {
@@ -122,6 +158,11 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
             else
                 return Json("0", JsonRequestBehavior.DenyGet);
         }
+        /// <summary>
+        /// 删除（伪删除）品牌信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Deletebrand(int id)
         {
@@ -130,6 +171,39 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
                 return Json("1", JsonRequestBehavior.DenyGet);
             else
                 return Json("0", JsonRequestBehavior.DenyGet);
+        }
+
+        public ActionResult ProductAttribute()
+        {
+            return View();
+        }
+        /// <summary>
+        /// 得到所有的属性
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetallAttribute()
+        {
+            List<AttributeModel> model = categoryandproduct.GetAllAttribute();
+            var griddata = new
+            {
+                Rows = model,
+                Total = 2
+            };
+            return Json(griddata, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// 得到所有的属性
+        /// </summary>
+        /// <returns></returns>
+        public JsonResult GetallAttributevalues(int id)
+        {
+            List<AttributeValuesModel> model = categoryandproduct.GetAttributeValues(id);
+            var griddata = new
+            {
+                Rows = model,
+                Total = 2
+            };
+            return Json(griddata, JsonRequestBehavior.AllowGet);
         }
     }
 }

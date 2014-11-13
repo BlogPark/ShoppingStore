@@ -233,5 +233,48 @@ WHERE A.brandid = @id ";
             paramter[0].Value = brandid;
             return helper.ExecuteSql(sqltxt,paramter);
         }
+        /// <summary>
+        /// 查询所有的属性
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetAllAttribute()
+        {
+            string sqltxt = @"SELECT  attrid ,
+        name ,
+        attributecode ,
+        IsEnable ,
+        CASE IsEnable WHEN 1 THEN '启用' ELSE '未启用' END AS enablename,
+        showtype ,
+        CASE showtype WHEN 1 THEN '文字' ELSE '图片' END AS showtypename,
+        isfilter ,
+        CASE isfilter WHEN 1 THEN '是' ELSE '否' END AS isfiltername,
+        IsSpec,
+        CASE IsSpec WHEN 1 THEN '是' ELSE '否' END AS IsSpecname
+FROM    ShoppingStore.dbo.bsp_attributes WITH ( NOLOCK )";
+            return helper.Query(sqltxt).Tables[0];
+        }
+        /// <summary>
+        /// 根据属性ID查找属性值
+        /// </summary>
+        /// <param name="attrid"></param>
+        /// <returns></returns>
+        public DataTable GetAttributevalues(int attrid)
+        {
+            string sqltxt = @"SELECT  attrvalueid ,
+        attrid ,
+        attrvaluename ,
+        isinput ,
+        attrvalueCode ,
+        attrvaluedisplayorder ,
+        attrshowtype ,
+        IsEnable,
+        CASE IsEnable WHEN 1 THEN '启用' ELSE '未启用' END AS enablename,
+        CASE attrshowtype WHEN 0 THEN '文本' ELSE '图片' END AS showtypename
+FROM    ShoppingStore.dbo.bsp_attributevalues WITH(NOLOCK)
+WHERE attrid=@attrid";
+            SqlParameter[] paramter = { new SqlParameter("@attrid",SqlDbType.Int)};
+            paramter[0].Value = attrid;
+            return helper.Query(sqltxt, paramter).Tables[0];
+        }
     }
 }

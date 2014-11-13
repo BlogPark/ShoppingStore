@@ -82,5 +82,56 @@ namespace ShoppingStore.BLL.Admin
         {
             return dal.DeleteBrandItem(brandid);
         }
+        /// <summary>
+        /// 查询所有的属性
+        /// </summary>
+        /// <returns></returns>
+        public List<AttributeModel> GetAllAttribute()
+        {
+            DataTable dt=dal.GetAllAttribute();
+            List<AttributeModel> list = new List<AttributeModel>();
+            foreach (DataRow item in dt.Rows)
+            {
+                AttributeModel model = new AttributeModel();
+                model.attributecode = item["attributecode"].ToString();
+                model.attrid = int.Parse(item["attrid"].ToString());
+                model.IsEnable = int.Parse(item["IsEnable"].ToString());
+                model.isfilter = int.Parse(item["isfilter"].ToString());
+                model.IsSpec = int.Parse(item["IsSpec"].ToString());
+                model.name = item["name"].ToString();
+                model.showtype = int.Parse(item["showtype"].ToString());
+                model.Enablename = item["enablename"].ToString();
+                model.Isfiltername = item["isfiltername"].ToString();
+                model.Isspecname = item["IsSpecname"].ToString();
+                model.Showtypename = item["showtypename"].ToString();
+                list.Add(model);
+            }
+            return list;
+        }
+        /// <summary>
+        /// 查询属性值
+        /// </summary>
+        /// <param name="attrid"></param>
+        /// <returns></returns>
+        public List<AttributeValuesModel> GetAttributeValues(int attrid)
+        {
+            DataTable dt = dal.GetAttributevalues(attrid);
+            List<AttributeValuesModel> list = new List<AttributeValuesModel>();
+            foreach (DataRow item in dt.Rows)
+            {
+                AttributeValuesModel model = new AttributeValuesModel();
+                model.attrid = int.Parse(item["attrid"].ToString());
+                model.attrshowtype = int.Parse(item["attrshowtype"].ToString());
+                model.attrvalueCode = item["attrvalueCode"].ToString();
+                model.attrvalueid = int.Parse(item["attrvalueid"].ToString());
+                model.attrvaluename = item["attrvaluename"].ToString();
+                model.Enablename = item["enablename"].ToString();
+                model.IsEnable = int.Parse(item["IsEnable"].ToString());
+                model.isinput = int.Parse(item["isinput"].ToString());
+                model.Showtypename = item["showtypename"].ToString();
+                list.Add(model);
+            }
+            return list;
+        }
     }
 }

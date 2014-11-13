@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Admin\Adminactions.cs" />
+    <Compile Include="Admin\AttributeModel.cs" />
+    <Compile Include="Admin\AttributeValuesModel.cs" />
     <Compile Include="Admin\BrandsInfoModel.cs" />
     <Compile Include="Admin\Categories.cs" />
     <Compile Include="Adverts.cs" />

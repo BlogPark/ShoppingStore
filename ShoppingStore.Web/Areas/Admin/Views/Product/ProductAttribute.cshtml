@@ -1,0 +1,112 @@
+﻿@{
+    ViewBag.Title = "ProductAttribute";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminContorlPartView.cshtml";
+}
+<script type="text/javascript">
+    var infogrid;
+    var detailgrid;
+    $(function () {
+        var infodata;
+        $.ajax({
+            url: '/Admin/Product/GetallAttribute',
+            datatype: 'JSON',
+            type: 'get',
+            async: false,
+            success: function (data) {
+                infodata = data;
+            }
+        });
+        infogrid = $("#infogrid").ligerGrid({
+            columns: [
+                  { display: '属性名', name: 'name', align: 'center', width: 60 },
+                  { display: '属性编码', name: 'attributecode', align: 'center', width: 100, minwidth: 60 },
+                  { display: 'attrid', name: 'attrid', align: 'center', hide: true },
+                  { display: 'IsEnable', name: 'IsEnable', align: 'center', hide: true },
+                  { display: 'isfilter', name: 'isfilter', align: 'center', hide: true },
+                  { display: 'IsSpec', name: 'IsSpec', align: 'center', hide: true },
+                  { display: 'showtype', name: 'showtype', align: 'center', hide: true },
+                  { display: '是否启用', name: 'Enablename', align: 'center', width: 100, minwidth: 60 },
+                  { display: '是否规格', name: 'Isspecname', align: 'center', width: 100, minwidth: 60 },
+                  { display: '显示类型', name: 'Showtypename', align: 'center', width: 100, minwidth: 60 },
+                  { display: '是否筛选属性', name: 'Isfiltername', align: 'center', width: 100, minwidth: 60 }
+            ], pageSize: 10,
+            data: infodata,
+            height: '100%',
+            rownumbers: true,
+            title: '商品属性/规格',
+            toolbar: {
+                items: [
+                    { text: '添加', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/add.gif' },
+                    { line: true },
+                    { text: '修改', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/config.gif' },
+                    { line: true },
+                    { text: '删除', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/delete.gif' }
+                ]
+            },
+            onSelectRow: function (rowdata, rowid, rowobj) {
+                loaddetail(rowdata.attrid);
+            }
+        });
+        $("#infoloading").hide();
+        detailgrid = $("#detailgrid").ligerGrid({
+            columns: [
+                { display: '属性值', name: 'attrvaluename', align: 'center', width: 100, minwidth: 60 },
+                { display: '属性值编号', name: 'attrvalueCode', align: 'center', width: 100, minwidth: 60 },
+                { display: '是否启用', name: 'Enablename', align: 'center', width: 100, minwidth: 60 },
+                { display: '显示类型', name: 'Showtypename', align: 'center', width: 100, minwidth: 60 },
+                { display: 'attrid', name: 'attrid', align: 'center', hide: true },
+                { display: 'attrnameCode', name: 'attrnameCode', align: 'center', hide: true },
+                { display: 'attrshowtype', name: 'attrshowtype', align: 'center', hide: true },
+                { display: 'attrvalueid', name: 'attrvalueid', align: 'center', hide: true },
+                { display: 'IsEnable', name: 'IsEnable', align: 'center', hide: true },
+                { display: 'isinput', name: 'isinput', align: 'center', hide: true }
+            ], pageSize: 30,
+            height: '100%',
+            rownumbers: true,
+            title: '商品属性/规格 值',
+            toolbar: {
+                items: [
+                    { text: '添加', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/add.gif' },
+                    { line: true },
+                    { text: '修改', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/config.gif' },
+                    { line: true },
+                    { text: '删除', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/delete.gif' }
+                ]
+            },
+        });
+    });
+    function loaddetail(attrid) {
+        $("#infoloading").show();
+        $.ajax({
+            url: '/Admin/Product/GetallAttributevalues',
+            async: false,
+            type: 'get',
+            datatype: 'JSON',
+            data: { "id": attrid },
+            success: function (mydata) {
+                var t = mydata;
+                detailgrid.set({ data: mydata });
+            }
+        });
+        $("#infoloading").hide();
+    }
+</script>
+<div class="l-loading" style="display:block" id="infoloading"></div>
+<!--左侧主表区-->
+<div style="width:60%;height:100%;float:left;">
+    <div class="l-clear"></div>
+    <div id="infogrid"></div>
+    <div style="display:none;">
+    </div>
+</div>
+<div style="width:1%;height:100%;float:left">
+    <p>&nbsp;</p>
+</div>
+<!--右侧明细区-->
+<div style="width:39%;height:100%;float:left">
+    <div class="l-clear"></div>
+    <div id="detailgrid"></div>
+    <div style="display:none;">
+    </div>
+</div>
+
