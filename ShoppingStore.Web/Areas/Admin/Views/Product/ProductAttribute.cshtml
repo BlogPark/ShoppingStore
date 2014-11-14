@@ -46,6 +46,8 @@
             },
             onSelectRow: function (rowdata, rowid, rowobj) {
                 loaddetail(rowdata.attrid);
+                $("#attriteid").val(rowdata.attrid);
+                $("#valueattritetext").val(rowdata.name);
             }
         });
         $("#infoloading").hide();
@@ -67,7 +69,7 @@
             title: '商品属性/规格 值',
             toolbar: {
                 items: [
-                    { text: '添加', click: function (item) { $.ligerDialog.open({ target: $("#addattribute"), width: 500, height: 500 }); }, img: '/lib/ligerUI/skins/icons/add.gif' },
+                    { text: '添加', click: function (item) { if ($("#attriteid").val() =='') { $.ligerDialog.warn("请先选择左侧对应的属性！！"); return; } $.ligerDialog.open({ target: $("#addattributevalue"), width: 500, height: 500 }); }, img: '/lib/ligerUI/skins/icons/add.gif' },
                     { line: true },
                     { text: '修改', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/config.gif' },
                     { line: true },
@@ -155,6 +157,10 @@
             }
         });
     }
+    function addattributevalue()
+    {
+
+    }
 </script>
 <div class="l-loading" style="display:block" id="infoloading"></div>
 <!--左侧主表区-->
@@ -205,6 +211,23 @@
     <p><input type="button" value="添 加" id="addattributebtn" /></p>
 </div>
 <!--添加属性值层-->
-<div style="width:300px;height:300px;display:none">
-    
+<div id="addattributevalue" style="width:300px;height:300px;display:none">
+    <p>属性名：<input type="text" id="valueattritetext" disabled="disabled"/></p>
+    <p>属性值名称：<input type="text" id="valuename" /></p>
+    <p>属性值代码：<input type="text" id="valuecode" /></p>
+    <p>
+        <div id="updatediv">
+            <table>
+                <tr>
+                    <td><input type="radio" name="updatevalueshowtype" value="1" /></td>
+                    <td>图片</td>
+                    <td><input type="radio" name="updatevalueshowtype" value="0" checked="checked"/></td>
+                    <td>文本</td>
+                </tr>
+            </table>
+        </div>
+    </p>
+    <p><input type="checkbox"  id="updatevalueenable"/>启用</p>
+    <p><input type="button" id="updatevaluebtn" value="添加"/></p>
+    <input type="hidden" id="attriteid" />
 </div>
