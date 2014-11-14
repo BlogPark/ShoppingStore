@@ -242,13 +242,13 @@ WHERE A.brandid = @id ";
             string sqltxt = @"SELECT  attrid ,
         name ,
         attributecode ,
-        IsEnable ,
+        ISNULL(IsEnable,0) IsEnable,
         CASE IsEnable WHEN 1 THEN '启用' ELSE '未启用' END AS enablename,
-        showtype ,
-        CASE showtype WHEN 1 THEN '文字' ELSE '图片' END AS showtypename,
-        isfilter ,
+        ISNULL(showtype,0) showtype,
+        CASE showtype WHEN 1 THEN '图片' ELSE '文字' END AS showtypename,
+        ISNULL(isfilter,0) isfilter,
         CASE isfilter WHEN 1 THEN '是' ELSE '否' END AS isfiltername,
-        IsSpec,
+        ISNULL(IsSpec,0) IsSpec,
         CASE IsSpec WHEN 1 THEN '是' ELSE '否' END AS IsSpecname
 FROM    ShoppingStore.dbo.bsp_attributes WITH ( NOLOCK )";
             return helper.Query(sqltxt).Tables[0];
@@ -275,6 +275,86 @@ WHERE attrid=@attrid";
             SqlParameter[] paramter = { new SqlParameter("@attrid",SqlDbType.Int)};
             paramter[0].Value = attrid;
             return helper.Query(sqltxt, paramter).Tables[0];
+        }
+        /// <summary>
+        /// 插入属性
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int InsertAttribute(AttributeModel model)
+        {
+            string sqltxt = @"INSERT  INTO ShoppingStore.dbo.bsp_attributes
+        ( name ,
+          attributecode ,
+          IsEnable ,
+          showtype ,
+          isfilter ,
+          displayorder ,
+          IsSpec
+        )
+VALUES  ( @name ,
+          @attributecode ,
+          @isenable ,
+          @showtype ,
+          @isfilter ,
+          0 ,
+          @isspec
+        )";
+            SqlParameter[] paramter = {
+                                          new SqlParameter("@name",SqlDbType.NVarChar),
+                                          new SqlParameter("@attributecode",SqlDbType.NVarChar),
+                                          new SqlParameter("@isenable",SqlDbType.Int),
+                                          new SqlParameter("@showtype",SqlDbType.Int),
+                                          new SqlParameter("@isfilter",SqlDbType.Int),
+                                          new SqlParameter("@isspec",SqlDbType.Int),
+                                      };
+            paramter[0].Value = model.name;
+            paramter[1].Value = model.attributecode;
+            paramter[2].Value = model.IsEnable;
+            paramter[3].Value = model.showtype;
+            paramter[4].Value = model.isfilter;
+            paramter[5].Value = model.IsSpec;
+            return helper.ExecuteSql(sqltxt,paramter);
+        }
+        /// <summary>
+        /// 插入属性值信息
+        /// </summary>
+        /// <param name="valuemodel"></param>
+        /// <returns></returns>
+        public int InsertAttributeValue(AttributeValuesModel valuemodel)
+        {
+            string sqltxt = @"INSERT  INTO ShoppingStore.dbo.bsp_attributevalues
+        ( attrid ,
+          attrvaluename ,
+          isinput ,
+          attrvalueCode ,
+          attrvaluedisplayorder ,
+          attrshowtype ,
+          IsEnable
+        )
+VALUES  ( @attrid ,
+          @attrvaluename ,
+          @isinput ,
+          @attrvalueCode ,
+          0 ,
+          @attrshowtype ,
+          @IsEnable
+        )";
+            SqlParameter[] paramter = {
+                                          new SqlParameter("@attrid",SqlDbType.Int),
+                                          new SqlParameter("@attrvaluename",SqlDbType.NVarChar),
+                                          new SqlParameter("@isinput",SqlDbType.Int),
+                                          new SqlParameter("@attrvalueCode",SqlDbType.NVarChar),
+                                          new SqlParameter("@attrshowtype",SqlDbType.Int),
+                                          new SqlParameter("@IsEnable",SqlDbType.Int)
+                                      };
+            paramter[0].Value = valuemodel.attrid;
+            paramter[1].Value = valuemodel.attrvaluename;
+            paramter[2].Value=valuemodel.isinput;
+            paramter[3].Value = valuemodel.attrvalueCode;
+            paramter[4].Value = valuemodel.attrshowtype;
+            paramter[5].Value = valuemodel.IsEnable;
+            return helper.ExecuteSql(sqltxt,paramter);
         }
     }
 }

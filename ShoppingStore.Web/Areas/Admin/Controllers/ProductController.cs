@@ -205,5 +205,33 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
             };
             return Json(griddata, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// 插入属性
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult InsertAttribute(AttributeModel model)
+        {
+            int k = categoryandproduct.InsertAttribute(model);
+            if(k>0)
+                return Json("1", JsonRequestBehavior.DenyGet);
+            else
+                return Json("0", JsonRequestBehavior.DenyGet);
+        }
+        /// <summary>
+        /// 插入属性
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult InsertAttributevalue(AttributeValuesModel valmodel)
+        {
+            int k = categoryandproduct.InsertAttributeValue(valmodel);
+            if (k > 0)
+                return Json("1", JsonRequestBehavior.DenyGet);
+            else
+                return Json("0", JsonRequestBehavior.DenyGet);
+        }
     }
 }

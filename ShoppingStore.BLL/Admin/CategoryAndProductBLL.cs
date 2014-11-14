@@ -133,5 +133,23 @@ namespace ShoppingStore.BLL.Admin
             }
             return list;
         }
+        /// <summary>
+        /// 插入属性
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public int InsertAttribute(AttributeModel model)
+        {
+            return dal.InsertAttribute(model);
+        }
+         /// <summary>
+        /// 插入属性值信息
+        /// </summary>
+        /// <param name="valuemodel"></param>
+        /// <returns></returns>
+        public int InsertAttributeValue(AttributeValuesModel valuemodel)
+        {
+            return dal.InsertAttributeValue(valuemodel);
+        }
     }
 }

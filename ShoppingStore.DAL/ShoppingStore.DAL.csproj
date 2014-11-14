@@ -62,6 +62,7 @@
     <Content Include="SQL\bsp_attributes.sql" />
     <Content Include="SQL\bsp_attributes_addfeild.sql" />
     <Content Include="SQL\bsp_attributevalues.sql" />
+    <Content Include="SQL\bsp_attributevalues_identity.sql" />
     <Content Include="SQL\bsp_brands add filer.sql" />
     <Content Include="SQL\bsp_brands.sql" />
     <Content Include="SQL\bsp_ProductAttribute.sql" />

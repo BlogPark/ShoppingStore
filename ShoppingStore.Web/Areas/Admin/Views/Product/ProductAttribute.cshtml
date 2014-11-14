@@ -5,6 +5,7 @@
 <script type="text/javascript">
     var infogrid;
     var detailgrid;
+    var laddr;
     $(function () {
         var infodata;
         $.ajax({
@@ -36,7 +37,7 @@
             title: '商品属性/规格',
             toolbar: {
                 items: [
-                    { text: '添加', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/add.gif' },
+                    { text: '添加', click: function (item) { $.ligerDialog.open({ target: $("#addattribute"), width: 500, height: 500 }); }, img: '/lib/ligerUI/skins/icons/add.gif' },
                     { line: true },
                     { text: '修改', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/config.gif' },
                     { line: true },
@@ -66,7 +67,7 @@
             title: '商品属性/规格 值',
             toolbar: {
                 items: [
-                    { text: '添加', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/add.gif' },
+                    { text: '添加', click: function (item) { $.ligerDialog.open({ target: $("#addattribute"), width: 500, height: 500 }); }, img: '/lib/ligerUI/skins/icons/add.gif' },
                     { line: true },
                     { text: '修改', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/config.gif' },
                     { line: true },
@@ -74,6 +75,8 @@
                 ]
             },
         });
+        laddr = $("#addiv input:radio").ligerRadio();
+        $("#addattributebtn").bind("click", addattribute);
     });
     function loaddetail(attrid) {
         $("#infoloading").show();
@@ -89,6 +92,68 @@
             }
         });
         $("#infoloading").hide();
+    }
+    function addattribute() {
+        if ($("#addattributename").val() == '')
+        {
+            $.ligerDialog.warn("请填写属性名称");
+            return;
+        }
+        if ($("#addattributecode").val() == '') {
+            $.ligerDialog.warn("请填写属性编号");
+            return;
+        }
+        var showtype;
+        $("#addiv input:radio").each(function () {
+            if (this.checked) {
+                showtype = this.value;
+            }
+        });
+        var isspec = 0;
+        if ($("#addattributeisspec").ligerCheckBox().getValue())
+        { isspec = 1; }
+        var isfilter = 0;
+        if ($("#addattributefilter").ligerCheckBox().getValue())
+        { isfilter = 1; }
+        var isenable = 0;
+        if ($("#addattributeenable").ligerCheckBox().getValue())
+        { isenable = 1; }
+        var model = {
+            name: $("#addattributename").val(),
+            attributecode: $("#addattributecode").val(),
+            IsSpec: isspec,
+            showtype: showtype,
+            IsEnable: isenable,
+            isfilter: isfilter
+        };
+        $.ajax({
+            url: '/Admin/Product/InsertAttribute',
+            type: 'POST',
+            data: JSON.stringify(model),
+            contentType: 'application/json; charset=utf-8',
+            datatype: 'JSON',
+            processData: false,
+            async:false,
+            success: function (data) {
+                if (data == "1") {
+                    $.ligerDialog.success("添加完成", "提示", function () {
+                        $.ligerDialog.hide();
+                        $.ajax({
+                            url: '/Admin/Product/GetallAttribute',
+                            datatype: 'JSON',
+                            type: 'get',
+                            success: function (data) {
+                                infogrid.loadData(data);
+                            }
+                        });
+                    });
+                }
+                else {
+                    $.ligerDialog.error("添加失败");
+                }
+
+            }
+        });
     }
 </script>
 <div class="l-loading" style="display:block" id="infoloading"></div>
@@ -109,4 +174,37 @@
     <div style="display:none;">
     </div>
 </div>
-
+<!--添加属性层-->
+<div id="addattribute" style="width:300px;height:300px;display:none">
+    <p>属性名称：<input type="text" id="addattributename" /></p>
+    <p>属性编号：<input type="text" id="addattributecode" /></p>
+    <p>
+        <table>
+            <tr>
+                <td><input type="checkbox" id="addattributeenable" /></td>
+                <td>启用</td>
+                <td><input type="checkbox" id="addattributeisspec" /></td>
+                <td>规格</td>
+                <td><input type="checkbox" id="addattributefilter" /></td>
+                <td>筛选属性</td>
+            </tr>
+        </table>
+    </p>
+    <p>
+        <div id="addiv">
+            <table>
+                <tr>
+                    <td><input type="radio" id="showtype" name="showtype" value="0" checked="checked" /></td>
+                    <td>文本</td>
+                    <td><input type="radio" id="showtype2" name="showtype" value="1" /></td>
+                    <td>图片</td>
+                </tr>
+            </table>
+        </div>
+    </p>
+    <p><input type="button" value="添 加" id="addattributebtn" /></p>
+</div>
+<!--添加属性值层-->
+<div style="width:300px;height:300px;display:none">
+    
+</div>
