@@ -55,6 +55,12 @@
     <Compile Include="ProductsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ShoppingStore.Common\ShoppingStore.Common.csproj">
+      <Project>{ed25710d-9178-4a22-8278-db4db1c2049b}</Project>
+      <Name>ShoppingStore.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

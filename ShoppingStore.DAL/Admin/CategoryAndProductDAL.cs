@@ -56,6 +56,7 @@ namespace ShoppingStore.DAL.Admin
             paramter[5].Value = model.layer;
             paramter[6].Value = model.haschild;
             paramter[7].Value = model.path;
+           
             return helper.ExecuteSql(sqltxt, paramter);
         }
         /// <summary>
