@@ -69,7 +69,7 @@
             title: '商品属性/规格 值',
             toolbar: {
                 items: [
-                    { text: '添加', click: function (item) { if ($("#attriteid").val() =='') { $.ligerDialog.warn("请先选择左侧对应的属性！！"); return; } $.ligerDialog.open({ target: $("#addattributevalue"), width: 500, height: 500 }); }, img: '/lib/ligerUI/skins/icons/add.gif' },
+                    { text: '添加', click: function (item) { if ($("#attriteid").val() == '') { $.ligerDialog.warn("请先选择左侧对应的属性！！"); return; } $.ligerDialog.open({ target: $("#addattributevalue"), width: 500, height: 500 }); }, img: '/lib/ligerUI/skins/icons/add.gif' },
                     { line: true },
                     { text: '修改', click: function (item) { alert(item.text); }, img: '/lib/ligerUI/skins/icons/config.gif' },
                     { line: true },
@@ -79,6 +79,7 @@
         });
         laddr = $("#addiv input:radio").ligerRadio();
         $("#addattributebtn").bind("click", addattribute);
+        $("#updatevaluebtn").click(addattributevalue);
     });
     function loaddetail(attrid) {
         $("#infoloading").show();
@@ -96,8 +97,7 @@
         $("#infoloading").hide();
     }
     function addattribute() {
-        if ($("#addattributename").val() == '')
-        {
+        if ($("#addattributename").val() == '') {
             $.ligerDialog.warn("请填写属性名称");
             return;
         }
@@ -135,7 +135,7 @@
             contentType: 'application/json; charset=utf-8',
             datatype: 'JSON',
             processData: false,
-            async:false,
+            async: false,
             success: function (data) {
                 if (data == "1") {
                     $.ligerDialog.success("添加完成", "提示", function () {
@@ -157,9 +157,64 @@
             }
         });
     }
-    function addattributevalue()
-    {
-
+    function addattributevalue() {
+        if ($("#valuename").val() == '') {
+            $.ligerDialog.warn("请输入属性值名称");
+            return;
+        }
+        if ($("#valuecode").val() == '') {
+            $.ligerDialog.warn("请输入属性值代码");
+            return;
+        }
+        var valueshowtype;
+        $("#updatediv input:radio").each(function () {
+            if (this.checked)
+            { valueshowtype = this.value; }
+        });
+        var valueisable = 0;
+        if ($("#updatevalueenable").ligerCheckBox().getValue())
+        { valueisable = 1; }
+        var valmodel = {
+            attrid: $("#attriteid").val(),
+            attrvaluename: $("#valuename").val(),
+            attrvalueCode: $("#valuecode").val(),
+            isinput: 0,
+            attrshowtype: valueshowtype,
+            IsEnable: valueisable
+        };
+        $.ajax({
+            url: '/Admin/Product/InsertAttributevalue',
+            data: JSON.stringify(valmodel),
+            datatype: 'Json',
+            type: 'POST',
+            contentType: 'application/json;charset=utf-8 ',
+            processdata: false,
+            async: false,
+            success: function (data) {
+                if (data == '1') {
+                    $.ligerDialog.success("添加数据成功", "提示", function () {
+                        $.ligerDialog.hide();
+                        $("#valuename").val('');
+                        $("#valuecode").val('');
+                        $("#updatediv input:radio").each(function ()
+                        {
+                            if (this.value == '0') { this.checked = true; }
+                        });
+                        $.ajax({
+                            url: '/Admin/Product/GetallAttributevalues',
+                            type: 'get',
+                            datatype: 'JSON',
+                            data: { "id": $("#attriteid").val() },
+                            success: function (mydata) {
+                                var t = mydata;
+                                detailgrid.set({ data: mydata });
+                            }
+                        });
+                    });
+                }
+                else { $.ligerDialog.error("添加失败"); }
+            }
+        });
     }
 </script>
 <div class="l-loading" style="display:block" id="infoloading"></div>
@@ -212,7 +267,7 @@
 </div>
 <!--添加属性值层-->
 <div id="addattributevalue" style="width:300px;height:300px;display:none">
-    <p>属性名：<input type="text" id="valueattritetext" disabled="disabled"/></p>
+    <p>属性名：<input type="text" id="valueattritetext" disabled="disabled" /></p>
     <p>属性值名称：<input type="text" id="valuename" /></p>
     <p>属性值代码：<input type="text" id="valuecode" /></p>
     <p>
@@ -221,13 +276,13 @@
                 <tr>
                     <td><input type="radio" name="updatevalueshowtype" value="1" /></td>
                     <td>图片</td>
-                    <td><input type="radio" name="updatevalueshowtype" value="0" checked="checked"/></td>
+                    <td><input type="radio" name="updatevalueshowtype" value="0" checked="checked" /></td>
                     <td>文本</td>
                 </tr>
             </table>
         </div>
     </p>
-    <p><input type="checkbox"  id="updatevalueenable"/>启用</p>
-    <p><input type="button" id="updatevaluebtn" value="添加"/></p>
+    <p><input type="checkbox" id="updatevalueenable" />启用</p>
+    <p><input type="button" id="updatevaluebtn" value="添 加" /></p>
     <input type="hidden" id="attriteid" />
 </div>

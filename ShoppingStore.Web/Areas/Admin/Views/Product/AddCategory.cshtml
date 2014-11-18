@@ -3,13 +3,15 @@
     Layout = "/Areas/Admin/Views/Shared/_AdminContorlPartView.cshtml";
 }
 <script type="text/javascript">
+    var attributegrid;
+    var treenode;
     $.ajax({
         url: "/Admin/Product/getCategoryjsonstr",
         datatype: "html",
         type: "get",
         success: function (data) {
             var mydata = JSON.parse(data);
-            $("#allcategory").ligerTree({
+            treenode = $("#allcategory").ligerTree({
                 data: mydata,
                 slide: false,
                 checkbox: false,
@@ -18,7 +20,9 @@
                 textFieldName: "name",
                 idFieldName: "cateid",
                 isExpand: false,
-                onSelect: opendiagshowmsg
+                onSelect: function (node) {
+                    getattribute(node.data.cateid);
+                }
             });
             $("#txt2").ligerComboBox({
                 width: 180,
@@ -43,7 +47,8 @@
             });
         }
     });
-    function opendiagshowmsg(node) {
+    function opendiagshowmsg() {
+        var node = treenode.getSelected();
         var nodetext = node.data.name;
         var nodeid = node.data.cateid;
         var pid = node.data.parentid;
@@ -88,6 +93,7 @@
                 height: 500
             });
         });
+        $("#updat").bind("click", opendiagshowmsg);
         $("#chk").ligerCheckBox();
         $("#upchk").ligerCheckBox();
         $("#btnedit").click(function () {
@@ -102,8 +108,7 @@
                 data: { "id": id, "pid": maincateid, "catename": catename, "isenable": isenable },
                 async: false,
                 success: function (data) {
-                    if (data == "1")
-                    {
+                    if (data == "1") {
                         alert("修改成功");
                         parent.$.ligerDialog.close();
                         $.ajax({
@@ -114,38 +119,118 @@
                                 $("#allcategory").ligerTree().refreshTree();
                             }
                         });
-                       
+
                     }
-                    else
-                    { alert("修改失败"); }
+                    else { alert("修改失败"); }
                 }
             });
         });
+        attributegrid = $("#infogrid").ligerGrid({
+            columns: [
+                { display: '属性名称', name: 'AttributeName', width: 100, minWidth: 60, align: 'center' },
+                { display: '是否规格', name: 'SpecName', width: 100, minwidth: 60, align: 'center' },
+                { display: '是否启用', name: 'Enablename', width: 100, minwidth: 60, align: 'center' }
+            ],
+            height: '100%',
+            pagesize: 20,
+            rownumbers: true,
+            title: '绑定属性',
+            toolbar: {
+                items: [
+                    { text: '添加', click: showaddattribute, img: '/lib/ligerUI/skins/icons/add.gif' }
+                ]
+            }
+        });
+        $("#infoloading").hide();
     });
-</script>
-<h4 style="margin-left:20px; margin-top:10px">商品分类</h4> <span><a id="add">添加类别</a></span>
-<div id="panel1" style="width:200px;height:100%;margin:5px 20px;border:1px solid;overflow:hidden;float:left;">
-    <ul id="allcategory"></ul>
-</div>
-<input type="hidden" name="hiddenarea" id="hiddenarea" />
-<div id="showmsg" style="width:200px; margin:3px; display:none;height:300px;">
-    所属类别：<input type="text" id="txt1" /><br />
-    类别名称：<input type="text" id="upname" /><br />
-    <input type="checkbox" id="upchk" checked="checked" /><p>启用</p>
-    <input type="hidden" id="cateid" /><br />
-    <input type="button" id="btnedit" value="修  改" />
-    <input type="button" id="btndeleteitem" value="删   除" />
-</div>
-<div id="Addcategory" style="width:300px;height:300px;display:none;">
-    @{
-        using (Html.BeginForm("AddCategoryitem", "Product", FormMethod.Post))
-        {
-            <span>选择类别：<input type="text" id="txt2" name="txt2" /></span>
-            <span>类别名称：<input type="text" id="name" name="name" /></span>
-            <span>价格区间：<input type="text" id="pricerange" name="pricerange" /></span>
-            <span>是否启用：<input type="checkbox" id="chk" name="chk" /></span>
-            <input type="submit" value="确 定" id="addbtn" style="margin-left:10px;" />
-        }
+    function getattribute(cateid) {
+        $("#infoloading").show();
+        $.ajax({
+            url: '/Admin/Product/GetCategoryAttribute',
+            data: { "id": cateid },
+            datatype: 'json',
+            type: 'get',
+            contentType: 'application/json;charset=utf-8',
+            processdata: false,
+            success: function (data) {
+                attributegrid.set({ data: data });
+            }
+        });
+        $("#infoloading").hide();
     }
+    function showaddattribute() {
+        $.ajax({
+            url: '/Admin/Product/GetallAttributeforcom',
+            datatype: 'json',
+            contentType: 'application/json;charset=utf-8',
+            type: 'get',
+            async: false,
+            processData: false,
+            success: function (mydata) {
+                 $("#attributecom").ligerComboBox({
+                    data: mydata,
+                    isMultiSelect: true,
+                    isShowCheckBox: true,
+                    valueFieldID: 'attrid',
+                    textField:'name',
+                });
+                $.ligerDialog.open({
+                    target: $("#showatt"),
+                    width: 300,
+                    height: 300,
+                    buttons: [
+                        { text: '确定', onclick: function (item, dialog) { alert($("#attributecom").val()); } },
+                        { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+                    ]
+                });
+            }
+        });
 
+    }
+</script>
+<div style="float:left;width:45%;height:100%">
+    <h4 style="margin-left:20px; margin-top:10px">商品分类</h4> <input type="button" id="add" value="添加类别" /><input type="button" id="updat" value="修改类别" />
+    <div id="panel1" style="width:200px;height:100%;margin:5px 20px;border:1px solid;overflow:hidden;float:left;">
+        <ul id="allcategory"></ul>
+    </div>
+    <input type="hidden" name="hiddenarea" id="hiddenarea" />
+    <div id="showmsg" style="width:200px; margin:3px; display:none;height:300px;">
+        所属类别：<input type="text" id="txt1" /><br />
+        类别名称：<input type="text" id="upname" /><br />
+        <input type="checkbox" id="upchk" checked="checked" /><p>启用</p>
+        <input type="hidden" id="cateid" /><br />
+        <input type="button" id="btnedit" value="修  改" />
+        <input type="button" id="btndeleteitem" value="删   除" />
+    </div>
+    <div id="Addcategory" style="width:300px;height:300px;display:none;">
+        @{
+            using (Html.BeginForm("AddCategoryitem", "Product", FormMethod.Post))
+            {
+                <span>选择类别：<input type="text" id="txt2" name="txt2" /></span>
+                <span>类别名称：<input type="text" id="name" name="name" /></span>
+                <span>价格区间：<input type="text" id="pricerange" name="pricerange" /></span>
+                <span>是否启用：<input type="checkbox" id="chk" name="chk" /></span>
+                <input type="submit" value="确 定" id="addbtn" style="margin-left:10px;" />
+            }
+        }
+
+    </div>
+</div>
+<div style="float:left;width:10%;height:100%">
+    &nbsp;
+</div>
+<!--右侧属性列表-->
+<div style="float:left;width:45%;height:100%">
+    <div class="l-loading" style="display:block" id="infoloading"></div>
+    <!--左侧主表区-->
+    <div style="width:100%;height:100%;float:left;">
+        <div class="l-clear"></div>
+        <div id="infogrid"></div>
+        <div style="display:none;">
+        </div>
+    </div>
+</div>
+<!--添加属性层-->
+<div id="showatt" style="width:200px;height:200px;display:none">
+    选择属性:<input type="text" id="attributecom" />
 </div>

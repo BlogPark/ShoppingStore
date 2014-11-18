@@ -195,13 +195,22 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
         /// 得到所有的属性
         /// </summary>
         /// <returns></returns>
+        public JsonResult GetallAttributeforcom()
+        {
+            List<AttributeModel> model = categoryandproduct.GetAllAttribute();
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// 得到所有的属性值
+        /// </summary>
+        /// <returns></returns>
         public JsonResult GetallAttributevalues(int id)
         {
             List<AttributeValuesModel> model = categoryandproduct.GetAttributeValues(id);
             var griddata = new
             {
                 Rows = model,
-                Total = 2
+                Total = model.Count
             };
             return Json(griddata, JsonRequestBehavior.AllowGet);
         }
@@ -214,13 +223,13 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
         public ActionResult InsertAttribute(AttributeModel model)
         {
             int k = categoryandproduct.InsertAttribute(model);
-            if(k>0)
+            if (k > 0)
                 return Json("1", JsonRequestBehavior.DenyGet);
             else
                 return Json("0", JsonRequestBehavior.DenyGet);
         }
         /// <summary>
-        /// 插入属性
+        /// 插入属性值
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -232,6 +241,17 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
                 return Json("1", JsonRequestBehavior.DenyGet);
             else
                 return Json("0", JsonRequestBehavior.DenyGet);
+        }
+        /// <summary>
+        /// 得到分类和属性对应关系
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult GetCategoryAttribute(int id)
+        {
+            List<CategoryAttributeModel> modellist = categoryandproduct.GetCategoryAttribute(id);
+            var gdata= new {Rows=modellist,Total=modellist.Count};
+            return Json(gdata, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -151,5 +151,27 @@ namespace ShoppingStore.BLL.Admin
         {
             return dal.InsertAttributeValue(valuemodel);
         }
+
+        /// <summary>
+        /// 得到类别和属性的对应关系
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<CategoryAttributeModel> GetCategoryAttribute(int id)
+        {
+            DataTable dt = dal.GetCategoryAttribute(id);
+            List<CategoryAttributeModel> modellist = new List<CategoryAttributeModel>();
+            foreach (DataRow item in dt.Rows)
+            {
+                CategoryAttributeModel model = new CategoryAttributeModel();
+                model.CategoryID = item["CategoryID"].ToString().ToInt(0);
+                model.AttributeName = item["name"].ToString();
+                model.AttributeID = item["AttributeID"].ToString().ToInt(0);
+                model.Enablename = item["enablename"].ToString();
+                model.SpecName = item["isspec"].ToString();
+                modellist.Add(model);
+            }
+            return modellist;
+        }
     }
 }

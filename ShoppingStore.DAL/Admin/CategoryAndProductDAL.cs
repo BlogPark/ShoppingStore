@@ -357,5 +357,31 @@ VALUES  ( @attrid ,
             paramter[5].Value = valuemodel.IsEnable;
             return helper.ExecuteSql(sqltxt,paramter);
         }
+        /// <summary>
+        /// 得到类别和属性的对应关系
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DataTable GetCategoryAttribute(int id)
+        {
+            string sqltxt = @"SELECT  A.CategoryID ,
+        A.AttributeID ,
+        A.IsEnable ,
+        CASE A.IsEnable
+          WHEN 1 THEN '启用'
+          ELSE '未启用'
+        END AS enablename ,
+        C.attributecode ,
+        C.name ,
+        CASE c.IsSpec
+          WHEN 1 THEN '是'
+          ELSE '否'
+        END AS isspec
+FROM    ShoppingStore.dbo.bsp_CategoryAttribute A WITH ( NOLOCK )
+        INNER JOIN ShoppingStore.dbo.bsp_attributes C WITH ( NOLOCK ) ON A.AttributeID = C.attrid AND A.CategoryID=@id";
+            SqlParameter[] paramter = { new SqlParameter("@id",SqlDbType.Int)};
+            paramter[0].Value = id;
+            return helper.Query(sqltxt, paramter).Tables[0];
+        }
     }
 }

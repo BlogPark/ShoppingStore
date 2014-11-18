@@ -45,6 +45,7 @@
     <Compile Include="Admin\AttributeValuesModel.cs" />
     <Compile Include="Admin\BrandsInfoModel.cs" />
     <Compile Include="Admin\Categories.cs" />
+    <Compile Include="Admin\CategoryAttributeModel.cs" />
     <Compile Include="Adverts.cs" />
     <Compile Include="BrandsModel.cs" />
     <Compile Include="CategoriesModel.cs" />
