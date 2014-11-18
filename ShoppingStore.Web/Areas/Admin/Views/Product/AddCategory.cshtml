@@ -159,6 +159,7 @@
         $("#infoloading").hide();
     }
     function showaddattribute() {
+        var attcom;
         $.ajax({
             url: '/Admin/Product/GetallAttributeforcom',
             datatype: 'json',
@@ -167,19 +168,20 @@
             async: false,
             processData: false,
             success: function (mydata) {
-                 $("#attributecom").ligerComboBox({
+               attcom=  $("#attributecom").ligerComboBox({
                     data: mydata,
                     isMultiSelect: true,
                     isShowCheckBox: true,
                     valueFieldID: 'attrid',
-                    textField:'name',
-                });
+                    textField: 'name',
+                    valueField: 'attrid'
+               });
                 $.ligerDialog.open({
                     target: $("#showatt"),
                     width: 300,
                     height: 300,
                     buttons: [
-                        { text: '确定', onclick: function (item, dialog) { alert($("#attributecom").val()); } },
+                        { text: '确定', onclick: function (item, dialog) { alert(attcom.getValue()); } },
                         { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
                     ]
                 });
