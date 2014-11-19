@@ -266,6 +266,7 @@
     <Content Include="Areas\Admin\Views\Shared\_AdminContorlPartView.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Brands.cshtml" />
     <Content Include="Areas\Admin\Views\Product\ProductAttribute.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\AddProduct.cshtml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\listbg.gif" />
     <Content Include="Images\listbg2.gif" />

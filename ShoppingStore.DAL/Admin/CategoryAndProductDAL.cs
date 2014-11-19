@@ -383,5 +383,36 @@ FROM    ShoppingStore.dbo.bsp_CategoryAttribute A WITH ( NOLOCK )
             paramter[0].Value = id;
             return helper.Query(sqltxt, paramter).Tables[0];
         }
+        /// <summary>
+        /// 插入属性和类别关系
+        /// </summary>
+        /// <param name="cateid"></param>
+        /// <param name="attrid"></param>
+        /// <returns></returns>
+        public int InsertCategoryAttribute(int cateid,int attrid)
+        {
+            string sqltxt = @"IF NOT EXISTS ( SELECT  id
+                FROM    ShoppingStore.dbo.bsp_CategoryAttribute
+                WHERE   CategoryID = @CategoryID
+                        AND AttributeID = @AttributeID )
+    BEGIN
+        INSERT  INTO ShoppingStore.dbo.bsp_CategoryAttribute
+                ( CategoryID ,
+                  AttributeID ,
+                  IsEnable
+                )
+        VALUES  ( @CategoryID ,
+                  @AttributeID ,
+                  1
+                )
+    END";
+            SqlParameter[] paramter = {
+                                          new SqlParameter("@CategoryID",SqlDbType.Int),
+                                          new SqlParameter("@AttributeID",SqlDbType.Int)
+                                      };
+            paramter[0].Value = cateid;
+            paramter[1].Value = attrid;
+            return helper.ExecuteSql(sqltxt,paramter);
+        }
     }
 }

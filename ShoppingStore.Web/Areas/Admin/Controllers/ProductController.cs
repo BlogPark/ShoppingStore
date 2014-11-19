@@ -250,8 +250,28 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
         public ActionResult GetCategoryAttribute(int id)
         {
             List<CategoryAttributeModel> modellist = categoryandproduct.GetCategoryAttribute(id);
-            var gdata= new {Rows=modellist,Total=modellist.Count};
+            var gdata = new { Rows = modellist, Total = modellist.Count };
             return Json(gdata, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// 插入属性和类别关系表
+        /// </summary>
+        /// <param name="attribute"></param>
+        /// <param name="cateid"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult InsertCategoryAttribute(string attribute, int cateid)
+        {
+            int k = categoryandproduct.InsertAttributeCategory(attribute, cateid);
+            if (k > 0)
+                return Json("1", JsonRequestBehavior.DenyGet);
+            else
+                return Json("0", JsonRequestBehavior.DenyGet);
+        }
+
+        public ActionResult AddProduct()
+        {
+            return View();
         }
     }
 }

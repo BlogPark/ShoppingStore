@@ -10,7 +10,7 @@ using System.Data.SqlClient;
 
 namespace ShoppingStore.BLL.Admin
 {
-    public  class CategoryAndProductBLL
+    public class CategoryAndProductBLL
     {
         CategoryAndProductDAL dal = new CategoryAndProductDAL();
         /// <summary>
@@ -24,7 +24,7 @@ namespace ShoppingStore.BLL.Admin
         }
         public List<Categories> SelectAllCategory()
         {
-            DataTable dt= dal.SelectAllCategory();
+            DataTable dt = dal.SelectAllCategory();
             List<Categories> categorys = new List<Categories>();
             foreach (DataRow item in dt.Rows)
             {
@@ -88,7 +88,7 @@ namespace ShoppingStore.BLL.Admin
         /// <returns></returns>
         public List<AttributeModel> GetAllAttribute()
         {
-            DataTable dt=dal.GetAllAttribute();
+            DataTable dt = dal.GetAllAttribute();
             List<AttributeModel> list = new List<AttributeModel>();
             foreach (DataRow item in dt.Rows)
             {
@@ -142,7 +142,7 @@ namespace ShoppingStore.BLL.Admin
         {
             return dal.InsertAttribute(model);
         }
-         /// <summary>
+        /// <summary>
         /// 插入属性值信息
         /// </summary>
         /// <param name="valuemodel"></param>
@@ -172,6 +172,31 @@ namespace ShoppingStore.BLL.Admin
                 modellist.Add(model);
             }
             return modellist;
+        }
+        /// <summary>
+        /// 插入属性和类别关系表
+        /// </summary>
+        /// <param name="attributeid"></param>
+        /// <param name="cateid"></param>
+        /// <returns></returns>
+        public int InsertAttributeCategory(string attributeid, int cateid)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(attributeid))
+                    return 0;
+                string[] ids = attributeid.Split(';');
+                foreach (string item in ids)
+                {
+                    int attid = item.ToInt(0);
+                    int k = dal.InsertCategoryAttribute(cateid, attid);
+                }
+                return 1;
+            }
+            catch 
+            {
+                return 0;
+            }
         }
     }
 }

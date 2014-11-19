@@ -22,6 +22,8 @@
                 isExpand: false,
                 onSelect: function (node) {
                     getattribute(node.data.cateid);
+                    $("#selectedcateid").val(node.data.cateid);
+                    $("#selectedpid").val(node.data.parentid);
                 }
             });
             $("#txt2").ligerComboBox({
@@ -159,6 +161,9 @@
         $("#infoloading").hide();
     }
     function showaddattribute() {
+        if ($("#selectedpid").val() == '0') {
+            $.ligerDialog.warn("请勿选择主类别"); return;
+        }
         var attcom;
         $.ajax({
             url: '/Admin/Product/GetallAttributeforcom',
@@ -168,21 +173,53 @@
             async: false,
             processData: false,
             success: function (mydata) {
-               attcom=  $("#attributecom").ligerComboBox({
+                attcom = $("#attributecom").ligerComboBox({
                     data: mydata,
                     isMultiSelect: true,
                     isShowCheckBox: true,
                     valueFieldID: 'attrid',
                     textField: 'name',
                     valueField: 'attrid'
-               });
+                });
+                attcom.setValue('');
                 $.ligerDialog.open({
                     target: $("#showatt"),
+                    title: '添加属性',
                     width: 300,
                     height: 300,
                     buttons: [
-                        { text: '确定', onclick: function (item, dialog) { alert(attcom.getValue()); } },
-                        { text: '取消', onclick: function (item, dialog) { dialog.close(); } }
+                        {
+                            text: '确定', onclick: function (item, dialog) {
+                                $.ajax({
+                                    url: '/Admin/Product/InsertCategoryAttribute',
+                                    data: { "attribute": attcom.getValue(), "cateid": $("#selectedcateid").val() },
+                                    type: 'POST',
+                                    datatype: 'json',
+                                    async: false,
+                                    success: function (resultdata) {
+                                        if (resultdata == '1') {
+                                            $.ligerDialog.success('添加数据成功', '提示', function () {
+                                                $.ligerDialog.hide();
+                                                $.ajax({
+                                                    url: '/Admin/Product/GetCategoryAttribute',
+                                                    data: { "id": $("#selectedcateid").val() },
+                                                    datatype: 'json',
+                                                    type: 'get',
+                                                    contentType: 'application/json;charset=utf-8',
+                                                    processdata: false,
+                                                    success: function (ydata) {
+                                                        attributegrid.set({ data: ydata });
+                                                    }
+                                                });
+                                            });
+                                        }
+                                        else { $.ligerDialog.error("操作出现错误"); }
+
+                                    }
+                                });
+                            }
+                        },
+                        { text: '取消', onclick: function (item, dialog) { dialog.hide(); } }
                     ]
                 });
             }
@@ -235,4 +272,6 @@
 <!--添加属性层-->
 <div id="showatt" style="width:200px;height:200px;display:none">
     选择属性:<input type="text" id="attributecom" />
+    <input type="hidden" id="selectedcateid" />
+    <input type="hidden" id="selectedpid" />
 </div>
