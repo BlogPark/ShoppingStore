@@ -3,41 +3,72 @@
     Layout = "/Areas/Admin/Views/Shared/_AdminContorlPartView.cshtml";
 }
 @section head{
-    <meta name="viewport" content="width=device-width" />
-    <meta charset="utf-8" />
-    <title>XXXX商城后台管理-分类维护</title>
-    <link href="~/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" />
-    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
-    <script src="~/lib/ligerUI/js/ligerui.all.js"></script>
-    <script src="~/lib/ligerUI/js/plugins/ligerTab.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery.cookie.js"></script>
-    <script src="~/lib/json2.js"></script>
+
     <script type="text/javascript">
-    var attributegrid;
-    var treenode;
-    $.ajax({
-        url: "/Admin/Product/getCategoryjsonstr",
-        datatype: "html",
-        type: "get",
-        success: function (data) {
-            var mydata = JSON.parse(data);
-            treenode = $("#allcategory").ligerTree({
-                data: mydata,
-                slide: false,
-                checkbox: false,
-                nodeWidth: 120,
-                parentIDFieldName: "parentid",
-                textFieldName: "name",
-                idFieldName: "cateid",
-                isExpand: false,
-                onSelect: function (node) {
-                    getattribute(node.data.cateid);
-                    $("#selectedcateid").val(node.data.cateid);
-                    $("#selectedpid").val(node.data.parentid);
-                }
-            });
-            $("#txt2").ligerComboBox({
+        var attributegrid;
+        var treenode;
+        $.ajax({
+            url: "/Admin/Product/getCategoryjsonstr",
+            datatype: "html",
+            type: "get",
+            success: function (data) {
+                var mydata = JSON.parse(data);
+                treenode = $("#allcategory").ligerTree({
+                    data: mydata,
+                    slide: false,
+                    checkbox: false,
+                    nodeWidth: 120,
+                    parentIDFieldName: "parentid",
+                    textFieldName: "name",
+                    idFieldName: "cateid",
+                    isExpand: false,
+                    onSelect: function (node) {
+                        getattribute(node.data.cateid);
+                        $("#selectedcateid").val(node.data.cateid);
+                        $("#selectedpid").val(node.data.parentid);
+                    }
+                });
+                $("#txt2").ligerComboBox({
+                    width: 180,
+                    selectBoxWidth: 200,
+                    selectBoxHeight: 200,
+                    textField: 'name',
+                    treeLeafOnly: false,
+                    valueField: "cateid",
+                    valueFieldID: "parentid",
+                    tree: {
+                        data: mydata, parentIDFieldName: "parentid",
+                        textFieldName: "name",
+                        idFieldName: "cateid",
+                        isExpand: true,
+                        checkbox: false,
+                        slide: false,
+                        nodeWidth: 120
+                    },
+                    onselected: function (newvalue, newtext) {
+                        $("#hiddenarea").val(newvalue);
+                    }
+                });
+            }
+        });
+        function opendiagshowmsg() {
+            var node = treenode.getSelected();
+            var nodetext = node.data.name;
+            var nodeid = node.data.cateid;
+            var pid = node.data.parentid;
+            if (pid != 0) {
+                $("#upname").val(nodetext);
+                $("#cateid").val(nodeid);
+                $("#txt1").ligerComboBox().setValue(pid);
+                $.ligerDialog.open({
+                    target: $("#showmsg"),
+                    width: 500,
+                    height: 500
+                });
+            }
+        }
+        $(function () {
+            $("#txt1").ligerComboBox({
                 width: 180,
                 selectBoxWidth: 200,
                 selectBoxHeight: 200,
@@ -46,9 +77,10 @@
                 valueField: "cateid",
                 valueFieldID: "parentid",
                 tree: {
-                    data: mydata, parentIDFieldName: "parentid",
+                    url: "/Admin/Product/getCategoryjsonstr2",
                     textFieldName: "name",
                     idFieldName: "cateid",
+                    parentIDFieldName: "parentid",
                     isExpand: true,
                     checkbox: false,
                     slide: false,
@@ -58,185 +90,144 @@
                     $("#hiddenarea").val(newvalue);
                 }
             });
-        }
-    });
-    function opendiagshowmsg() {
-        var node = treenode.getSelected();
-        var nodetext = node.data.name;
-        var nodeid = node.data.cateid;
-        var pid = node.data.parentid;
-        if (pid != 0) {
-            $("#upname").val(nodetext);
-            $("#cateid").val(nodeid);
-            $("#txt1").ligerComboBox().setValue(pid);
-            $.ligerDialog.open({
-                target: $("#showmsg"),
-                width: 500,
-                height: 500
+            $("#add").bind("click", function () {
+                $.ligerDialog.open({
+                    target: $("#Addcategory"),
+                    width: 500,
+                    height: 500
+                });
             });
-        }
-    }
-    $(function () {
-        $("#txt1").ligerComboBox({
-            width: 180,
-            selectBoxWidth: 200,
-            selectBoxHeight: 200,
-            textField: 'name',
-            treeLeafOnly: false,
-            valueField: "cateid",
-            valueFieldID: "parentid",
-            tree: {
-                url: "/Admin/Product/getCategoryjsonstr2",
-                textFieldName: "name",
-                idFieldName: "cateid",
-                parentIDFieldName: "parentid",
-                isExpand: true,
-                checkbox: false,
-                slide: false,
-                nodeWidth: 120
-            },
-            onselected: function (newvalue, newtext) {
-                $("#hiddenarea").val(newvalue);
-            }
-        });
-        $("#add").bind("click", function () {
-            $.ligerDialog.open({
-                target: $("#Addcategory"),
-                width: 500,
-                height: 500
-            });
-        });
-        $("#updat").bind("click", opendiagshowmsg);
-        $("#chk").ligerCheckBox();
-        $("#upchk").ligerCheckBox();
-        $("#btnedit").click(function () {
-            var maincateid = $("#hiddenarea").val();
-            var catename = $("#upname").val();
-            var isenable = $("#upchk").ligerCheckBox().getValue();
-            var id = $("#cateid").val();
-            $.ajax({
-                url: "/Admin/Product/UpdateCategoryItem",
-                datatype: "text",
-                type: "get",
-                data: { "id": id, "pid": maincateid, "catename": catename, "isenable": isenable },
-                async: false,
-                success: function (data) {
-                    if (data == "1") {
-                        alert("修改成功");
-                        parent.$.ligerDialog.close();
-                        $.ajax({
-                            url: "/Admin/Product/getCategoryjsonstr",
-                            datatype: "html",
-                            type: "get",
-                            success: function (data) {
-                                $("#allcategory").ligerTree().refreshTree();
-                            }
-                        });
+            $("#updat").bind("click", opendiagshowmsg);
+            $("#chk").ligerCheckBox();
+            $("#upchk").ligerCheckBox();
+            $("#btnedit").click(function () {
+                var maincateid = $("#hiddenarea").val();
+                var catename = $("#upname").val();
+                var isenable = $("#upchk").ligerCheckBox().getValue();
+                var id = $("#cateid").val();
+                $.ajax({
+                    url: "/Admin/Product/UpdateCategoryItem",
+                    datatype: "text",
+                    type: "get",
+                    data: { "id": id, "pid": maincateid, "catename": catename, "isenable": isenable },
+                    async: false,
+                    success: function (data) {
+                        if (data == "1") {
+                            alert("修改成功");
+                            parent.$.ligerDialog.close();
+                            $.ajax({
+                                url: "/Admin/Product/getCategoryjsonstr",
+                                datatype: "html",
+                                type: "get",
+                                success: function (data) {
+                                    $("#allcategory").ligerTree().refreshTree();
+                                }
+                            });
 
+                        }
+                        else { alert("修改失败"); }
                     }
-                    else { alert("修改失败"); }
+                });
+            });
+            attributegrid = $("#infogrid").ligerGrid({
+                columns: [
+                    { display: '属性名称', name: 'AttributeName', width: 100, minWidth: 60, align: 'center' },
+                    { display: '是否规格', name: 'SpecName', width: 100, minwidth: 60, align: 'center' },
+                    { display: '是否启用', name: 'Enablename', width: 100, minwidth: 60, align: 'center' }
+                ],
+                height: '100%',
+                pagesize: 20,
+                rownumbers: true,
+                title: '绑定属性',
+                toolbar: {
+                    items: [
+                        { text: '添加', click: showaddattribute, img: '/lib/ligerUI/skins/icons/add.gif' }
+                    ]
                 }
             });
+            $("#infoloading").hide();
         });
-        attributegrid = $("#infogrid").ligerGrid({
-            columns: [
-                { display: '属性名称', name: 'AttributeName', width: 100, minWidth: 60, align: 'center' },
-                { display: '是否规格', name: 'SpecName', width: 100, minwidth: 60, align: 'center' },
-                { display: '是否启用', name: 'Enablename', width: 100, minwidth: 60, align: 'center' }
-            ],
-            height: '100%',
-            pagesize: 20,
-            rownumbers: true,
-            title: '绑定属性',
-            toolbar: {
-                items: [
-                    { text: '添加', click: showaddattribute, img: '/lib/ligerUI/skins/icons/add.gif' }
-                ]
-            }
-        });
-        $("#infoloading").hide();
-    });
-    function getattribute(cateid) {
-        $("#infoloading").show();
-        $.ajax({
-            url: '/Admin/Product/GetCategoryAttribute',
-            data: { "id": cateid },
-            datatype: 'json',
-            type: 'get',
-            contentType: 'application/json;charset=utf-8',
-            processdata: false,
-            success: function (data) {
-                attributegrid.set({ data: data });
-            }
-        });
-        $("#infoloading").hide();
-    }
-    function showaddattribute() {
-        if ($("#selectedpid").val() == '0') {
-            $.ligerDialog.warn("请勿选择主类别"); return;
+        function getattribute(cateid) {
+            $("#infoloading").show();
+            $.ajax({
+                url: '/Admin/Product/GetCategoryAttribute',
+                data: { "id": cateid },
+                datatype: 'json',
+                type: 'get',
+                contentType: 'application/json;charset=utf-8',
+                processdata: false,
+                success: function (data) {
+                    attributegrid.set({ data: data });
+                }
+            });
+            $("#infoloading").hide();
         }
-        var attcom;
-        $.ajax({
-            url: '/Admin/Product/GetallAttributeforcom',
-            datatype: 'json',
-            contentType: 'application/json;charset=utf-8',
-            type: 'get',
-            async: false,
-            processData: false,
-            success: function (mydata) {
-                attcom = $("#attributecom").ligerComboBox({
-                    data: mydata,
-                    isMultiSelect: true,
-                    isShowCheckBox: true,
-                    valueFieldID: 'attrid',
-                    textField: 'name',
-                    valueField: 'attrid'
-                });
-                attcom.setValue('');
-                $.ligerDialog.open({
-                    target: $("#showatt"),
-                    title: '添加属性',
-                    width: 300,
-                    height: 300,
-                    buttons: [
-                        {
-                            text: '确定', onclick: function (item, dialog) {
-                                $.ajax({
-                                    url: '/Admin/Product/InsertCategoryAttribute',
-                                    data: { "attribute": attcom.getValue(), "cateid": $("#selectedcateid").val() },
-                                    type: 'POST',
-                                    datatype: 'json',
-                                    async: false,
-                                    success: function (resultdata) {
-                                        if (resultdata == '1') {
-                                            $.ligerDialog.success('添加数据成功', '提示', function () {
-                                                $.ligerDialog.hide();
-                                                $.ajax({
-                                                    url: '/Admin/Product/GetCategoryAttribute',
-                                                    data: { "id": $("#selectedcateid").val() },
-                                                    datatype: 'json',
-                                                    type: 'get',
-                                                    contentType: 'application/json;charset=utf-8',
-                                                    processdata: false,
-                                                    success: function (ydata) {
-                                                        attributegrid.set({ data: ydata });
-                                                    }
-                                                });
-                                            });
-                                        }
-                                        else { $.ligerDialog.error("操作出现错误"); }
-
-                                    }
-                                });
-                            }
-                        },
-                        { text: '取消', onclick: function (item, dialog) { dialog.hide(); } }
-                    ]
-                });
+        function showaddattribute() {
+            if ($("#selectedpid").val() == '0') {
+                $.ligerDialog.warn("请勿选择主类别"); return;
             }
-        });
+            var attcom;
+            $.ajax({
+                url: '/Admin/Product/GetallAttributeforcom',
+                datatype: 'json',
+                contentType: 'application/json;charset=utf-8',
+                type: 'get',
+                async: false,
+                processData: false,
+                success: function (mydata) {
+                    attcom = $("#attributecom").ligerComboBox({
+                        data: mydata,
+                        isMultiSelect: true,
+                        isShowCheckBox: true,
+                        valueFieldID: 'attrid',
+                        textField: 'name',
+                        valueField: 'attrid'
+                    });
+                    attcom.setValue('');
+                    $.ligerDialog.open({
+                        target: $("#showatt"),
+                        title: '添加属性',
+                        width: 300,
+                        height: 300,
+                        buttons: [
+                            {
+                                text: '确定', onclick: function (item, dialog) {
+                                    $.ajax({
+                                        url: '/Admin/Product/InsertCategoryAttribute',
+                                        data: { "attribute": attcom.getValue(), "cateid": $("#selectedcateid").val() },
+                                        type: 'POST',
+                                        datatype: 'json',
+                                        async: false,
+                                        success: function (resultdata) {
+                                            if (resultdata == '1') {
+                                                $.ligerDialog.success('添加数据成功', '提示', function () {
+                                                    $.ligerDialog.hide();
+                                                    $.ajax({
+                                                        url: '/Admin/Product/GetCategoryAttribute',
+                                                        data: { "id": $("#selectedcateid").val() },
+                                                        datatype: 'json',
+                                                        type: 'get',
+                                                        contentType: 'application/json;charset=utf-8',
+                                                        processdata: false,
+                                                        success: function (ydata) {
+                                                            attributegrid.set({ data: ydata });
+                                                        }
+                                                    });
+                                                });
+                                            }
+                                            else { $.ligerDialog.error("操作出现错误"); }
 
-    }
+                                        }
+                                    });
+                                }
+                            },
+                            { text: '取消', onclick: function (item, dialog) { dialog.hide(); } }
+                        ]
+                    });
+                }
+            });
+
+        }
     </script>
 }
 <div style="float:left;width:45%;height:100%">
