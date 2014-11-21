@@ -2,17 +2,13 @@
     ViewBag.Title = "AddProduct";
     Layout = "~/Areas/Admin/Views/Shared/_AdminContorlPartView.cshtml";
 }
-
 @section head{
-
+    <script type="text/javascript" src="~/UEdit/ueditor.config.js"></script>
+<script type="text/javascript" src="~/UEdit/ueditor.all.js"></script>
     <script type="text/javascript">
-        var uedit;
         $(function () {
+            var ue = UE.getEditor('productdis');
             $("#navtabpro").ligerTab();
-            //uedit = UE.getEditor('container');
-            $("#showmsg").click(function () {
-                alert(uedit.getAllHtml());
-            });
         });
     </script>
 }
@@ -31,18 +27,12 @@
     </div>
     <div title="详情描述">
         <div id="editcontent" style="margin:10px;height:100%;width:100%;">
-            <!-- 加载编辑器的容器 -->
-            <script id="container" name="content" type="text/plain">
-                这里写你的初始化内容
+            <script id="productdis" type="text/plain">
             </script>
-            <!-- 配置文件 -->
-            <script src="~/UEdit/ueditor.config.js"></script>
-            <!-- 编辑器源码文件 -->
-            <script src="~/UEdit/ueditor.all.js"></script>
-            <!-- 实例化编辑器 -->
-            <script type="text/javascript">
-                var ue = UE.getEditor('container');
-            </script>
+           
+            @*<script type="text/javascript">
+                
+            </script>*@
         </div>
     </div>
 </div>
