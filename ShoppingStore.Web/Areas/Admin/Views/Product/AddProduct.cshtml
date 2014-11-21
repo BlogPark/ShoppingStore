@@ -6,8 +6,43 @@
 @section head{
 
     <script type="text/javascript">
-        $(function () { alert("ssss") })
+        var uedit;
+        $(function () {
+            $("#navtabpro").ligerTab();
+            //uedit = UE.getEditor('container');
+            $("#showmsg").click(function () {
+                alert(uedit.getAllHtml());
+            });
+        });
     </script>
 }
 
-<p>asfhsaigahgiyergfoerfoqwefyqwoe8fyqweof87qywerfoq87e</p>
+<div id="navtabpro" style="width:100%;overflow:hidden; margin-top:6px;">
+    <div tabid="home" title="基本信息" lselected="true" style="height:100%;">
+        <div>ssssssssssss</div>
+    </div>
+    <div title="分类信息">
+        <div id="Div7" style="margin:10px; height:300px;">我的主页2</div>
+    </div>
+    <div title="辅助信息">
+        <div id="Div8" style="margin:10px;height:300px;">
+            <input type="button" id="showmsg" value="显示" />
+        </div>
+    </div>
+    <div title="详情描述">
+        <div id="editcontent" style="margin:10px;height:100%;width:100%;">
+            <!-- 加载编辑器的容器 -->
+            <script id="container" name="content" type="text/plain">
+                这里写你的初始化内容
+            </script>
+            <!-- 配置文件 -->
+            <script src="~/UEdit/ueditor.config.js"></script>
+            <!-- 编辑器源码文件 -->
+            <script src="~/UEdit/ueditor.all.js"></script>
+            <!-- 实例化编辑器 -->
+            <script type="text/javascript">
+                var ue = UE.getEditor('container');
+            </script>
+        </div>
+    </div>
+</div>
