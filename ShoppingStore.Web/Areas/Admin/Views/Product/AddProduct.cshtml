@@ -4,35 +4,61 @@
 }
 @section head{
     <script type="text/javascript" src="~/UEdit/ueditor.config.js"></script>
-<script type="text/javascript" src="~/UEdit/ueditor.all.js"></script>
+    <script type="text/javascript" src="~/UEdit/ueditor.all.js"></script>
     <script type="text/javascript">
+        var tab;
         $(function () {
             var ue = UE.getEditor('productdis');
-            $("#navtabpro").ligerTab();
+            tab = $("#navtabpro").ligerTab();
         });
+        //移动到下一个Tab
+        function movenexttab() {
+            alert('ssss');
+            var tabcount = tab.getTabItemCount();
+            var selecttab = tab.getSelectedTabItemID();
+            if (parseInt(selecttab) < parseInt(tabcount)) {
+                var co = parseInt(selecttab) + 1;
+                tab.selectTabItem(co);
+            }
+        }
     </script>
 }
 
-<div id="navtabpro" style="width:100%;overflow:hidden; margin-top:6px;">
-    <div tabid="home" title="基本信息" lselected="true" style="height:100%;">
-        <div>ssssssssssss</div>
+<div id="navtabpro" style="width:100%;overflow:hidden; margin-top:6px;height:100%;">
+    <div tabid="1" title="基本信息" lselected="true" style="height:100%;">
+        <span>商品名称：<input type="text" id="name" name="name" /></span>
+        <p>商品编号：<input type="text" id="internalcode" name="internalcode" /></p><br />
+        <p>商品分类：<input type="text" id="procategory" name="procategory" /></p><br />
+        <p>商品品牌：<input type="text" id="probrand" name="probrand" /></p><br />
+        <p>成本价：<input type="text" id="procostprice" name="procostprice" /></p><br />
+        <p>市场价：<input type="text" id="promarkprice" name="promarkprice" /></p><br />
+        <p>商城价：<input type="text" id="proshopprice" name="proshopprice" /></p><br />
+        <input type="button" id="next1" value="继 续" onclick="movenexttab();" />
     </div>
-    <div title="分类信息">
-        <div id="Div7" style="margin:10px; height:300px;">我的主页2</div>
+    <div tabid="2" title="分类信息">
+        <span>商品名称：<input type="text" id="name" name="name" /></span>
+        <p>商品编号：<input type="text" id="internalcode" name="internalcode" /></p><br />
+        <p>商品分类：<input type="text" id="procategory" name="procategory" /></p><br />
+        <p>商品品牌：<input type="text" id="probrand" name="probrand" /></p><br />
+        <p>成本价：<input type="text" id="procostprice" name="procostprice" /></p><br />
+        <p>市场价：<input type="text" id="promarkprice" name="promarkprice" /></p><br />
+        <p>商城价：<input type="text" id="proshopprice" name="proshopprice" /></p><br />
+        <input type="button" id="next2" value="继 续" onclick="movenexttab();" />
     </div>
-    <div title="辅助信息">
-        <div id="Div8" style="margin:10px;height:300px;">
-            <input type="button" id="showmsg" value="显示" />
-        </div>
+    <div tabid="3" title="辅助信息">
+        <span>商品名称：<input type="text" id="name" name="name" /></span>
+        <p>商品编号：<input type="text" id="internalcode" name="internalcode" /></p><br />
+        <p>商品分类：<input type="text" id="procategory" name="procategory" /></p><br />
+        <p>商品品牌：<input type="text" id="probrand" name="probrand" /></p><br />
+        <p>成本价：<input type="text" id="procostprice" name="procostprice" /></p><br />
+        <p>市场价：<input type="text" id="promarkprice" name="promarkprice" /></p><br />
+        <p>商城价：<input type="text" id="proshopprice" name="proshopprice" /></p><br />
+        <input type="button" id="next3" value="继 续" onclick="movenexttab();" />
     </div>
-    <div title="详情描述">
-        <div id="editcontent" style="margin:10px;height:100%;width:100%;">
+    <div tabid="4" title="详情描述">
+        <div id="editcontent" style="margin:10px;height:100%;">
             <script id="productdis" type="text/plain">
             </script>
-           
-            @*<script type="text/javascript">
-                
-            </script>*@
         </div>
     </div>
 </div>
