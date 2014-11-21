@@ -2,6 +2,17 @@
     ViewBag.Title = "Index";
     Layout = "/Areas/Admin/Views/Shared/_AdminContorlPartView.cshtml";
 }
+@section head{
+<meta name="viewport" content="width=device-width" />
+<meta charset="utf-8" />
+<title>XXXX商城后台管理</title>
+<link href="~/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.8.2.min.js"></script>
+<script src="~/lib/ligerUI/js/ligerui.all.js"></script>
+<script src="~/lib/ligerUI/js/plugins/ligerTab.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/lib/jquery.cookie.js"></script>
+<script src="~/lib/json2.js"></script>
 <script type="text/javascript">
     var tab = null;
     var accordion = null;
@@ -248,6 +259,7 @@
         margin-right: 6px;
     }
 </style>
+    }
 <div id="mybody" style="padding:0px;background:#EAEEF5;">
     <div id="pageloading"></div>
     <div id="topmenu" class="l-topmenu">

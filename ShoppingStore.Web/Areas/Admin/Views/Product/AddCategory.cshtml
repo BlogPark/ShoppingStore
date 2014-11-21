@@ -2,7 +2,18 @@
     ViewBag.Title = "AddCategory";
     Layout = "/Areas/Admin/Views/Shared/_AdminContorlPartView.cshtml";
 }
-<script type="text/javascript">
+@section head{
+    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8" />
+    <title>XXXX商城后台管理-分类维护</title>
+    <link href="~/lib/ligerUI/skins/Aqua/css/ligerui-all.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/lib/ligerUI/js/ligerui.all.js"></script>
+    <script src="~/lib/ligerUI/js/plugins/ligerTab.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery.cookie.js"></script>
+    <script src="~/lib/json2.js"></script>
+    <script type="text/javascript">
     var attributegrid;
     var treenode;
     $.ajax({
@@ -226,7 +237,8 @@
         });
 
     }
-</script>
+    </script>
+}
 <div style="float:left;width:45%;height:100%">
     <h4 style="margin-left:20px; margin-top:10px">商品分类</h4> <input type="button" id="add" value="添加类别" /><input type="button" id="updat" value="修改类别" />
     <div id="panel1" style="width:200px;height:100%;margin:5px 20px;border:1px solid;overflow:hidden;float:left;">
