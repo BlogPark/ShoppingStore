@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "AddProduct";
     Layout = "~/Areas/Admin/Views/Shared/_AdminContorlPartView.cshtml";
-}
+ }
 @section head{
     <script type="text/javascript" src="~/UEdit/ueditor.config.js"></script>
     <script type="text/javascript" src="~/UEdit/ueditor.all.js"></script>
@@ -10,6 +10,9 @@
         $(function () {
             var ue = UE.getEditor('productdis');
             tab = $("#navtabpro").ligerTab();
+            $("#addbtn").ligerButton({
+
+            });
         });
         //移动到下一个Tab
         function movenexttab() {
@@ -59,6 +62,7 @@
         <div id="editcontent" style="margin:10px;height:100%;">
             <script id="productdis" type="text/plain">
             </script>
+            <div id="addbtn"></div>
         </div>
     </div>
 </div>

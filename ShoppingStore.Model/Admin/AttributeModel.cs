@@ -70,5 +70,10 @@ namespace ShoppingStore.Model.Admin
         /// </summary>
         [DataMember]
         public string Isspecname { get; set; }
+        /// <summary>
+        /// 前端ID
+        /// </summary>
+        [DataMember]
+        public string ShowIDname { get; set; }
     }
 }

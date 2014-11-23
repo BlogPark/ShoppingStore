@@ -18,5 +18,10 @@ namespace ShoppingStore.Model.Admin
         /// </summary>
         [DataMember]
         public List<SKUModel> SKUS { get; set; }
+        /// <summary>
+        /// 商品属性列表
+        /// </summary>
+        [DataMember]
+        public List<AttributeModel> Attributrte { get; set; }
     }
 }

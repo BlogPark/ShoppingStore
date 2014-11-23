@@ -198,5 +198,26 @@ namespace ShoppingStore.BLL.Admin
                 return 0;
             }
         }
+        /// <summary>
+        /// 得到属性列表
+        /// </summary>
+        /// <param name="cateid"></param>
+        /// <returns></returns>
+        public List<AttributeModel> GetDataforAddProduct(int cateid)
+        {
+            List<AttributeModel> models = new List<AttributeModel>();
+            DataTable dt = dal.GetAttributeForProduct(cateid);
+            foreach (DataRow item in dt.Rows)
+            {
+                AttributeModel model = new AttributeModel();
+                model.name = item["name"].ToString();
+                model.ShowIDname = item["showIDname"].ToString();
+                model.attrid = item["attrid"].ToString().ToInt(0);
+                model.attributecode = item["attributecode"].ToString();
+                model.IsSpec = item["IsSpec"].ToString().ToInt(0);
+                models.Add(model);
+            }
+            return models;
+        }
     }
 }

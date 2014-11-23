@@ -414,5 +414,26 @@ FROM    ShoppingStore.dbo.bsp_CategoryAttribute A WITH ( NOLOCK )
             paramter[1].Value = attrid;
             return helper.ExecuteSql(sqltxt,paramter);
         }
+        /// <summary>
+        /// 得到所有的属性列表
+        /// </summary>
+        /// <param name="cateid"></param>
+        /// <returns></returns>
+        public DataTable GetAttributeForProduct(int cateid)
+        {
+            string sqltxt = @"SELECT  A.CategoryID ,
+        B.attrid ,
+        b.attributecode ,
+        B.name ,
+        B.showIDname,
+        B.IsSpec
+FROM    ShoppingStore.dbo.bsp_CategoryAttribute A WITH ( NOLOCK )
+        INNER JOIN ShoppingStore.dbo.bsp_attributes B WITH ( NOLOCK ) ON A.AttributeID = B.attrid
+                                                              AND A.CategoryID = @cateid
+                                                              AND A.IsEnable = 1
+                                                              AND B.IsEnable = 1";
+            SqlParameter[] paramter = { new SqlParameter(@"@cateid",cateid)};
+            return helper.Query(sqltxt, paramter).Tables[0];
+        }
     }
 }
