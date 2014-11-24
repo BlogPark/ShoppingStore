@@ -283,11 +283,25 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
             List<BrandsInfoModel> model = categoryandproduct.GetbrandBycateid(cateid);
             return Json(model, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// 得到属性列表
+        /// </summary>
+        /// <param name="cateid"></param>
+        /// <returns></returns>
         public ActionResult Getattributebycate(int cateid)
-        { 
-            
-            //List<AttributeModel> model=categoryandproduct
-            return Json("ss");
+        {
+            List<AttributeModel> model = categoryandproduct.GetAttributeDataforAddProduct(cateid);
+            return Json(model,JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// 得到属性值
+        /// </summary>
+        /// <param name="attid"></param>
+        /// <returns></returns>
+        public JsonResult GetAttributeValue(int attid)
+        {
+            List<AttributeValuesModel> model = categoryandproduct.GetAttributeValues(attid);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
     }
 }

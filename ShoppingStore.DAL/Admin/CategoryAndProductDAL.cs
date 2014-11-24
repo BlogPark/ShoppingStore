@@ -451,5 +451,7 @@ WHERE   BelongsCategoryID = @cateid
             paramter[0].Value = cateid;
             return helper.Query(sqltxt, paramter).Tables[0];
         }
+
+      
     }
 }

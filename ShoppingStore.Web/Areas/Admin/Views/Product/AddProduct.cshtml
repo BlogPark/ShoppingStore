@@ -30,10 +30,10 @@
                     checkbox: false,
                     slide: false,
                     nodeWidth: 120,
-                    single:true
+                    single: true
                 },
                 onselected: function (newvalue, newtext) {
-                    bindbrands(newvalue);
+                    bindbrands(newvalue); bindattribute(newvalue)
                 }
             });
             brandcom = $("#probrand").ligerComboBox({
@@ -41,7 +41,7 @@
                 isShowCheckBox: false,
                 valueField: 'brandid',
                 textField: 'name',
-                width:180
+                width: 180
             });
         });
         //移动到下一个Tab
@@ -54,15 +54,14 @@
             }
         }
         //绑定品牌
-        function bindbrands(cateid)
-        {
+        function bindbrands(cateid) {
             $.ajax({
                 url: '/Admin/Product/getBrandsbycate',
                 datatype: 'Json',
                 data: { 'cateid': cateid },
                 type: 'get',
                 contentType: 'application/json;charset=utf-8',
-                proessdata: false,
+                processdata: false,
                 success: function (data) {
                     $("#probrand").ligerComboBox({
                         resize: true,
@@ -73,6 +72,42 @@
                         data: data
                     });
                 }
+            });
+        }
+        function bindattribute(cateid) {
+            var attributedata;
+            $("#attributediv").empty();
+            $.ajax({
+                url: '/Admin/Product/Getattributebycate',
+                datatype: 'json',
+                data: { 'cateid': cateid },
+                type: 'get',
+                async: false,
+                contentType: 'application/json;charset=utf-8',
+                processdata: false,
+                success: function (data) { attributedata = data; }
+            }); 
+            $.each(attributedata, function (i) {
+                var attrid = "#" + attributedata[i].ShowIDname;
+                $("#attributediv").append('<p>' + attributedata[i].name + ':<input type="text" name="' + attributedata[i].ShowIDname + '" id="' + attributedata[i].ShowIDname + '"/></p><br/> ');
+                $.ajax({
+                    url: '/Admin/Product/GetAttributeValue',
+                    datatype: 'json',
+                    data: { 'attid': attributedata[i].attrid },
+                    type: 'get',
+                    contentType: 'application/json;charset=utf-8',
+                    processdata: false,
+                    success: function (data) {
+                        $(attrid).ligerComboBox({
+                            data: data,
+                            textField: 'attrvaluename',
+                            valueField: 'attrid',
+                            resize: true,
+                            isShowCheckBox: false,
+                            width: 180
+                        });
+                    }
+                });
             });
         }
     </script>
@@ -92,11 +127,11 @@
                 <input type="button" id="next1" value="继 续" onclick="movenexttab();" />
             </div>
             <div tabid="2" title="分类信息" style="height:100%;width:100%">
-               
+                <div id="attributediv"></div>
                 <input type="button" id="next2" value="继 续" onclick="movenexttab();" />
             </div>
             <div tabid="3" title="辅助信息" style="height:100%;width:100%">
-                
+
                 <input type="button" id="next3" value="继 续" onclick="movenexttab();" />
             </div>
             <div tabid="4" title="详情描述">
