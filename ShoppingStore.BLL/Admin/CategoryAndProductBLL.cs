@@ -203,7 +203,7 @@ namespace ShoppingStore.BLL.Admin
         /// </summary>
         /// <param name="cateid"></param>
         /// <returns></returns>
-        public List<AttributeModel> GetDataforAddProduct(int cateid)
+        public List<AttributeModel> GetAttributeDataforAddProduct(int cateid)
         {
             List<AttributeModel> models = new List<AttributeModel>();
             DataTable dt = dal.GetAttributeForProduct(cateid);
@@ -215,6 +215,24 @@ namespace ShoppingStore.BLL.Admin
                 model.attrid = item["attrid"].ToString().ToInt(0);
                 model.attributecode = item["attributecode"].ToString();
                 model.IsSpec = item["IsSpec"].ToString().ToInt(0);
+                models.Add(model);
+            }
+            return models;
+        }
+        /// <summary>
+        /// 得到品牌数据
+        /// </summary>
+        /// <param name="cateid"></param>
+        /// <returns></returns>
+        public List<BrandsInfoModel> GetbrandBycateid(int cateid)
+        {
+            List<BrandsInfoModel> models = new List<BrandsInfoModel>();
+            DataTable dt = dal.GetbrandsByCateid(cateid);
+            foreach (DataRow item in dt.Rows)
+            {
+                BrandsInfoModel model = new BrandsInfoModel();
+                model.name = item["name"].ToString();
+                model.brandid = item["brandid"].ToString().ToInt(0);
                 models.Add(model);
             }
             return models;

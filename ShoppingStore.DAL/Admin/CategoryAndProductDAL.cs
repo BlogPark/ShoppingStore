@@ -435,5 +435,21 @@ FROM    ShoppingStore.dbo.bsp_CategoryAttribute A WITH ( NOLOCK )
             SqlParameter[] paramter = { new SqlParameter(@"@cateid",cateid)};
             return helper.Query(sqltxt, paramter).Tables[0];
         }
+        /// <summary>
+        /// 根据cateid得到品牌
+        /// </summary>
+        /// <param name="cateid"></param>
+        /// <returns></returns>
+        public DataTable GetbrandsByCateid(int cateid)
+        {
+            string sqltxt = @"SELECT  name ,
+        brandid
+FROM    ShoppingStore.dbo.bsp_brands WITH ( NOLOCK )
+WHERE   BelongsCategoryID = @cateid
+        AND isshow = 1";
+            SqlParameter[] paramter = { new SqlParameter("@cateid",SqlDbType.Int)};
+            paramter[0].Value = cateid;
+            return helper.Query(sqltxt, paramter).Tables[0];
+        }
     }
 }

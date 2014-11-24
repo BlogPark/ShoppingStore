@@ -23,5 +23,10 @@ namespace ShoppingStore.Model.Admin
         /// </summary>
         [DataMember]
         public List<AttributeModel> Attributrte { get; set; }
+        /// <summary>
+        /// 商品品牌
+        /// </summary>
+        [DataMember]
+        public List<BrandsInfoModel> Brands { get; set; }
     }
 }
