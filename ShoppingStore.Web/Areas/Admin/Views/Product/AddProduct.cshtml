@@ -28,7 +28,7 @@
             });
             subbtn.setValue('提  交');
             var upcc = $("#procategory").ligerComboBox({
-                width: 180,
+                width: 200,
                 textField: 'name',
                 treeLeafOnly: false,
                 valueField: "cateid",
@@ -53,7 +53,7 @@
                 isShowCheckBox: false,
                 valueField: 'brandid',
                 textField: 'name',
-                width: 180
+                width: 200
             });
             $('#uploadify').uploadify({
                 uploader: '/Admin/Product/uploadThumbnailpic',           // 服务器端处理地址
@@ -112,7 +112,7 @@
                         isShowCheckBox: false,
                         valueField: 'brandid',
                         textField: 'name',
-                        width: 180,
+                        width: 200,
                         data: data
                     });
                 }
@@ -149,7 +149,7 @@
                                 valueField: 'attrid',
                                 resize: true,
                                 isShowCheckBox: false,
-                                width: 180
+                                width: 200
                             });
                         }
                     });
@@ -179,14 +179,46 @@
 <form method="post" id="addproductform">
     <div id="navtabpro" style="width:100%;overflow:hidden; margin-top:6px;height:100%;">
         <div tabid="1" title="基本信息" lselected="true" style="height:100%;width:100%">
-            <label>商品名称：<input type="text" id="name" name="name" /></label><br />
-            <p>商品编号：<input type="text" id="internalcode" name="internalcode" /></p><br />
-            <p>商品分类：<input type="text" id="procategory" name="procategory" /></p><br />
-            <p>商品品牌：<input type="text" id="probrand" name="probrand" /></p><br />
-            <p>成本价：<input type="text" id="procostprice" name="procostprice" /></p><br />
-            <p>市场价：<input type="text" id="promarkprice" name="promarkprice" /></p><br />
-            <p>商城价：<input type="text" id="proshopprice" name="proshopprice" /></p><br />
-            <input type="button" id="next1" value="继 续" onclick="movenexttab();" />
+            <table style="border:none">
+                <tr>
+                    <td style="text-align:right"><p>商品名称：</p></td>
+                    <td style="width:200px"><input type="text" id="name" name="name" style="width:200px"/></td>
+                    <td style="text-align:left"><p style="color:red;">*</p></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right"><p>商品编号：</p></td>
+                    <td style="width:200px"><input type="text" id="internalcode" name="internalcode" style="width:200px" /></td>
+                    <td style="text-align:left"><b style="color:red;">*</b></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right"><p>商品分类：</p></td>
+                    <td style="width:200px"><input type="text" id="procategory" name="procategory" style="width:200px" /></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right"><p>商品品牌：</p></td>
+                    <td style="width:200px"><input type="text" id="probrand" name="probrand" style="width:200px" /></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right"><p>成本价：</p></td>
+                    <td style="width:200px"><input type="text" id="procostprice" name="procostprice" style="width:200px" /></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right"><p>市场价：</p></td>
+                    <td style="width:200px"><input type="text" id="promarkprice" name="promarkprice" style="width:200px" /></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="text-align:right"><p>商城价：</p></td>
+                    <td style="width:200px"><input type="text" id="proshopprice" name="proshopprice" style="width:200px" /></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:center"><input type="button" id="next1" value="继 续" onclick="movenexttab();" /></td>
+                </tr>
+            </table>
         </div>
         <div tabid="2" title="分类信息" style="height:100%;width:100%">
             <div id="attributediv"></div>
