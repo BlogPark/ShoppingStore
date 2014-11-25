@@ -75,5 +75,10 @@ namespace ShoppingStore.Model.Admin
         /// </summary>
         [DataMember]
         public string ShowIDname { get; set; }
+        /// <summary>
+        /// 是否多选
+        /// </summary>
+        [DataMember]
+        public int IsMultiple { get; set; }
     }
 }

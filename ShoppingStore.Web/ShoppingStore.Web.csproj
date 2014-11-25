@@ -1457,8 +1457,6 @@
     <Content Include="uploadify\uploadify-cancel.png" />
     <Content Include="uploadify\uploadify.css" />
     <Content Include="uploadify\uploadify.swf" />
-    <Content Include="uploadify\__MACOSX\._Change Log.txt" />
-    <Content Include="uploadify\__MACOSX\._uploadify.swf" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

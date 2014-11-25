@@ -215,6 +215,7 @@ namespace ShoppingStore.BLL.Admin
                 model.attrid = item["attrid"].ToString().ToInt(0);
                 model.attributecode = item["attributecode"].ToString();
                 model.IsSpec = item["IsSpec"].ToString().ToInt(0);
+                model.IsMultiple = item["IsMultiple"].ToString().ToInt(0);
                 models.Add(model);
             }
             return models;

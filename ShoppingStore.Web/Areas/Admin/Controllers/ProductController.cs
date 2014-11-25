@@ -291,7 +291,7 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
         public ActionResult Getattributebycate(int cateid)
         {
             List<AttributeModel> model = categoryandproduct.GetAttributeDataforAddProduct(cateid);
-            return Json(model,JsonRequestBehavior.AllowGet);
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// 得到属性值
@@ -302,6 +302,31 @@ namespace ShoppingStore.Web.Areas.Admin.Controllers
         {
             List<AttributeValuesModel> model = categoryandproduct.GetAttributeValues(attid);
             return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        /// <summary>
+        /// 上传缩略图
+        /// </summary>
+        /// <param name="Filedata"></param>
+        /// <returns></returns>
+        public ActionResult uploadThumbnailpic(HttpPostedFileBase Filedata)
+        {
+            // 如果没有上传文件
+            if (Filedata == null ||
+                string.IsNullOrEmpty(Filedata.FileName) ||
+                Filedata.ContentLength == 0)
+            {
+                return this.HttpNotFound();
+            }
+
+            // 保存到 ~/photos 文件夹中，名称不变
+            string filename = System.IO.Path.GetFileName(Filedata.FileName);
+            string virtualPath =
+                string.Format("/skuimgs/{0}", filename);
+            // 文件系统不能使用虚拟路径
+            string path = this.Server.MapPath(virtualPath);
+
+            Filedata.SaveAs(path);
+            return Json(new { Success = true, FileName = filename, SaveName = virtualPath });
         }
     }
 }

@@ -426,7 +426,8 @@ FROM    ShoppingStore.dbo.bsp_CategoryAttribute A WITH ( NOLOCK )
         b.attributecode ,
         B.name ,
         B.showIDname,
-        B.IsSpec
+        B.IsSpec,
+        B.IsMultiple
 FROM    ShoppingStore.dbo.bsp_CategoryAttribute A WITH ( NOLOCK )
         INNER JOIN ShoppingStore.dbo.bsp_attributes B WITH ( NOLOCK ) ON A.AttributeID = B.attrid
                                                               AND A.CategoryID = @cateid
