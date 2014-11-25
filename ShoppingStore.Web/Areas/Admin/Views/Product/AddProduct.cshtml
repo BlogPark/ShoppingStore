@@ -79,13 +79,14 @@
                     alert('文件 ' + file.name + ' 已经上传成功，文件地址为 ' + data.SaveName);
                 }
             });
-            //$("#addproductform").validate({
-            //    rules: {
-            //        name: 'required',
-            //        internalcode: 'required'
-            //    },
-
-            //});
+            $("#addproductform").validate({
+                rules: {
+                    name: { required: true }
+                },
+                messages: {
+                    name: { required: '请输入商品名称' }
+                }
+            });
         });
         //移动到下一个Tab
         function movenexttab() {
@@ -178,7 +179,7 @@
 <form method="post" id="addproductform">
     <div id="navtabpro" style="width:100%;overflow:hidden; margin-top:6px;height:100%;">
         <div tabid="1" title="基本信息" lselected="true" style="height:100%;width:100%">
-            <p>商品名称：<input type="text" id="name" name="name" /></p><br />
+            <label>商品名称：<input type="text" id="name" name="name" /></label><br />
             <p>商品编号：<input type="text" id="internalcode" name="internalcode" /></p><br />
             <p>商品分类：<input type="text" id="procategory" name="procategory" /></p><br />
             <p>商品品牌：<input type="text" id="probrand" name="probrand" /></p><br />
