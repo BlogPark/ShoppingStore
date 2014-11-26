@@ -22,9 +22,7 @@
             var subbtn = $("#addbtn").ligerButton({
                 icon: '/lib/ligerUI/skins/icons/true.gif',
                 width: 50,
-                click: function () {
-                    alert('提交');
-                }
+                click: submitform
             });
             subbtn.setValue('提  交');
             var upcc = $("#procategory").ligerComboBox({
@@ -80,11 +78,23 @@
                 }
             });
             $("#addproductform").validate({
+                onfocusout:false,
                 rules: {
                     name: { required: true }
                 },
                 messages: {
                     name: { required: '请输入商品名称' }
+                },
+                success: function () { alert('ss') },
+                errorPlacement: function (error, element) {
+                    error.appendTo(element.parent().next());
+                        if ( element.is(":radio") )
+                            error.appendTo( element.siblings("span") );
+                        else if ( element.is(":checkbox") ){
+                            error.appendTo ( element.siblings("span") );
+                        }
+                            else
+                            error.appendTo( element.parent() );
                 }
             });
         });
@@ -121,6 +131,7 @@
         function bindattribute(cateid) {
             var attributedata;
             $("#attributediv").empty();
+            $("#attributediv").append('<h3 id="chosecate">请选择分类</h3>')
             $.ajax({
                 url: '/Admin/Product/Getattributebycate',
                 datatype: 'json',
@@ -132,6 +143,7 @@
                 success: function (data) { attributedata = data; }
             });
             $.each(attributedata, function (i) {
+                $("#chosecate").remove();
                 var attrid = "#" + attributedata[i].ShowIDname;
                 if (attributedata[i].IsMultiple == 0) {
                     $("#attributediv").append('<p>' + attributedata[i].name + ':<input type="text" name="' + attributedata[i].ShowIDname + '" id="' + attributedata[i].ShowIDname + '"/></p><br/> ');
@@ -167,10 +179,22 @@
                             $(attrid).ligerCheckBoxList({
                                 data: data,
                                 textField: 'attrvaluename',
-                                valueField: 'attrid'
+                                valueField: 'attrid',
+                                rowSize: 6
                             });
                         }
                     });
+                }
+            });
+        }
+        function submitform()
+        {
+            $("#addproductform").validate({
+                submitHandler: function (form) {
+                    var r = $('#addproductform').form('validate');
+                    if (r)
+                        alert(r);
+                    else { alert('校验有误') }
                 }
             });
         }
@@ -179,59 +203,70 @@
 <form method="post" id="addproductform">
     <div id="navtabpro" style="width:100%;overflow:hidden; margin-top:6px;height:100%;">
         <div tabid="1" title="基本信息" lselected="true" style="height:100%;width:100%">
-            <table style="border:none">
+            <table style="border: none; margin-top: 20px; margin-left: 10px">
                 <tr>
                     <td style="text-align:right"><p>商品名称：</p></td>
-                    <td style="width:200px"><input type="text" id="name" name="name" style="width:200px"/></td>
-                    <td style="text-align:left"><p style="color:red;">*</p></td>
+                    <td style="width:200px"><input type="text" id="name" name="name" style="width:200px" /></td>
+                    <td style="text-align:left"><h4 style="color:red; ">*</h4></td>
                 </tr>
+                <tr style="height:15px"><td colspan="3"></td></tr>
                 <tr>
                     <td style="text-align:right"><p>商品编号：</p></td>
                     <td style="width:200px"><input type="text" id="internalcode" name="internalcode" style="width:200px" /></td>
                     <td style="text-align:left"><b style="color:red;">*</b></td>
                 </tr>
+                <tr style="height:15px"><td colspan="3"></td></tr>
                 <tr>
                     <td style="text-align:right"><p>商品分类：</p></td>
                     <td style="width:200px"><input type="text" id="procategory" name="procategory" style="width:200px" /></td>
                     <td></td>
                 </tr>
+                <tr style="height:15px"><td colspan="3"></td></tr>
                 <tr>
                     <td style="text-align:right"><p>商品品牌：</p></td>
                     <td style="width:200px"><input type="text" id="probrand" name="probrand" style="width:200px" /></td>
                     <td></td>
                 </tr>
+                <tr style="height:15px"><td colspan="3"></td></tr>
                 <tr>
                     <td style="text-align:right"><p>成本价：</p></td>
                     <td style="width:200px"><input type="text" id="procostprice" name="procostprice" style="width:200px" /></td>
                     <td></td>
                 </tr>
+                <tr style="height:15px"><td colspan="3"></td></tr>
                 <tr>
                     <td style="text-align:right"><p>市场价：</p></td>
                     <td style="width:200px"><input type="text" id="promarkprice" name="promarkprice" style="width:200px" /></td>
                     <td></td>
                 </tr>
+                <tr style="height:15px"><td colspan="3"></td></tr>
                 <tr>
                     <td style="text-align:right"><p>商城价：</p></td>
                     <td style="width:200px"><input type="text" id="proshopprice" name="proshopprice" style="width:200px" /></td>
                     <td></td>
                 </tr>
+                <tr style="height:15px"><td colspan="3"></td></tr>
                 <tr>
                     <td colspan="3" style="text-align:center"><input type="button" id="next1" value="继 续" onclick="movenexttab();" /></td>
                 </tr>
             </table>
         </div>
         <div tabid="2" title="分类信息" style="height:100%;width:100%">
-            <div id="attributediv"></div>
-            <input type="button" id="next2" value="继 续" onclick="movenexttab();" />
+            <div id="attributediv" style="width:100%;height:auto;margin-top:20px;margin-left:10px">
+                <h3 id="chosecate">请选择分类</h3>
+            </div>
+            <input type="button" id="next2" value="继 续" onclick="movenexttab();" style="margin-top:5px" />
         </div>
         <div tabid="3" title="辅助信息" style="height:100%;width:100%">
-            <p>商品重量：<input type="text" id="productweight" name="productweight" /></p><br />
-            <p>商品描述：<input type="text" id="proSimpleDescription" name="proSimpleDescription" /></p>
-            <span id="uploadify"></span><input type="hidden" id="imgpath" name="imgpath" />
-            <input type="button" id="next3" value="继 续" onclick="movenexttab();" style="margin-top:10px" />
+            <div style="margin-left:10px;margin-top:20px;width:100%;height:auto">
+                <p>商品重量：<input type="text" id="productweight" name="productweight" /></p><br />
+                <p>商品描述：<input type="text" id="proSimpleDescription" name="proSimpleDescription" /></p>
+                <span id="uploadify"></span><input type="hidden" id="imgpath" name="imgpath" />
+                <input type="button" id="next3" value="继 续" onclick="movenexttab();" style="margin-top:10px" />
+            </div>
         </div>
         <div tabid="4" title="详情描述">
-            <div id="editcontent" style="margin:10px;height:100%;">
+            <div id="editcontent" style="margin-left:10px;margin-top:20px;width:100%;height:auto">
                 <script id="productdis" type="text/plain">
                 </script>
                 <div id="addbtn"></div>
