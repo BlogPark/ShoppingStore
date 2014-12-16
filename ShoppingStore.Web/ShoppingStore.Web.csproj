@@ -183,6 +183,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminOperateController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BaseSysSetController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Models\CategoriesViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ProductViewModel.cs" />

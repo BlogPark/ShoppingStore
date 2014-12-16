@@ -29,5 +29,15 @@ FROM    ShoppingStore.dbo.bsp_adminactions WITH(NOLOCK)
 ORDER BY displayorder DESC";
             return helper.Query(sqltxt).Tables[0];
         }
+        /// <summary>
+        /// 查询所有的友情链接
+        /// </summary>
+        /// <returns></returns>
+        public DataTable GetAllfriendlinks()
+        {
+            string sqltxt = @"SELECT id,name,title,logo,url,[target],displayorder
+FROM ShoppingStore.dbo.bsp_friendlinks";
+            return helper.Query(sqltxt).Tables[0];
+        }
     }
 }

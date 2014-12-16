@@ -46,6 +46,7 @@
     <Compile Include="Admin\BrandsInfoModel.cs" />
     <Compile Include="Admin\Categories.cs" />
     <Compile Include="Admin\CategoryAttributeModel.cs" />
+    <Compile Include="Admin\FriendlinksModel.cs" />
     <Compile Include="Admin\ProductModel.cs" />
     <Compile Include="Admin\ProductVOModel.cs" />
     <Compile Include="Admin\SKUModel.cs" />
