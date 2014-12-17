@@ -33,9 +33,16 @@ namespace ShoppingStore.Model.Admin
         /// <summary>
         /// URL
         /// </summary>
+        [DataMember]
         public string Url { get; set; }
+        /// <summary>
+        /// 打开方式
+        /// </summary>
         [DataMember]
         public string Target { get; set; }
+        /// <summary>
+        /// 排序
+        /// </summary>
         [DataMember]
         public string Displayorder { get; set; }
     }
